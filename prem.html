@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+body{
+    background:#131313;
+    color:#e5e2e1;
+    font-family:'Inter',sans-serif;
+    padding-bottom:105px;
+}
+.material-symbols-outlined{
+    font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+}
+.glass-panel{
+    background:rgba(25,25,25,0.7);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+}
+.album-glow:hover{
+    box-shadow:0 10px 40px -10px rgba(83,224,118,0.3);
+}
+::-webkit-scrollbar{
+    width:6px;
+    height:6px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:rgba(255,255,255,0.2);
+}
+:root{
+    --primary:#53e076;
+    --primary-container:#1db954;
+    --background:#131313;
+    --surface:#1c1b1b;
+    --text-main:#e5e2e1;
+    --text-muted:#bccbb9;
+}
+.text-main{color:var(--text-main);}
+.text-muted{color:var(--text-muted);}
+.btn-success{
+    background:var(--primary-container);
+    border:none;
+}
+
+.btn-success:hover{
+    background:#18a74a;
+}
+
+::selection{
+    background:var(--primary);
+    color:#002108;
+}
+
+.sidebar{
+    width:260px;
+    background:rgba(19,19,19,0.7);
+    backdrop-filter:blur(20px);
+    border-right:1px solid rgba(255,255,255,0.1);
+}
+
+.nav-link{
+    color:#bccbb9;
+    font-weight:500;
+    transition:all .2s ease;
+}
+
+.nav-link:hover{
+    background:rgba(255,255,255,0.05);
+    color:#e5e2e1;
+}
+
+.material-symbols-outlined.filled{
+    font-variation-settings: 'FILL' 1;
+}
+
+.upgrade-btn{
+    background:#1db954;
+    border:none;
+    transition:.2s;
+}
+
+.upgrade-btn:hover{
+    transform:scale(1.05);
+}
+.text-secondary{
+    color:#bccbb9 !important;
+}
+.main-content {
+    margin-left: 260px; /* sama dengan sidebar */
+    padding-top: 80px;
+}
+
+.topbar {
+    height: 64px;
+    position: fixed;
+    top: 0;
+    left: 260px; /* FIX DI SINI */
+    right: 0;
+    z-index: 40;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+}
+/* NAV TEXT */
+.nav-link-custom {
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+    
+}
+
+.nav-link-custom:hover {
+    color: #fff;
+}
+
+/* ICON */
+.icon-btn {
+    cursor: pointer;
+    color: rgba(255,255,255,0.6);
+    transition: 0.2s;
+}
+
+.icon-btn:hover {
+    color: #fff;
+}
+
+/* PROFILE */
+.profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+  :root {
+    --primary-color: #1DB954;
+  }
+
+  .card-custom {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    transition: 0.3s;
+  }
+
+  .card-custom:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .badge-popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+  }
+
+  .icon {
+    font-size: 20px;
+    color: var(--primary-color);
+  }
+
+  .btn-custom {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-custom:hover {
+    background: #17a74a;
+  }
+
+  .btn-outline-custom {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+  }
+
+  .btn-outline-custom:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .text-primary-custom {
+    color: var(--primary-color);
+  }
+  /* PLAYER BAR - FINAL CLEAN */
+.player-bar{
+    position:fixed;
+    bottom:0;
+    left:260px;
+    right:0;
+    height:90px;
+    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,0.7);
+    border-top:1px solid rgba(255,255,255,0.1);
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+}
+
+/* COVER */
+.cover{
+    width:56px;
+    height:56px;
+    border-radius:8px;
+    object-fit:cover;
+}
+
+/* ICON BUTTON */
+.icon-btn{
+    background:none;
+    border:none;
+    color:#aaa;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.icon-btn:hover{
+    color:#fff;
+}
+
+/* ICON ACTIVE (FILL) */
+.icon-btn.fill span{
+    font-variation-settings:'FILL' 1;
+}
+
+/* PLAY BUTTON (CENTER) */
+.play-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#fff;
+    color:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    transform: translateY(-3px);
+    transition:0.2s;
+}
+
+.play-btn:hover{
+    transform: translateY(-3px) scale(1.08);
+}
+
+/* PROGRESS BAR */
+.progress{
+    height:4px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:35%;
+    background:var(--primary-container); /* pakai variable */
+    transition:width .3s ease;
+}
+
+/* VOLUME */
+.volume-bar{
+    width:80px;
+    height:4px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.volume-fill{
+    width:60%;
+    height:100%;
+    background:#aaa;
+}
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary selection:text-on-primary-fixed">
+<nav class="sidebar position-fixed top-0 start-0 vh-100 d-flex flex-column p-4">
+
+    <div class="mb-4">
+        <h1 class="fw-bold text-success" style="font-size:24px;">
+            Music Premium
+        </h1>
+        <p class="small text-secondary opacity-75 mb-0">
+            Premium Member
+        </p>
+    </div>
+
+    <div class="d-flex flex-column gap-2 flex-grow-1">
+
+        <a href="home.html" class="nav-link active d-flex align-items-center gap-3 px-2 py-2 rounded">
+            <span class="material-symbols-outlined filled">home</span>
+            <span>Home</span>
+        </a>
+
+        <a href="#" class="nav-link d-flex align-items-center gap-3 px-2 py-2 rounded">
+            <span class="material-symbols-outlined">search</span>
+            <span>Search</span>
+        </a>
+
+        <a href="#" class="nav-link d-flex align-items-center gap-3 px-2 py-2 rounded">
+            <span class="material-symbols-outlined">library_music</span>
+            <span>Your Library</span>
+        </a>
+
+        <a href="#" class="nav-link d-flex align-items-center gap-3 px-2 py-2 rounded">
+            <span class="material-symbols-outlined">add_box</span>
+            <span>Create Playlist</span>
+        </a>
+
+    </div>
+
+    <div class="mt-auto pt-4 border-top border-secondary-subtle d-flex flex-column gap-3">
+
+        <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
+            Upgrade Plan
+        </button>
+
+        <a href="#" class="nav-link d-flex align-items-center gap-3 px-2 py-2">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Settings</span>
+        </a>
+
+        <a href="#" class="nav-link d-flex align-items-center gap-3 px-2 py-2">
+            <span class="material-symbols-outlined">help</span>
+            <span>Help</span>
+        </a>
+
+    </div>
+</nav>
+<main class="main-content position-relative pb-5">
+<header class="topbar d-flex justify-content-between align-items-center px-5">
+
+    <!-- LEFT MENU -->
+    <div class="d-flex gap-4">
+        <span class="nav-link-custom">Podcasts</span>
+        <span class="nav-link-custom">Charts</span>
+        <span class="nav-link-custom">Genres</span>
+        <span class="nav-link-custom">New Releases</span>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="d-flex align-items-center gap-3">
+        <span class="material-symbols-outlined icon-btn">notifications</span>
+
+        <div class="profile-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2ZQ4cIZ8qTQX6yiW8TeloU5BAz_pW2A5gsRmTyf-MGTQmVcxcCnxzlihjW4vWGCx_pMfpN3HHHu3VhLoj-x_UH4qTsbZyAj18i6pefh-196tCVABRrnb3P_Ob_l9oT_muvfsdPPtZstwYJMC1Z6bFQ5urRc8czPjpX60Vv1II4j9mu8nSAb73HX9xVvS-75Wdjo21AyxUTE4Gluzir5AAMjml7IYyWsYIHbdCjzEqr0UDxVoZiVZSKab06FYBnE0mmdh9_wQdiQ" alt="User">
+        </div>
+    </div>
+
+</header>
+<main class="container py-5">
+  <section class="text-center mb-5">
+    <h1 class="fw-bold mb-3">Pick your Premium</h1>
+    <p class="text-secondary mx-auto" style="max-width:600px;">
+      Listen without limits on your phone, speaker, and other devices. Switch plans anytime.
+    </p>
+  </section>
+
+  <!-- Pricing -->
+  <div class="row g-4">
+
+    <!-- Individual -->
+    <div class="col-md-4">
+      <div class="card-custom p-4 position-relative h-100 d-flex flex-column">
+        <div class="badge-popular">Most Popular</div>
+
+        <h4>Individual</h4>
+        <h3 class="text-primary-custom">$10.99 <small class="text-secondary fs-6">/ month</small></h3>
+        <hr>
+
+        <ul class="list-unstyled flex-grow-1">
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Ad-free music</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Offline download</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> High quality audio</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Listen together</li>
+        </ul>
+
+        <button class="btn btn-custom w-100">Get Started</button>
+        <p class="text-center text-secondary mt-3 small">1 account only.</p>
+      </div>
+    </div>
+
+    <!-- Duo -->
+    <div class="col-md-4">
+      <div class="card-custom p-4 h-100 d-flex flex-column">
+        <h4>Duo</h4>
+        <h3>$14.99 <small class="text-secondary fs-6">/ month</small></h3>
+
+        <hr>
+
+        <ul class="list-unstyled flex-grow-1">
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> 2 accounts</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> For couples</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> No ads</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> High quality</li>
+        </ul>
+
+        <button class="btn btn-outline-light w-100">Get Started</button>
+        <p class="text-center text-secondary mt-3 small">2 accounts.</p>
+      </div>
+    </div>
+
+    <!-- Family -->
+    <div class="col-md-4">
+      <div class="card-custom p-4 h-100 d-flex flex-column">
+        <h4>Family</h4>
+        <h3>$16.99 <small class="text-secondary fs-6">/ month</small></h3>
+
+        <hr>
+
+        <ul class="list-unstyled flex-grow-1">
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Up to 6 accounts</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Block explicit</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> Kids app</li>
+          <li class="mb-2"><span class="material-symbols-outlined icon">check_circle</span> High quality</li>
+        </ul>
+
+        <button class="btn btn-outline-light w-100">Get Started</button>
+        <p class="text-center text-secondary mt-3 small">Up to 6 accounts.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Extra Section -->
+  <div class="row mt-5 g-4">
+
+    <div class="col-md-6">
+      <div class="card-custom p-4 d-flex align-items-center gap-3">
+        <span class="material-symbols-outlined icon fs-1">devices</span>
+        <div>
+          <h5>Listen Everywhere</h5>
+          <p class="text-secondary mb-0">Mobile, desktop, PlayStation, Chromecast, Apple TV.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card-custom p-4 d-flex align-items-center gap-3">
+        <span class="material-symbols-outlined icon fs-1">offline_pin</span>
+        <div>
+          <h5>Offline Listening</h5>
+          <p class="text-secondary mb-0">No internet? No problem.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+<footer class="player-bar d-flex align-items-center justify-content-between px-4">
+
+    <div class="d-flex align-items-center gap-3 col-3">
+
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ln0u6CeZ8C6RfSXSzAZbone7Df_LhrkkavFJywZwJy-bpp2fQyK9Z4RHp5821GqiKh0N6anACH-lHek2qhaBVuz87FLd9KNoYznc7kBrF1_AOg725sV5zespuYkpl6Khp-YIG0Xy_VUJN4R5RXmxD4SS9f2tLfy0VmDRCFMWBYp9PKSU2puj-EunungJQgNiCDRbowIIcDMCUIdKynnA7IiFQkzDF_EzhmBlIuG_ZO66o0iTvYrpdvO3_W1WCJps9rz_mIV3Lg"
+             class="cover">
+
+        <div class="text-truncate">
+            <div class="text-white fw-bold small">Circuit Breaker</div>
+            <div class="text-secondary small">Sonic Frontiers</div>
+        </div>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">favorite</span>
+        </button>
+
+    </div>
+
+    <div class="text-center col-6">
+
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-1">
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">shuffle</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_previous</span>
+            </button>
+
+            <button class="play-btn">
+                <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_next</span>
+            </button>
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">repeat</span>
+            </button>
+
+        </div>
+
+        <div class="d-flex align-items-center gap-2 px-3">
+
+            <small class="text-secondary">1:24</small>
+
+            <div class="progress flex-grow-1">
+                <div class="progress-bar"></div>
+            </div>
+
+            <small class="text-secondary">3:45</small>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end gap-3 col-3">
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">lyrics</span>
+        </button>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">queue_music</span>
+        </button>
+
+        <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">volume_up</span>
+
+            <div class="volume-bar">
+                <div class="volume-fill"></div>
+            </div>
+        </div>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">fullscreen</span>
+        </button>
+
+    </div>
+
+</footer>
+<script>
+        // Simple interactivity for pricing cards
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (!card.classList.contains('active-card')) {
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                if (!card.classList.contains('active-card')) {
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                }
+            });
+        });
+
+        // Toggle Active State
+        function selectPlan(element) {
+            cards.forEach(c => c.classList.remove('active-card', 'glow-shadow-primary'));
+            element.classList.add('active-card', 'glow-shadow-primary');
+        }
+    </script>
+</body></html>

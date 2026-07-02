@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Explore - Sonic Glass</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary-color: #53e076;
+            --bg-dark: #131313;
+            --surface-color: #201f1f;
+            --text-secondary: #bccbb9;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Material Symbols Fill Settings */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: 256px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            z-index: 1030;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0 !important;
+            }
+            .header-nav {
+                left: 0 !important;
+            }
+        }
+
+        .nav-link-custom {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--on-surface-variant);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link-custom:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--on-surface);
+        }
+
+        .nav-link-custom.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Header Styling */
+        .top-header {
+            height: 80px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 280px;
+            z-index: 999;
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            padding-top: 80px;
+            padding-bottom: 120px;
+        }
+
+        /* Sonic Glass Hero */
+        .hero-section {
+            position: relative;
+            padding: 5rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(83, 224, 118, 0.15) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input-group {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input-group:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(83, 224, 118, 0.1);
+        }
+
+        .form-control-custom {
+            background: transparent !important;
+            border: none !important;
+            color: #fff !important;
+            padding-left: 1.5rem !important;
+            box-shadow: none !important;
+        }
+
+        .form-control-custom::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            color: #002108;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #4cd16b;
+            transform: scale(1.02);
+            color: #002108;
+        }
+
+        /* Filter Pills */
+        .filter-pills {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-pill {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-pill:hover, .btn-pill.active {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(83, 224, 118, 0.05);
+        }
+
+        /* Genre Cards */
+        .genre-card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            background: transparent;
+            position: relative;
+            height: 220px;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .genre-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .genre-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.6s ease;
+        }
+
+        .genre-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .genre-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .genre-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #fff;
+        }
+
+        .genre-subtitle {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary-color);
+        }
+
+        /* Player Bar */
+        .player-bar {
+            height: 100px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(19, 19, 19, 0.8);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1001;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .song-info img {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar-inner {
+            position: absolute;
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .play-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: #002108;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 0 20px rgba(83, 224, 118, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #353534; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
+
+        @media (max-width: 992px) {
+            .sidebar { transform: translateX(-100%); }
+            .top-header, main { left: 0; margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar -->
+<aside class="sidebar d-flex flex-column" id="sidebar-nav">
+<div class="mb-5 px-2">
+<span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
+</div>
+<nav class="d-flex flex-column gap-1 flex-grow-1">
+<a class="nav-link-custom" href="home.html">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span>Your Library</span>
+</a>
+<a class="nav-link-custom active" href="#">
+<span class="material-symbols-outlined">add_box</span>
+<span>Create Playlist</span>
+</a>
+</nav>
+
+<div class="mt-auto d-flex flex-column gap-1">
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+</div>
+</aside><header class="top-header">
+<div class="d-flex gap-2">
+<button class="btn border-0 p-2" style="background: rgba(255,255,255,0.05); color: #fff; border-radius: 12px;">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="btn border-0 p-2" style="background: rgba(255,255,255,0.05); color: #fff; border-radius: 12px;">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="ms-auto d-flex align-items-center gap-4">
+<div class="d-none d-md-flex gap-4">
+<a class="text-primary text-decoration-none small fw-bold" href="#">Music</a>
+<a class="text-secondary text-decoration-none small" href="#">Live</a>
+</div>
+<button class="btn border-0 p-2" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); border-radius: 12px;">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="hero-section">
+<div class="hero-blob" style="top: 10%; left: 15%;"></div>
+<div class="hero-blob" style="bottom: 10%; right: 15%;"></div>
+<h1 class="display-3 fw-bolder mb-5" style="letter-spacing: -2px;">Find your <span class="text-primary font-italic">frequency</span></h1>
+<div class="search-container">
+<div class="input-group search-input-group">
+<span class="input-group-text bg-transparent border-0 ps-4 text-secondary">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="form-control form-control-custom fs-5" placeholder="Search artists, tracks, or mood..." type="text"/>
+<button class="btn btn-primary-custom ms-2" type="button">Explore</button>
+</div>
+</div>
+<!-- Filter Pills -->
+<div class="filter-pills">
+<button class="btn btn-pill active">Moods</button>
+<button class="btn btn-pill">Genres</button>
+<button class="btn btn-pill">Decades</button>
+<button class="btn btn-pill">Podcasts</button>
+<button class="btn btn-pill">Trending</button>
+</div>
+</section>
+<!-- Category Grid -->
+<section class="container-fluid px-lg-5">
+<div class="d-flex align-items-center justify-content-between mb-4">
+<div class="d-flex align-items-center gap-3">
+<h3 class="fw-bold mb-0">Discover Categories</h3>
+<span class="badge rounded-pill" style="background: rgba(83, 224, 118, 0.1); border: 1px solid rgba(83, 224, 118, 0.2); color: var(--primary-color); font-size: 0.6rem; padding: 0.4em 0.8em; letter-spacing: 0.1em;">LIVE</span>
+</div>
+<div class="d-flex gap-2">
+<button class="btn border-0 p-2" style="background: rgba(255,255,255,0.05); color: var(--primary-color); border-radius: 12px;">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="btn border-0 p-2" style="background: transparent; color: var(--text-secondary); border-radius: 12px;">
+<span class="material-symbols-outlined">list</span>
+</button>
+</div>
+</div>
+<div class="row g-4">
+<!-- Pop -->
+<div class="col-12 col-md-6 col-lg-4">
+<div class="card genre-card">
+<img alt="Pop Culture" src="https://lh3.googleusercontent.com/aida/AP1WRLs99nqRg6udFEXwaaLsJ0RuHBMw1lt4bH0rET3RuSwJwj0HSKF6495sCQJhM1DNt39SIMk7cVLepKHhcYH97dD3HIvVCkFW4nKpS3qcTbKrip7zSNV7qPt95N6Uj6KfG4sTnsy1MD1tneRzxGPmf-nhmEmcmwxw3BnoSanSsz4dvaV724OZSA4UfLmzWx9rjCin9Fl0fQE5Y_Uy3zkCuvi_Y9HBrGpGEoPSex-MzVSuc39hLS5K85b4"/>
+<div class="genre-card-overlay">
+<h4 class="genre-title">Pop Culture</h4>
+<p class="genre-subtitle">12M Playlists</p>
+</div>
+</div>
+</div>
+<!-- Hip Hop -->
+<div class="col-12 col-md-6 col-lg-4">
+<div class="card genre-card">
+<img alt="Hip Hop" src="https://lh3.googleusercontent.com/aida/AP1WRLtNJy9YEy71AsKn9BRJPIsNgOn8jFf17lKAZaXPtSxf3Zldl1f4e8K08_nm3GF5IBL0S3CSH3VBjfjq6wFIwXoEjM8liKEJTuAS0l-I5Wr-P4a6UPGh8TNbc_1oZ0HJ2yug7mNCgoM7bT912RTpLstS7rtFvedEIfw5UsE_MoJjYWs9IemjSZXEPgnbfsxvTXJpoRf3bhvfGpx5m58CvSt_VOCUplL2v1A2QFiWKSza-fU4YKGf45EUxg"/>
+<div class="genre-card-overlay">
+<h4 class="genre-title">Hip Hop</h4>
+<p class="genre-subtitle">Rising Now</p>
+</div>
+</div>
+</div>
+<!-- Electronic -->
+<div class="col-12 col-md-6 col-lg-4">
+<div class="card genre-card">
+<img alt="Electronic" src="https://lh3.googleusercontent.com/aida/AP1WRLuIaN9vL8HgUcOBNCRHmIyqWF6WiNCQmdEpQVr8PehJE-LwuCsOquqx53L6LYCGrcHNaY8mAjZAvI2p0lk5TguX2VLgjo701QSQ_WaBLf9fI5nckSfP8m4mM9n3EDxe1jxE1R2Va2UOAi9LcD4rQPJC_J65kss2fT9s_H6WIxxWA3CFqqoLg0G3kDOhVecTAkbVbIO02AEDB5djkg_7TuHDLFQrlnn1XkLAXC3Ix90SEmmF-v3jGWex9A"/>
+<div class="genre-card-overlay">
+<h4 class="genre-title">Electronic</h4>
+<p class="genre-subtitle">New Beats</p>
+</div>
+</div>
+</div>
+<!-- Rock -->
+<div class="col-12 col-md-6">
+<div class="card genre-card">
+<img alt="Stadium Rock" src="https://lh3.googleusercontent.com/aida/AP1WRLsaH-nBamtx053PnIxPBcRmgpWTWc5d5914s2e39qkerJcCq4ahnSM8QEreks8x-5qs40Y7_1ojWp8G4AVblEtxzd5u1zxeSrReJRHgjQuqOD8DJvejLWIeyML5cjzh07a1xY7MKw57MKSnKpKf--j56XYxYTLO_YrZjijJRlnyYVxHEj1VUr5pEBAFnwDb30YQmmBEQE4gt8YQMOpP8bAzlZGC4UfN5ajLZEQtUe-oljzVSS7Wu0gPqA"/>
+<div class="genre-card-overlay">
+<h4 class="genre-title">Stadium Rock</h4>
+<p class="genre-subtitle">Trending</p>
+</div>
+</div>
+</div>
+<!-- Jazz -->
+<div class="col-12 col-md-6">
+<div class="card genre-card">
+<img alt="Jazz Room" src="https://lh3.googleusercontent.com/aida/AP1WRLs4yotZyXhDxMKaxCdBF8afAhUqwqICSLbwKYtqk6hXxjaa_NAYsLvtOL9m26gIXVy86li_aACEOq54strXoBb9b5ZWaYqb74cwbUDkqmm_bYPBA9Gc_qauSdxjPzVPLHSlKkO3iTEzhvSfxp47W35cUIDEKp-2h_mH73S57m-chjJqrM0q17qA1UzULGXLnCo5kG6oiczO6gztVobYuqz-saO6fSTdn0a6ANW20ZDzMJus8-Ub8lmQ"/>
+<div class="genre-card-overlay">
+<h4 class="genre-title">Jazz Room</h4>
+<p class="genre-subtitle">Smooth Vibes</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Fixed Player Bar -->
+<footer class="player-bar">
+<!-- Song Info -->
+<div class="d-flex align-items-center gap-3" style="width: 300px;">
+<div class="song-info position-relative group">
+<img alt="Cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Hjs8vcOcNQ-vEvxlCS-LGno6vEzjglqAUDzckCxJiqWHEf4FU0L-RIT8K0BzlLBH1fOIcU56ffgIQfmCI9vo5WHKXphsB_epTBtCLeG-GCR-yn_qRsJ2hl1fkJVr5CUY7b3Lu2pDCXDy9IUQxMhrDZ-zHDYXD0T7WvToYDqtkShq_KlGhulS83PYTmkLG9Uk8YMo38LHJF6efAgy5hEVpZvhRVQRIFOBnhNMsuvekD2rg8buDprR8VsHX3Cm80Yvkz4A5t84aQ"/>
+</div>
+<div class="text-truncate">
+<div class="fw-bold mb-0 text-white">Midnight City</div>
+<div class="text-secondary small text-truncate">M83 • Hurry Up, We're Dreaming</div>
+</div>
+<button class="btn btn-link text-secondary p-0 ms-2">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<!-- Player Controls -->
+<div class="flex-grow-1 mx-5 d-flex flex-column align-items-center gap-2" style="max-width: 600px;">
+<div class="d-flex align-items-center gap-4">
+<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">shuffle</span></button>
+<button class="btn btn-link text-white p-0"><span class="material-symbols-outlined fs-2">skip_previous</span></button>
+<button class="play-btn"><span class="material-symbols-outlined fill fs-3">play_arrow</span></button>
+<button class="btn btn-link text-white p-0"><span class="material-symbols-outlined fs-2">skip_next</span></button>
+<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">repeat</span></button>
+</div>
+<div class="d-flex align-items-center gap-3 w-100">
+<span class="text-secondary" style="font-size: 10px; font-family: monospace;">01:24</span>
+<div class="progress-container flex-grow-1">
+<div class="progress-bar-inner" style="width: 35%;"></div>
+</div>
+<span class="text-secondary" style="font-size: 10px; font-family: monospace;">03:45</span>
+</div>
+</div>
+<!-- Extra Controls -->
+<div class="d-flex align-items-center justify-content-end gap-3" style="width: 300px;">
+<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">mic</span></button>
+<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">queue_music</span></button>
+<div class="d-flex align-items-center gap-2" style="width: 100px;">
+<span class="material-symbols-outlined text-secondary fs-5">volume_up</span>
+<div class="progress-container flex-grow-1" style="height: 3px;">
+<div class="progress-bar-inner" style="width: 70%; background: var(--text-secondary);"></div>
+</div>
+</div>
+<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">open_in_full</span></button>
+</div>
+</footer>
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>

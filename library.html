@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Music Premium - Your Library</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary: #53e076;
+            --on-primary: #003914;
+            --background: #131313;
+            --surface: #131313;
+            --surface-container: #201f1f;
+            --surface-container-low: #1c1b1b;
+            --surface-container-high: #2a2a2a;
+            --surface-container-highest: #353534;
+            --on-surface: #e5e2e1;
+            --on-surface-variant: #bccbb9;
+            --outline-variant: #3d4a3d;
+            --primary-container: #1db954;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sonic Glass Aesthetic */
+        .glass-panel {
+            background: rgba(25, 25, 25, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-top {
+            background: rgba(19, 19, 19, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sidebar Desktop */
+        @media (min-width: 992px) {
+            .sidebar {
+                width: 256px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 1050;
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+            }
+            main { margin-left: 256px; }
+            header { left: 256px !important; }
+        }
+
+        /* Sidebar Mobile/Tablet */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            main { margin-left: 0; }
+            header { left: 0 !important; position: sticky !important; }
+        }
+
+        
+        /* Sidebar Styling */
+        .sidebar {
+            width: 256px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(19, 19, 19, 0.7);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            z-index: 1030;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0 !important;
+            }
+            .header-nav {
+                left: 0 !important;
+            }
+        }
+
+        .nav-link-custom {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--on-surface-variant);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-link-custom:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--on-surface);
+        }
+
+        .nav-link-custom.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+
+        /* Library Content Layout */
+        .library-layout {
+            display: flex;
+            height: calc(100vh - 80px - 96px); /* minus header and player */
+        }
+
+        @media (max-width: 768px) {
+            .library-layout { flex-direction: column; height: auto; }
+            .playlists-col { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        }
+
+        .playlists-col {
+            width: 320px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(19, 19, 19, 0.3);
+        }
+
+        .main-overview {
+            flex: 1;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, rgba(83, 224, 118, 0.05), var(--background) 40%);
+        }
+
+        /* Scrollbars */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+
+        /* Cards and Elements */
+        .music-card {
+            background: var(--surface-container-low);
+            padding: 1.25rem;
+            border-radius: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100%;
+        }
+
+        .music-card:hover {
+            background: var(--surface-container-high);
+            transform: translateY(-4px);
+        }
+
+        .play-btn {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            border: none;
+        }
+
+        .music-card:hover .play-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .playlist-item {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .playlist-item:hover { background: rgba(255,255,255,0.05); }
+        .playlist-item.active { background: rgba(83, 224, 118, 0.1); border: 1px solid rgba(83, 224, 118, 0.2); }
+
+        /* Player */
+        .player-bar {
+            height: 96px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1100;
+        }
+
+        .progress-bar-custom {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 33%;
+        }
+
+        .artist-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; }
+        .nav-link:hover .artist-img, .artist-item:hover .artist-img { filter: grayscale(0%); }
+
+        /* Typography overrides */
+        .display-lg { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        .headline-md { font-size: 24px; font-weight: 700; }
+        .title-lg { font-size: 20px; font-weight: 600; }
+        .body-md { font-size: 14px; }
+        .label-md { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .search-input {
+            background: rgba(53, 53, 52, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 0.6rem 1rem 0.6rem 3rem;
+            color: white;
+            width: 320px;
+        }
+        .search-input:focus {
+            background: rgba(53, 53, 52, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<!--  
+<aside class="sidebar glass-panel d-none d-lg-flex">
+<div class="mb-4">
+<h2 class="headline-md text-primary mb-0">Music Premium</h2>
+</div>
+<nav class="nav flex-column gap-1">
+<a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
+<a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
+<a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
+<a class="nav-link" href="#"><span class="material-symbols-outlined">add_box</span>Create Playlist</a>
+</nav>
+<div class="mt-5">
+<p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
+<div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
+<div class="nav-link cursor-pointer">
+<img alt="Solar Echoes" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA"/>
+<span class="body-md">Solar Echoes</span>
+</div>
+<div class="nav-link cursor-pointer">
+<img alt="Luna Vibe" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
+<span class="body-md">Luna Vibe</span>
+</div>
+<div class="nav-link cursor-pointer">
+<img alt="Vector Pulse" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxWg2QRyIWuHn6urSz3DmTBTG9aHM8mURqFh2mLw1LIclGrmErSeAc0kDft-67GpAvjIRVhcQWeK-h-sNfFE1pz8HQqyG-e1iVQJoHCQVsbO3_M6Y-Vxo4iZ-MS578v7GLJaron--n4cc_3QmReUy0WGTKuD4HeOxHzasqpgySQvBNbn3EMMO3o0K10jsbIXebbFAzVS3_8-rnBmszzxsrHYTMFjR9wHItG68MMgAk3-KOovAfr7Hbul5Gvu7kH6s0WxFjzRSEQ"/>
+<span class="body-md">Vector Pulse</span>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-3 border-top border-white-10">
+<a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span>Settings</a>
+<a class="nav-link" href="#"><span class="material-symbols-outlined">help</span>Help</a>
+</div>
+</aside> -->
+<aside class="sidebar d-flex flex-column" id="sidebar-nav">
+<div class="mb-5 px-2">
+<span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
+</div>
+<nav class="d-flex flex-column gap-1 flex-grow-1">
+<a class="nav-link-custom" href="home.html">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span>Your Library</span>
+</a>
+<a class="nav-link-custom active" href="#">
+<span class="material-symbols-outlined">add_box</span>
+<span>Create Playlist</span>
+</a>
+<div class="mt-5">
+<p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
+<div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
+<div class="nav-link cursor-pointer">
+<img alt="Solar Echoes" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA"/>
+<span class="body-md">Solar Echoes</span>
+</div>
+<div class="nav-link cursor-pointer">
+<img alt="Luna Vibe" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
+<span class="body-md">Luna Vibe</span>
+</div>
+<div class="nav-link cursor-pointer">
+<img alt="Vector Pulse" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxWg2QRyIWuHn6urSz3DmTBTG9aHM8mURqFh2mLw1LIclGrmErSeAc0kDft-67GpAvjIRVhcQWeK-h-sNfFE1pz8HQqyG-e1iVQJoHCQVsbO3_M6Y-Vxo4iZ-MS578v7GLJaron--n4cc_3QmReUy0WGTKuD4HeOxHzasqpgySQvBNbn3EMMO3o0K10jsbIXebbFAzVS3_8-rnBmszzxsrHYTMFjR9wHItG68MMgAk3-KOovAfr7Hbul5Gvu7kH6s0WxFjzRSEQ"/>
+<span class="body-md">Vector Pulse</span>
+</div>
+</div>
+</div>
+
+</nav>
+
+<div class="mt-auto d-flex flex-column gap-1">
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="nav-link-custom" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+</div>
+</aside>
+<!-- Top Header -->
+<header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040;">
+<div class="container-fluid d-flex justify-content-between align-items-center">
+<div class="d-flex align-items-center gap-4">
+<div class="position-relative d-none d-md-block">
+<span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
+<input class="search-input" placeholder="Search Library" type="text"/>
+</div>
+<nav class="d-none d-xl-flex gap-4">
+<a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration:none">All Content</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Podcasts</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Playlists</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Albums</a>
+</nav>
+</div>
+<div class="d-flex align-items-center gap-3">
+<button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<button class="btn btn-link text-white p-2"><span class="material-symbols-outlined">notifications</span></button>
+<div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
+<img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Mobile Sidebar Offcanvas -->
+<div class="offcanvas offcanvas-start bg-dark glass-panel" id="sidebarMobile" tabindex="-1">
+<div class="offcanvas-header">
+<h5 class="headline-md text-primary mb-0">Music Premium</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" type="button"></button>
+</div>
+<div class="offcanvas-body">
+<nav class="nav flex-column gap-1">
+<a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
+<a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
+<a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
+</nav>
+</div>
+</div>
+<!-- Main Content Area -->
+<main style="padding-top: 80px;">
+<div class="library-layout">
+<!-- Playlists Column -->
+<section class="playlists-col d-flex flex-column p-4 custom-scrollbar">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2 class="headline-md mb-0">Playlists</h2>
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">add</span></button>
+</div>
+<div class="d-flex flex-column gap-2">
+<div class="playlist-item active">
+<div class="d-flex align-items-center gap-3">
+<div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: linear-gradient(135deg, #53e076, #004118);">
+<span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div>
+<p class="title-lg mb-0">Liked Songs</p>
+<p class="body-md text-white-50 mb-0">Playlist • 128 songs</p>
+</div>
+</div>
+</div>
+<div class="playlist-item">
+<div class="d-flex align-items-center gap-3">
+<img alt="Deep Focus Tech" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ" style="width: 48px; height: 48px; object-fit: cover;"/>
+<div>
+<p class="title-lg mb-0">Deep Focus Tech</p>
+<p class="body-md text-white-50 mb-0">Playlist • 45 songs</p>
+</div>
+</div>
+</div>
+<div class="playlist-item">
+<div class="d-flex align-items-center gap-3">
+<img alt="Midnight Jazz" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGgktQ7TBP2Z7Ijx4Iv8mVI-9_PsATW1FibNn7ZSeBQ_xJEV2jdtI8w8LQz-cyjT7CNFyWrS_mkvrJaJ5cJhuQQECPlNQaPYIo53dG3cu5Du9Vvig0Lxh3XOEMVsNPPW3iadiVJ0CUvkhDohjVGrZhQiNGqGUM6Z9jbcKOyg9hOLVM6T9U7pVNSUlqCBIOi4FICHBnIK9gUNo3RQ3lXPi4dPi_KLZENq2H4J0RPM2aVqp2yAQxNU_3PXnsl4NvVLBCgKEqnH0hPQ" style="width: 48px; height: 48px; object-fit: cover;"/>
+<div>
+<p class="title-lg mb-0">Midnight Jazz</p>
+<p class="body-md text-white-50 mb-0">Playlist • 82 songs</p>
+</div>
+</div>
+</div>
+<div class="playlist-item">
+<div class="d-flex align-items-center gap-3">
+<img alt="Indie Anthems" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0zaFMIJt2nd0KkOXTtUhs59mU5rvxRQxZruMpEOvN4v6BtzwI7C1x14GMyCwI2i8LmclfHVr7Inq6xre69-K2Sf-E0mKEbN1eTj561j6dcdQ4K5lu_-MNDAbt8DF5XlcdplyFXP6R_F3yXAoiI_kG_4Lm611__M787y3nMheM1mnwZzp3sCqdrs9sRs9-nzPPYAR2Q5vyqUpnPu4uTuiCJVtKbyVwnlImZiou502Bo-sJBfEHKxTq_trQWVY0--tMhulWwlDaw" style="width: 48px; height: 48px; object-fit: cover;"/>
+<div>
+<p class="title-lg mb-0">Indie Anthems</p>
+<p class="body-md text-white-50 mb-0">Playlist • 104 songs</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Main Overview -->
+<section class="main-overview p-4 p-md-5 custom-scrollbar">
+<div class="mb-5 py-4">
+<p class="label-md text-primary mb-2">Library Overview</p>
+<h1 class="display-lg">Your Library</h1>
+</div>
+<!-- Recent Activity Section -->
+<div class="mb-5">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2 class="headline-md mb-0">Recent Activity</h2>
+<button class="btn btn-link text-white-50 p-0 label-md" style="text-decoration:none">SEE ALL</button>
+</div>
+<div class="row g-4">
+<!-- Card 1 -->
+<div class="col-12 col-sm-6 col-xl-3">
+<div class="music-card">
+<div class="position-relative mb-3">
+<img alt="Mix" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ"/>
+<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+</div>
+<p class="title-lg text-truncate mb-1">Daily Mix 1</p>
+<p class="body-md text-white-50 mb-0">Made for John Doe</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="col-12 col-sm-6 col-xl-3">
+<div class="music-card">
+<div class="position-relative mb-3">
+<img alt="Discover" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGgktQ7TBP2Z7Ijx4Iv8mVI-9_PsATW1FibNn7ZSeBQ_xJEV2jdtI8w8LQz-cyjT7CNFyWrS_mkvrJaJ5cJhuQQECPlNQaPYIo53dG3cur5Du9Vvig0Lxh3XOEMVsNPPW3iadiVJ0CUvkhDohjVGrZhQiNGqGUM6Z9jbcKOyg9hOLVM6T9U7pVNSUlqCBIOi4FICHBnIK9gUNo3RQ3lXPi4dPi_KLZENq2H4J0RPM2aVqp2yAQxNU_3PXnsl4NvVLBCgKEqnH0hPQ"/>
+<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+</div>
+<p class="title-lg text-truncate mb-1">Discover Weekly</p>
+<p class="body-md text-white-50 mb-0">New music for you</p>
+</div>
+</div>
+<!-- Card 3 (Artist Circle) -->
+<div class="col-12 col-sm-6 col-xl-3">
+<div class="music-card">
+<div class="position-relative mb-3">
+<img alt="Luna" class="w-100 rounded-circle shadow-lg object-fit-cover aspect-square border border-white-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
+<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+</div>
+<p class="title-lg text-truncate mb-1 text-center">Luna Vibe</p>
+<p class="body-md text-white-50 mb-0 text-center">Artist</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="col-12 col-sm-6 col-xl-3">
+<div class="music-card">
+<div class="position-relative mb-3">
+<img alt="Indie" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0zaFMIJt2nd0KkOXTtUhs59mU5rvxRQxZruMpEOvN4v6BtzwI7C1x14GMyCwI2i8LmclfHVr7Inq6xre69-K2Sf-E0mKEbN1eTj561j6dcdQ4K5lu_-MNDAbt8DF5XlcdplyFXP6R_F3yXAoiI_kG_4Lm611__M787y3nMheM1mnwZzp3sCqdrs9sRs9-nzPPYAR2Q5vyqUpnPu4uTuiCJVtKbyVwnlImZiou502Bo-sJBfEHKxTq_trQWVY0--tMhulWwlDaw"/>
+<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
+</div>
+<p class="title-lg text-truncate mb-1">Indie Anthems</p>
+<p class="body-md text-white-50 mb-0">Playlist</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Jump Back In Section -->
+<div class="mb-5 pb-5">
+<h2 class="headline-md mb-4">Jump Back In</h2>
+<div class="row g-3">
+<div class="col-12 col-md-6 col-lg-3">
+<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA" style="width: 56px; height: 56px; object-fit: cover;"/>
+<p class="mb-0 fw-bold">Solar Echoes</p>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ" style="width: 56px; height: 56px; object-fit: cover;"/>
+<p class="mb-0 fw-bold">Deep Focus</p>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6hpkusANUf4YPuERWy6t7HETHj9Nufg6cceROHlZZmnR94mwILZ6Vm-le0P5UqBwQWn7Isr3S3pj2ETzjd7wZ9jCRS5ZNAWUgwQGN1kGb8f5KCuwU66aXEVL8OsIOZogl_KojmTP06QiOYR3U2rx9tod-0tNlpUJi2hEs0KS-Phs9MiXqzPAVpPVeSzmVwsu9CbzY-JUpwNTA4SoBM4NbT4dBDmvLqX_ge6flILCh6h6jEwhga6mXROhkKKoMlKmA91WOtem8xA" style="width: 56px; height: 56px; object-fit: cover;"/>
+<p class="mb-0 fw-bold">Neon Horizons</p>
+</div>
+</div>
+<div class="col-12 col-md-6 col-lg-3">
+<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+<div class="rounded d-flex align-items-center justify-content-center bg-success bg-opacity-20" style="width: 56px; height: 56px;">
+<span class="material-symbols-outlined text-primary">favorite</span>
+</div>
+<p class="mb-0 fw-bold">Liked Songs</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Player Bar -->
+<footer class="player-bar glass-panel d-flex align-items-center px-4">
+<div class="container-fluid">
+<div class="row align-items-center">
+<!-- Now Playing -->
+<div class="col-3 d-flex align-items-center gap-3">
+<img alt="Current" class="rounded shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6hpkusANUf4YPuERWy6t7HETHj9Nufg6cceROHlZZmnR94mwILZ6Vm-le0P5UqBwQWn7Isr3S3pj2ETzjd7wZ9jCRS5ZNAWUgwQGN1kGb8f5KCuwU66aXEVL8OsIOZogl_KojmTP06QiOYR3U2rx9tod-0tNlpUJi2hEs0KS-Phs9MiXqzPAVpPVeSzmVwsu9CbzY-JUpwNTA4SoBM4NbT4dBDmvLqX_ge6flILCh6h6jEwhga6mXROhkKKoMlKmA91WOtem8xA" style="width: 56px; height: 56px; object-fit: cover;"/>
+<div class="d-none d-md-block">
+<p class="title-lg text-primary mb-0">Neon Horizons</p>
+<p class="body-md text-white-50 mb-0">Solar Echoes</p>
+</div>
+<button class="btn btn-link p-0 text-primary ms-2"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span></button>
+</div>
+<!-- Controls -->
+<div class="col-6 d-flex flex-column align-items-center gap-2">
+<div class="d-flex align-items-center gap-4">
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">shuffle</span></button>
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined headline-md">skip_previous</span></button>
+<button class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 44px; height: 44px;"><span class="material-symbols-outlined text-black headline-md" style="font-variation-settings: 'FILL' 1;">pause</span></button>
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined headline-md">skip_next</span></button>
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">repeat</span></button>
+</div>
+<div class="d-flex align-items-center gap-3 w-100 px-lg-5">
+<span class="label-md text-white-50">1:24</span>
+<div class="progress-bar-custom flex-grow-1">
+<div class="progress-bar-fill"></div>
+</div>
+<span class="label-md text-white-50">3:45</span>
+</div>
+</div>
+<!-- Volume/Extra -->
+<div class="col-3 d-flex align-items-center justify-content-end gap-3">
+<span class="material-symbols-outlined text-white-50 cursor-pointer d-none d-lg-block">mic</span>
+<span class="material-symbols-outlined text-white-50 cursor-pointer d-none d-lg-block">queue_music</span>
+<span class="material-symbols-outlined text-white-50 cursor-pointer">volume_up</span>
+<div class="progress-bar-custom d-none d-xl-block" style="width: 100px;">
+<div class="progress-bar-fill" style="width: 60%"></div>
+</div>
+<span class="material-symbols-outlined text-white-50 cursor-pointer">open_in_full</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Interaction simulation
+    document.querySelectorAll('.music-card, .playlist-item').forEach(el => {
+        el.addEventListener('click', function() {
+            const title = this.querySelector('.title-lg')?.innerText;
+            const artist = this.querySelector('.body-md')?.innerText;
+            const img = this.querySelector('img')?.src;
+            
+            if(title && artist && img) {
+                const footer = document.querySelector('footer');
+                footer.querySelector('.title-lg').innerText = title;
+                footer.querySelector('.body-md').innerText = artist;
+                footer.querySelector('img').src = img;
+            }
+        });
+    });
+</script>
+</body></html>
