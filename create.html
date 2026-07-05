@@ -1,648 +1,699 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Create Playlist - Music Premium</title>
-<!-- Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        :root {
-            --primary: #53e076;
-            --primary-container: #1db954;
-            --background: #131313;
-            --surface: #131313;
-            --surface-container-low: #1c1b1b;
-            --surface-container-high: #2a2a2a;
-            --on-background: #e5e2e1;
-            --on-surface: #e5e2e1;
-            --on-surface-variant: #bccbb9;
-            --on-primary: #003914;
-            --on-primary-fixed: #002108;
-        }
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Create Playlist - Music Premium</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #53e076;
+        --primary-container: #1db954;
+        --background: #131313;
+        --surface: #131313;
+        --surface-container-low: #1c1b1b;
+        --surface-container-high: #2a2a2a;
+        --on-background: #e5e2e1;
+        --on-surface: #e5e2e1;
+        --on-surface-variant: #bccbb9;
+        --on-primary: #003914;
+        --on-primary-fixed: #002108;
+      }
 
-        body {
-            background-color: var(--background);
-            color: var(--on-background);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            margin: 0;
-        }
+      body {
+        background-color: var(--background);
+        color: var(--on-background);
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+        margin: 0;
+      }
 
-        /* Sidebar Styling */
+      /* Sidebar Styling */
+      .sidebar {
+        width: 256px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background: rgba(19, 19, 19, 0.7);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 24px;
+        z-index: 1030;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      @media (max-width: 991.98px) {
         .sidebar {
-            width: 256px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background: rgba(19, 19, 19, 0.7);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 24px;
-            z-index: 1030;
-            transition: transform 0.3s ease-in-out;
+          transform: translateX(-100%);
         }
-
-        @media (max-width: 991.98px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0 !important;
-            }
-            .header-nav {
-                left: 0 !important;
-            }
+        .sidebar.show {
+          transform: translateX(0);
         }
-
-        .nav-link-custom {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 12px;
-            border-radius: 8px;
-            color: var(--on-surface-variant);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
+        .main-content {
+          margin-left: 0 !important;
         }
-
-        .nav-link-custom:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--on-surface);
+        .header-nav {
+          left: 0 !important;
         }
+      }
 
-        .nav-link-custom.active {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--primary);
-            font-weight: 700;
+      .nav-link-custom {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 12px;
+        border-radius: 8px;
+        color: var(--on-surface-variant);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+
+      .nav-link-custom:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--on-surface);
+      }
+
+      .nav-link-custom.active {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .main-content {
+        margin-left: 260px;
+        padding-top: 90px;
+      }
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 260px;
+        right: 0;
+        height: 70px;
+        background: rgba(19, 19, 19, 0.4);
+        backdrop-filter: blur(12px);
+        z-index: 40;
+      }
+      .nav-link-custom {
+        color: #bccbb9;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .nav-link-custom:hover {
+        color: #e5e2e1;
+      }
+      .btn-icon {
+        background: transparent;
+        border: none;
+        padding: 8px;
+        border-radius: 50%;
+        transition: 0.2s;
+      }
+
+      .btn-icon:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+      /* Glass Panel */
+      .glass-panel {
+        background: rgba(25, 25, 25, 0.7);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        transition: border-color 0.3s;
+      }
+      .glass-panel:hover {
+        border-color: rgba(83, 224, 118, 0.4);
+      }
+      /* Header Styles */
+      header {
+        height: 64px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 256px;
+        z-index: 1040;
+        background: var(--glass-top);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        display: flex;
+        align-items: center;
+        padding: 0 2rem;
+      }
+
+      /* Main Content */
+      main {
+        margin-left: 256px;
+        padding-top: 64px;
+        min-height: 100vh;
+        display: flex;
+      }
+
+      .playlist-column {
+        width: 320px;
+        border-right: 1px solid var(--border-white);
+        height: calc(100vh - 64px - 96px);
+        overflow-y: auto;
+      }
+
+      .content-column {
+        flex: 1;
+        height: calc(100vh - 64px - 96px);
+        overflow-y: auto;
+        background: linear-gradient(to bottom, rgba(83, 224, 118, 0.1), transparent);
+      }
+
+      /* UI Elements */
+      .search-input {
+        background: rgba(53, 53, 52, 0.5);
+        border: none;
+        border-radius: 50px;
+        padding: 0.5rem 1rem 0.5rem 3rem;
+        color: white;
+        width: 288px;
+      }
+
+      .search-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 1px var(--primary-color);
+        background: rgba(53, 53, 52, 0.8);
+      }
+
+      .search-container .material-symbols-outlined {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--on-surface-variant);
+      }
+
+      /* Album Cover Area */
+      .album-cover-container {
+        width: 288px;
+        height: 288px;
+        position: relative;
+        background: var(--surface-container-high);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 40px -10px rgba(83, 224, 118, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .album-cover-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.4;
+        transition: opacity 0.3s;
+      }
+
+      .album-cover-container:hover .album-cover-image {
+        opacity: 0.2;
+      }
+
+      /* Playlist Inputs */
+      .playlist-input {
+        background: transparent;
+        border: none;
+        color: var(--on-surface);
+        font-size: 48px;
+        font-weight: 800;
+        padding: 8px;
+        border-radius: 8px;
+        width: 100%;
+        transition: background 0.2s;
+      }
+
+      .playlist-input:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .playlist-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .description-textarea {
+        background: transparent;
+        border: none;
+        color: var(--on-surface-variant);
+        font-size: 16px;
+        padding: 8px;
+        border-radius: 8px;
+        width: 100%;
+        resize: none;
+        transition: background 0.2s;
+      }
+
+      .description-textarea:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .description-textarea:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      /* Track Rows */
+      .track-row {
+        border-radius: 8px;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+
+      .track-row:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateX(4px);
+      }
+
+      /* Player Bar */
+      footer {
+        height: 96px;
+        background: rgba(19, 19, 19, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: fixed;
+        bottom: 0;
+        left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+        right: 0;
+        z-index: 1060;
+        padding: 0 2rem;
+      }
+
+      /* Progress Bar */
+      .progress-container {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        width: 100%;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .progress-bar-inner {
+        height: 100%;
+        background: var(--primary);
+        border-radius: 2px;
+        width: 33%;
+      }
+
+      /* Volume */
+      .volume-bar {
+        width: 100px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+      }
+
+      .volume-bar-inner {
+        width: 50%;
+        height: 100%;
+        background: var(--on-surface-variant);
+        border-radius: 2px;
+      }
+
+      /* Mobile Fix */
+      @media (max-width: 991.98px) {
+        footer {
+          left: 0; /* ⬅️ full lagi saat sidebar hilang */
         }
+      }
 
-      
-.main-content{
-    margin-left:260px;
-    padding-top:90px;
-}
-.topbar{
-    position:fixed;
-    top:0;
-    left:260px;
-    right:0;
-    height:70px;
-    background:rgba(19,19,19,0.4);
-    backdrop-filter:blur(12px);
-    z-index:40;
-}
-.nav-link-custom{
-    color:#bccbb9;
-    font-weight:500;
-    cursor:pointer;
-    transition:.2s;
-}
+      /* Utility Classes */
+      .text-primary-custom {
+        color: var(--primary);
+      }
+      .bg-primary-custom {
+        background-color: var(--primary);
+        color: var(--on-primary-fixed);
+      }
+      .btn-pill {
+        border-radius: 9999px;
+        padding: 12px 32px;
+        font-weight: 700;
+        border: none;
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      .btn-pill:active {
+        transform: scale(0.95);
+      }
+      .btn-pill:hover {
+        transform: scale(1.05);
+      }
 
-.nav-link-custom:hover{
-    color:#e5e2e1;
-}
-.btn-icon{
-    background:transparent;
-    border:none;
-    padding:8px;
-    border-radius:50%;
-    transition:.2s;
-}
+      .btn-outline-custom {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--on-surface);
+        background: transparent;
+      }
 
-.btn-icon:hover{
-    background:rgba(255,255,255,0.05);
-}
-        /* Glass Panel */
-        .glass-panel {
-            background: rgba(25, 25, 25, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            transition: border-color 0.3s;
-        }
-        .glass-panel:hover {
-            border-color: rgba(83, 224, 118, 0.4);
-        }
-        /* Header Styles */
-        header {
-            height: 64px;
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 256px;
-            z-index: 1040;
-            background: var(--glass-top);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-        }
+      .btn-outline-custom:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
 
-        /* Main Content */
-        main {
-            margin-left: 256px;
-            padding-top: 64px;
-            min-height: 100vh;
-            display: flex;
-        }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+      /* Typography overrides */
+      .display-lg {
+        font-size: 64px;
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .headline-md {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .title-lg {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .body-md {
+        font-size: 14px;
+      }
+      .label-md {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
 
-        .playlist-column {
-            width: 320px;
-            border-right: 1px solid var(--border-white);
-            height: calc(100vh - 64px - 96px);
-            overflow-y: auto;
-        }
-
-        .content-column {
-            flex: 1;
-            height: calc(100vh - 64px - 96px);
-            overflow-y: auto;
-            background: linear-gradient(to bottom, rgba(83, 224, 118, 0.1), transparent);
-        }
-
-        /* UI Elements */
-        .search-input {
-            background: rgba(53, 53, 52, 0.5);
-            border: none;
-            border-radius: 50px;
-            padding: 0.5rem 1rem 0.5rem 3rem;
-            color: white;
-            width: 288px;
-        }
-
-        .search-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 1px var(--primary-color);
-            background: rgba(53, 53, 52, 0.8);
-        }
-
-        .search-container .material-symbols-outlined {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--on-surface-variant);
-        }
-
-
-        /* Album Cover Area */
-        .album-cover-container {
-            width: 288px;
-            height: 288px;
-            position: relative;
-            background: var(--surface-container-high);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 40px -10px rgba(83, 224, 118, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .album-cover-image {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-            transition: opacity 0.3s;
-        }
-
-        .album-cover-container:hover .album-cover-image {
-            opacity: 0.2;
-        }
-
-        /* Playlist Inputs */
-        .playlist-input {
-            background: transparent;
-            border: none;
-            color: var(--on-surface);
-            font-size: 48px;
-            font-weight: 800;
-            padding: 8px;
-            border-radius: 8px;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .playlist-input:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .playlist-input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .description-textarea {
-            background: transparent;
-            border: none;
-            color: var(--on-surface-variant);
-            font-size: 16px;
-            padding: 8px;
-            border-radius: 8px;
-            width: 100%;
-            resize: none;
-            transition: background 0.2s;
-        }
-
-        .description-textarea:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .description-textarea:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Track Rows */
-        .track-row {
-            border-radius: 8px;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .track-row:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(4px);
-        }
-
-        /* Player Bar */
-footer {
-height: 96px;
-background: rgba(19, 19, 19, 0.7);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border-top: 1px solid rgba(255,255,255,0.1);
-position: fixed;
-bottom: 0;
-left: 256px; /* ⬅️ biar tidak nabrak sidebar */
-right: 0;
-z-index: 1060;
-padding: 0 2rem;
-}
-
-/* Progress Bar */
-.progress-container {
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
-width: 100%;
-position: relative;
-cursor: pointer;
-}
-
-.progress-bar-inner {
-height: 100%;
-background: var(--primary);
-border-radius: 2px;
-width: 33%;
-}
-
-/* Volume */
-.volume-bar {
-width: 100px;
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
-}
-
-.volume-bar-inner {
-width: 50%;
-height: 100%;
-background: var(--on-surface-variant);
-border-radius: 2px;
-}
-
-/* Mobile Fix */
-@media (max-width: 991.98px) {
-footer {
-left: 0; /* ⬅️ full lagi saat sidebar hilang */
-}
-}
-
-
-        /* Utility Classes */
-        .text-primary-custom { color: var(--primary); }
-        .bg-primary-custom { background-color: var(--primary); color: var(--on-primary-fixed); }
-        .btn-pill { border-radius: 9999px; padding: 12px 32px; font-weight: 700; border: none; transition: transform 0.2s, background 0.2s; }
-        .btn-pill:active { transform: scale(0.95); }
-        .btn-pill:hover { transform: scale(1.05); }
-
-        .btn-outline-custom {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--on-surface);
-            background: transparent;
-        }
-
-        .btn-outline-custom:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-          /* Typography overrides */
-        .display-lg { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-        .headline-md { font-size: 24px; font-weight: 700; }
-        .title-lg { font-size: 20px; font-weight: 600; }
-        .body-md { font-size: 14px; }
-        .label-md { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-
-        .search-input {
-            background: rgba(53, 53, 52, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            padding: 0.6rem 1rem 0.6rem 3rem;
-            color: white;
-            width: 320px;
-        }
-        .search-input:focus {
-            background: rgba(53, 53, 52, 0.5);
-            outline: none;
-            box-shadow: 0 0 0 1px var(--primary);
-        }
+      .search-input {
+        background: rgba(53, 53, 52, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        padding: 0.6rem 1rem 0.6rem 3rem;
+        color: white;
+        width: 320px;
+      }
+      .search-input:focus {
+        background: rgba(53, 53, 52, 0.5);
+        outline: none;
+        box-shadow: 0 0 0 1px var(--primary);
+      }
     </style>
-</head>
-<body class="custom-scrollbar">
-<!-- Mobile Menu Toggle -->
-<button class="btn d-lg-none position-fixed top-0 start-0 m-2 z-max text-white" id="sidebar-toggle">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<!-- SideNavBar -->
-<aside class="sidebar d-flex flex-column" id="sidebar-nav">
-<div class="mb-5 px-2">
-<span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
-</div>
-<nav class="d-flex flex-column gap-1 flex-grow-1">
-<a class="nav-link-custom" href="home.html">
-<span class="material-symbols-outlined">home</span>
-<span>Home</span>
-</a>
-<a class="nav-link-custom" href="search.html">
-<span class="material-symbols-outlined">search</span>
-<span>Search</span>
-</a>
-<a class="nav-link-custom" href="library.html">
-<span class="material-symbols-outlined">library_music</span>
-<span>Your Library</span>
-</a>
-<a class="nav-link-custom active" href="create.html">
-<span class="material-symbols-outlined">add_box</span>
-<span>Create Playlist</span>
-</a>
-</nav>
+  </head>
+  <body class="custom-scrollbar">
+    <!-- Mobile Menu Toggle -->
+    <button class="btn d-lg-none position-fixed top-0 start-0 m-2 z-max text-white" id="sidebar-toggle">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <!-- SideNavBar -->
+    <aside class="sidebar d-flex flex-column" id="sidebar-nav">
+      <div class="mb-5 px-2">
+        <span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
+      </div>
+      <nav class="d-flex flex-column gap-1 flex-grow-1">
+        <a class="nav-link-custom" href="home.html">
+          <span class="material-symbols-outlined">home</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-link-custom" href="search.html">
+          <span class="material-symbols-outlined">search</span>
+          <span>Search</span>
+        </a>
+        <a class="nav-link-custom" href="library.html">
+          <span class="material-symbols-outlined">library_music</span>
+          <span>Your Library</span>
+        </a>
+        <a class="nav-link-custom active" href="create.html">
+          <span class="material-symbols-outlined">add_box</span>
+          <span>Create Playlist</span>
+        </a>
+      </nav>
 
-<div class="mt-auto d-flex flex-column gap-1">
-<a class="nav-link-custom" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Settings</span>
-</a>
-<a class="nav-link-custom" href="#">
-<span class="material-symbols-outlined">help</span>
-<span>Help</span>
-</a>
-</div>
-</aside>
-<main class="main-content position-relative pb-5">
-<header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040;">
-<div class="container-fluid d-flex justify-content-between align-items-center">
-<div class="d-flex align-items-center gap-4">
-<div class="position-relative d-none d-md-block">
-<span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
-<input class="search-input" placeholder="Search Library" type="text"/>
-</div>
-<nav class="d-none d-xl-flex gap-4">
-<a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration:none">All Content</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Podcasts</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Playlists</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Albums</a>
-</nav>
-</div>
-<div class="d-flex align-items-center gap-3">
-<button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<button class="btn btn-link text-white p-2"><span class="material-symbols-outlined">notifications</span></button>
-<div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
-<img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
-</div>
-</div>
-</div>
-</header>
-<!-- Page Content -->
-<div class="container-fluid pt-5 mt-4 px-4 px-lg-5">
-<div class="mx-auto" style="max-width: 1200px;">
-<!-- Hero Section -->
-<section class="row g-4 mb-5 align-items-end">
-<div class="col-auto">
-<div class="album-cover-container">
-<img alt="Playlist Cover" class="album-cover-image" src="https://i.pinimg.com/736x/b9/11/17/b91117aaa9793a07314429d1e93fbe6b.jpg"/>
-<div class="position-relative text-center text-on-surface-variant">
-<span class="material-symbols-outlined display-5 mb-2">add_a_photo</span>
-<div class="text-uppercase fw-bold ls-widest" style="font-size: 10px;">Choose Photo</div>
-</div>
-</div>
-</div>
-<div class="col">
-<div class="mb-4">
-<span class="text-uppercase fw-bold text-primary-custom ls-widest mb-2 d-block" style="font-size: 12px;">Playlist</span>
-<input class="playlist-input ms-n2" placeholder="Give your playlist a name" type="text" value="My Playlist #1"/>
-<textarea class="description-textarea ms-n2 mt-1" placeholder="Add an optional description..." rows="1"></textarea>
-</div>
-<div class="d-flex gap-3 flex-wrap">
-<button class="btn btn-pill bg-primary-custom" style="width: 192px;">Create Playlist</button>
-<button class="btn btn-pill btn-outline-custom" style="width: 192px;">Cancel</button>
-</div>
-</div>
-</section>
-<!-- Recommendations Section -->
-<section>
-<div class="d-flex justify-content-between align-items-center border-bottom border-white border-opacity-10 pb-3 mb-4">
-<h2 class="h3 fw-bold m-0">Recommended Songs</h2>
-<button class="btn p-0 border-0 text-primary-custom fw-bold ls-widest" style="font-size: 12px;">REFRESH</button>
-</div>
-<div class="table-responsive-sm">
-<div class="row px-3 py-2 text-uppercase fw-bold opacity-50 border-bottom border-white border-opacity-10" style="font-size: 11px; letter-spacing: 1px;">
-<div class="col-1 text-center">#</div>
-<div class="col-5">Title</div>
-<div class="col-3">Album</div>
-<div class="col-2 text-end">Duration</div>
-<div class="col-1"></div>
-</div>
-<!-- Track 1 -->
-<div class="row px-3 py-3 align-items-center track-row">
-<div class="col-1 text-center opacity-50">1</div>
-<div class="col-5 d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/4f/1b/8f/4f1b8f8eb694367adfc9e5c896be63f5.jpg" width="48"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-truncate">Just a Fan</div>
-<div class="opacity-50 text-truncate" style="font-size: 14px;">Roar</div>
-</div>
-</div>
-<div class="col-3 opacity-50 text-truncate">I cant Handle Change</div>
-<div class="col-2 text-end opacity-50">3:55</div>
-<div class="col-1 text-end">
-<button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-<!-- Track 2 -->
-<div class="row px-3 py-3 align-items-center track-row">
-<div class="col-1 text-center opacity-50">2</div>
-<div class="col-5 d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/dc/76/c8/dc76c8c4afe0c148040353e9c7ece8d5.jpg" width="48"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-truncate">Harvey</div>
-<div class="opacity-50 text-truncate" style="font-size: 14px;">Alex G</div>
-</div>
-</div>
-<div class="col-3 opacity-50 text-truncate">Dsu</div>
-<div class="col-2 text-end opacity-50">1:38</div>
-<div class="col-1 text-end">
-<button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-<!-- Track 3 -->
-<div class="row px-3 py-3 align-items-center track-row">
-<div class="col-1 text-center opacity-50">3</div>
-<div class="col-5 d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/db/28/d5/db28d5270c418d293e422d06f98ef680.jpg" width="48"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-truncate">Isimo</div>
-<div class="opacity-50 text-truncate" style="font-size: 14px;">Bleachers</div>
-</div>
-</div>
-<div class="col-3 opacity-50 text-truncate">Bleachers</div>
-<div class="col-2 text-end opacity-50">3:23</div>
-<div class="col-1 text-end">
-<button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-<!-- Track 4 -->
-<div class="row px-3 py-3 align-items-center track-row">
-<div class="col-1 text-center opacity-50">4</div>
-<div class="col-5 d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/19/18/90/19189022dbf18cdc2b0ae7661a8b25e4.jpg" width="48"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-truncate">Super Shy</div>
-<div class="opacity-50 text-truncate" style="font-size: 14px;">NewJeans</div>
-</div>
-</div>
-<div class="col-3 opacity-50 text-truncate">NewJeans 2nd EP 'Get Up'</div>
-<div class="col-2 text-end opacity-50">2:34</div>
-<div class="col-1 text-end">
-<button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
-</div>
-</div>
-</div>
-</section>
-<!-- Features Grid -->
-<section class="row g-4 mt-5">
-<div class="col-md-4">
-<div class="glass-panel p-4 h-100">
-<span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px;">auto_awesome</span>
-<h3 class="h5 fw-bold mb-2">Smart Auto-fill</h3>
-<p class="opacity-50 mb-0" style="font-size: 14px;">Let our AI finish the playlist based on your title and first few tracks.</p>
-</div>
-</div>
-<div class="col-md-4">
-<div class="glass-panel p-4 h-100">
-<span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px;">group</span>
-<h3 class="h5 fw-bold mb-2">Collaborative</h3>
-<p class="opacity-50 mb-0" style="font-size: 14px;">Invite friends to add their favorite tracks to this playlist in real-time.</p>
-</div>
-</div>
-<div class="col-md-4">
-<div class="glass-panel p-4 h-100">
-<span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px;">public</span>
-<h3 class="h5 fw-bold mb-2">Public Visibility</h3>
-<p class="opacity-50 mb-0" style="font-size: 14px;">Currently private. Turn on to share your musical taste with the world.</p>
-</div>
-</div>
-</section>
-</div>
-</div>
-</main>
-<!-- Player Bar -->
-<footer class="d-flex align-items-center">
-<div class="container-fluid px-0 h-100">
-<div class="row align-items-center h-100">
-<!-- Left: Current Song -->
-<div class="col-3 d-flex align-items-center gap-3">
-<img alt="Track Art" class="rounded shadow" height="56" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="56"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-primary text-truncate">Neon Horizons</div>
-<div class="small text-secondary text-truncate">Solar Echoes</div>
-</div>
-<button class="btn btn-icon ms-2">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
-</button>
-</div>
-<!-- Center: Controls -->
-<div class="col-6 d-flex flex-column align-items-center gap-2">
-<div class="d-flex align-items-center gap-4">
-<button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_previous</span></button>
-<button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-<span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">pause</span>
-</button>
-<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_next</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
-</div>
-<div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px;">
-<span class="small text-secondary" style="min-width: 35px;">1:24</span>
-<div class="progress-container flex-grow-1">
-<div class="progress-bar-inner"></div>
-</div>
-<span class="small text-secondary" style="min-width: 35px;">3:45</span>
-</div>
-</div>
-<!-- Right: Extras -->
-<div class="col-3 d-flex align-items-center justify-content-end gap-3">
-<button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
-<div class="d-flex align-items-center gap-2">
-<button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
-<div class="volume-bar">
-<div class="volume-bar-inner"></div>
-</div>
-</div>
-<button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
-</div>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sidebar = document.getElementById('sidebar-nav');
-        
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('show');
-        });
+      <div class="mt-auto d-flex flex-column gap-1">
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+        <a class="nav-link-custom" href="#">
+          <span class="material-symbols-outlined">help</span>
+          <span>Help</span>
+        </a>
+      </div>
+    </aside>
+    <main class="main-content position-relative pb-5">
+      <header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-4">
+            <div class="position-relative d-none d-md-block">
+              <span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
+              <input class="search-input" placeholder="Search Library" type="text" />
+            </div>
+            <nav class="d-none d-xl-flex gap-4">
+              <a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration: none">All Content</a>
+              <a class="label-md text-white-50" href="#" style="text-decoration: none">Podcasts</a>
+              <a class="label-md text-white-50" href="#" style="text-decoration: none">Playlists</a>
+              <a class="label-md text-white-50" href="#" style="text-decoration: none">Albums</a>
+            </nav>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <button class="btn btn-link text-white p-2"><span class="material-symbols-outlined">notifications</span></button>
+            <div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px">
+              <img
+                alt="User"
+                class="w-100 h-100 object-fit-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Page Content -->
+      <div class="container-fluid pt-5 mt-4 px-4 px-lg-5">
+        <div class="mx-auto" style="max-width: 1200px">
+          <!-- Hero Section -->
+          <section class="row g-4 mb-5 align-items-end">
+            <div class="col-auto">
+              <div class="album-cover-container">
+                <img alt="Playlist Cover" class="album-cover-image" src="https://i.pinimg.com/736x/b9/11/17/b91117aaa9793a07314429d1e93fbe6b.jpg" />
+                <div class="position-relative text-center text-on-surface-variant">
+                  <span class="material-symbols-outlined display-5 mb-2">add_a_photo</span>
+                  <div class="text-uppercase fw-bold ls-widest" style="font-size: 10px">Choose Photo</div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-4">
+                <span class="text-uppercase fw-bold text-primary-custom ls-widest mb-2 d-block" style="font-size: 12px">Playlist</span>
+                <input class="playlist-input ms-n2" placeholder="Give your playlist a name" type="text" value="My Playlist #1" />
+                <textarea class="description-textarea ms-n2 mt-1" placeholder="Add an optional description..." rows="1"></textarea>
+              </div>
+              <div class="d-flex gap-3 flex-wrap">
+                <button class="btn btn-pill bg-primary-custom" style="width: 192px">Create Playlist</button>
+                <button class="btn btn-pill btn-outline-custom" style="width: 192px">Cancel</button>
+              </div>
+            </div>
+          </section>
+          <!-- Recommendations Section -->
+          <section>
+            <div class="d-flex justify-content-between align-items-center border-bottom border-white border-opacity-10 pb-3 mb-4">
+              <h2 class="h3 fw-bold m-0">Recommended Songs</h2>
+              <button class="btn p-0 border-0 text-primary-custom fw-bold ls-widest" style="font-size: 12px">REFRESH</button>
+            </div>
+            <div class="table-responsive-sm">
+              <div class="row px-3 py-2 text-uppercase fw-bold opacity-50 border-bottom border-white border-opacity-10" style="font-size: 11px; letter-spacing: 1px">
+                <div class="col-1 text-center">#</div>
+                <div class="col-5">Title</div>
+                <div class="col-3">Album</div>
+                <div class="col-2 text-end">Duration</div>
+                <div class="col-1"></div>
+              </div>
+              <!-- Track 1 -->
+              <div class="row px-3 py-3 align-items-center track-row">
+                <div class="col-1 text-center opacity-50">1</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/4f/1b/8f/4f1b8f8eb694367adfc9e5c896be63f5.jpg" width="48" />
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate">Just a Fan</div>
+                    <div class="opacity-50 text-truncate" style="font-size: 14px">Roar</div>
+                  </div>
+                </div>
+                <div class="col-3 opacity-50 text-truncate">I cant Handle Change</div>
+                <div class="col-2 text-end opacity-50">3:55</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
+                </div>
+              </div>
+              <!-- Track 2 -->
+              <div class="row px-3 py-3 align-items-center track-row">
+                <div class="col-1 text-center opacity-50">2</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/dc/76/c8/dc76c8c4afe0c148040353e9c7ece8d5.jpg" width="48" />
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate">Harvey</div>
+                    <div class="opacity-50 text-truncate" style="font-size: 14px">Alex G</div>
+                  </div>
+                </div>
+                <div class="col-3 opacity-50 text-truncate">Dsu</div>
+                <div class="col-2 text-end opacity-50">1:38</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
+                </div>
+              </div>
+              <!-- Track 3 -->
+              <div class="row px-3 py-3 align-items-center track-row">
+                <div class="col-1 text-center opacity-50">3</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/db/28/d5/db28d5270c418d293e422d06f98ef680.jpg" width="48" />
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate">Isimo</div>
+                    <div class="opacity-50 text-truncate" style="font-size: 14px">Bleachers</div>
+                  </div>
+                </div>
+                <div class="col-3 opacity-50 text-truncate">Bleachers</div>
+                <div class="col-2 text-end opacity-50">3:23</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
+                </div>
+              </div>
+              <!-- Track 4 -->
+              <div class="row px-3 py-3 align-items-center track-row">
+                <div class="col-1 text-center opacity-50">4</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img alt="Album Art" class="rounded" height="48" src="https://i.pinimg.com/736x/19/18/90/19189022dbf18cdc2b0ae7661a8b25e4.jpg" width="48" />
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate">Super Shy</div>
+                    <div class="opacity-50 text-truncate" style="font-size: 14px">NewJeans</div>
+                  </div>
+                </div>
+                <div class="col-3 opacity-50 text-truncate">NewJeans 2nd EP 'Get Up'</div>
+                <div class="col-2 text-end opacity-50">2:34</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0 text-on-surface-variant hover-primary"><span class="material-symbols-outlined">add_circle</span></button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Features Grid -->
+          <section class="row g-4 mt-5">
+            <div class="col-md-4">
+              <div class="glass-panel p-4 h-100">
+                <span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px">auto_awesome</span>
+                <h3 class="h5 fw-bold mb-2">Smart Auto-fill</h3>
+                <p class="opacity-50 mb-0" style="font-size: 14px">Let our AI finish the playlist based on your title and first few tracks.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="glass-panel p-4 h-100">
+                <span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px">group</span>
+                <h3 class="h5 fw-bold mb-2">Collaborative</h3>
+                <p class="opacity-50 mb-0" style="font-size: 14px">Invite friends to add their favorite tracks to this playlist in real-time.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="glass-panel p-4 h-100">
+                <span class="material-symbols-outlined text-primary-custom mb-3" style="font-size: 32px">public</span>
+                <h3 class="h5 fw-bold mb-2">Public Visibility</h3>
+                <p class="opacity-50 mb-0" style="font-size: 14px">Currently private. Turn on to share your musical taste with the world.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!-- Player Bar -->
+    <footer class="d-flex align-items-center">
+      <div class="container-fluid px-0 h-100">
+        <div class="row align-items-center h-100">
+          <!-- Left: Current Song -->
+          <div class="col-3 d-flex align-items-center gap-3">
+            <img
+              alt="Track Art"
+              class="rounded shadow"
+              height="56"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg"
+              width="56"
+            />
+            <div class="overflow-hidden">
+              <div class="fw-bold text-white text-truncate">Neon Horizons</div>
+              <div class="small text-secondary text-truncate">Solar Echoes</div>
+            </div>
+            <button class="btn btn-icon ms-2">
+              <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1">favorite</span>
+            </button>
+          </div>
+          <!-- Center: Controls -->
+          <div class="col-6 d-flex flex-column align-items-center gap-2">
+            <div class="d-flex align-items-center gap-4">
+              <button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
+              <button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">skip_previous</span></button>
+              <button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
+                <span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">pause</span>
+              </button>
+              <button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">skip_next</span></button>
+              <button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
+            </div>
+            <div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px">
+              <span class="small text-secondary" style="min-width: 35px">1:24</span>
+              <div class="progress-container flex-grow-1">
+                <div class="progress-bar-inner"></div>
+              </div>
+              <span class="small text-secondary" style="min-width: 35px">3:45</span>
+            </div>
+          </div>
+          <!-- Right: Extras -->
+          <div class="col-3 d-flex align-items-center justify-content-end gap-3">
+            <button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
+            <button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
+            <button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
+              <div class="volume-bar">
+                <div class="volume-bar-inner"></div>
+              </div>
+            </div>
+            <button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebar = document.getElementById('sidebar-nav');
 
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth < 992) {
-                if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-                    sidebar.classList.remove('show');
-                }
-            }
-        });
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth < 992) {
+          if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+            sidebar.classList.remove('show');
+          }
+        }
+      });
     </script>
-</body></html>
+  </body>
+</html>
