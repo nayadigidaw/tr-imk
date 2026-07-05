@@ -131,7 +131,15 @@
             color: var(--primary);
             font-weight: 700;
         }
+        .upgrade-btn{
+    background:#1db954;
+    border:none;
+    transition:.2s;
+}
 
+.upgrade-btn:hover{
+    transform:scale(1.05);
+}
 
         /* Library Content Layout */
         .library-layout {
@@ -309,6 +317,9 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
 </nav>
 
 <div class="mt-auto d-flex flex-column gap-1">
+     <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
+            Upgrade Plan
+        </button>
 <a class="nav-link-custom" href="#">
 <span class="material-symbols-outlined">settings</span>
 <span>Settings</span>

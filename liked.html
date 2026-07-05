@@ -250,6 +250,16 @@
 .nav-link-custom:hover{
     color:#e5e2e1;
 }
+.upgrade-btn{
+    background:#1db954;
+    border:none;
+    transition:.2s;
+}
+
+.upgrade-btn:hover{
+    transform:scale(1.05);
+}
+
         /* Header Styles */
         header {
             height: 64px;
@@ -611,6 +621,9 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
 </nav>
 
 <div class="mt-auto d-flex flex-column gap-1">
+     <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
+            Upgrade Plan
+        </button>
 <a class="nav-link-custom" href="#">
 <span class="material-symbols-outlined">settings</span>
 <span>Settings</span>
@@ -764,91 +777,123 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
 </div>
 <!-- Track Table -->
 <div class="track-table mt-4">
-<div class="track-grid px-4 py-2 border-bottom border-white-10 text-uppercase small text-secondary fw-bold" style="letter-spacing: 0.1em;">
-<div class="text-center">#</div>
-<div>Title</div>
-<div>Artist</div>
-<div>Album</div>
-<div>Date Added</div>
-<div class="text-end"><span class="material-symbols-outlined small">schedule</span></div>
-</div>
-<div class="mt-3 d-flex flex-column gap-1">
-<!-- Track 1 -->
-<div class="track-grid track-row active">
-<div class="text-center small text-secondary">1</div>
-<div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/ec/19/d3/ec19d3062de74dff87bb9eb61e4c5e08.jpg" width="40"/>
-<div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Join Me In Death</div>
-<div class="small text-secondary text-truncate">HIM</div>
-</div>
-</div>
-<div class="small text-secondary">HIM</div>
-<div class="small text-secondary">And Love Said No</div>
-<div class="small text-secondary">2 days ago</div>
-<div class="text-end d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-success" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">3:36</span>
-</div>
-</div>
-<!-- Track 2 -->
-<div class="track-grid track-row">
-<div class="text-center small text-secondary">2</div>
-<div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/70/80/5b/70805b5177f25f604e238ef67bd2a330.jpg" width="40"/>
-<div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Blackbird</div>
-<div class="small text-secondary text-truncate">The Beatles</div>
-</div>
-</div>
-<div class="small text-secondary">The Beatles</div>
-<div class="small text-secondary">The White Album</div>
-<div class="small text-secondary">Oct 12, 2023</div>
-<div class="text-end d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-success" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">2:18</span>
-</div>
-</div>
-<!-- Track 3 -->
-<div class="track-grid track-row">
-<div class="text-center small text-secondary">3</div>
-<div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/7f/20/6b/7f206b7a9e3e034675661d8ce97740b7.jpg" width="40"/>
-<div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Run to the Hills</div>
-<div class="small text-secondary text-truncate">Iron Maiden</div>
-</div>
-</div>
-<div class="small text-secondary">Iron Maiden</div>
-<div class="small text-secondary">The Number of the Beast</div>
-<div class="small text-secondary">Oct 10, 2023</div>
-<div class="text-end d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-success" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">3:52</span>
-</div>
-</div>
-<!-- Track 4 -->
-<div class="track-grid track-row">
-<div class="text-center small text-secondary">4</div>
-<div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/1200x/e8/5a/4c/e85a4ca99fd1c5808d44a902d93cd149.jpg" width="40"/>
-<div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Bring Me to Life</div>
-<div class="small text-secondary text-truncate">Evanescence</div>
-</div>
-</div>
-<div class="small text-secondary">Evanescence</div>
-<div class="small text-secondary">Fallen</div>
-<div class="small text-secondary">Oct 5, 2023</div>
-<div class="text-end d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-success" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">3:55</span>
-</div>
-</div>
-</div>
-</div>
-<div style="height: 100px;"></div>
-</section>
+
+  <!-- HEADER -->
+  <div class="track-grid px-4 py-2 border-bottom border-white-10 text-uppercase small text-secondary fw-bold" style="letter-spacing: 0.1em;">
+    <div class="text-center">#</div>
+    <div>Title</div>
+    <div>Artist</div>
+    <div>Album</div>
+    <div>Date Added</div>
+    <div class="text-end">
+      <span class="material-symbols-outlined small">schedule</span>
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex flex-column gap-1">
+
+    <!-- TRACK 1 -->
+    <div class="track-grid track-row active">
+      <div class="text-center small text-secondary">1</div>
+
+      <div class="d-flex align-items-center gap-3">
+        <img class="rounded track-img" height="40"
+          src="https://i.pinimg.com/736x/ec/19/d3/ec19d3062de74dff87bb9eb61e4c5e08.jpg" width="40"/>
+
+        <div class="overflow-hidden">
+          <div class="fw-bold track-title text-truncate">Join Me In Death</div>
+          <div class="small text-secondary text-truncate track-artist">HIM</div>
+        </div>
+      </div>
+
+      <div class="small text-secondary">HIM</div>
+      <div class="small text-secondary">And Love Said No</div>
+      <div class="small text-secondary">2 days ago</div>
+
+      <div class="text-end d-flex align-items-center justify-content-end gap-3">
+        <span class="material-symbols-outlined text-success"
+          style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="small text-secondary">3:36</span>
+      </div>
+    </div>
+
+    <!-- TRACK 2 -->
+    <div class="track-grid track-row">
+      <div class="text-center small text-secondary">2</div>
+
+      <div class="d-flex align-items-center gap-3">
+        <img class="rounded track-img" height="40"
+          src="https://i.pinimg.com/736x/70/80/5b/70805b5177f25f604e238ef67bd2a330.jpg" width="40"/>
+
+        <div class="overflow-hidden">
+          <div class="fw-bold track-title text-truncate">Blackbird</div>
+          <div class="small text-secondary text-truncate track-artist">The Beatles</div>
+        </div>
+      </div>
+
+      <div class="small text-secondary">The Beatles</div>
+      <div class="small text-secondary">The White Album</div>
+      <div class="small text-secondary">Oct 12, 2023</div>
+
+      <div class="text-end d-flex align-items-center justify-content-end gap-3">
+        <span class="material-symbols-outlined text-success"
+          style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="small text-secondary">2:18</span>
+      </div>
+    </div>
+
+    <!-- TRACK 3 -->
+    <div class="track-grid track-row">
+      <div class="text-center small text-secondary">3</div>
+
+      <div class="d-flex align-items-center gap-3">
+        <img class="rounded track-img" height="40"
+          src="https://i.pinimg.com/736x/7f/20/6b/7f206b7a9e3e034675661d8ce97740b7.jpg" width="40"/>
+
+        <div class="overflow-hidden">
+          <div class="fw-bold track-title text-truncate">Run to the Hills</div>
+          <div class="small text-secondary text-truncate track-artist">Iron Maiden</div>
+        </div>
+      </div>
+
+      <div class="small text-secondary">Iron Maiden</div>
+      <div class="small text-secondary">The Number of the Beast</div>
+      <div class="small text-secondary">Oct 10, 2023</div>
+
+      <div class="text-end d-flex align-items-center justify-content-end gap-3">
+        <span class="material-symbols-outlined text-success"
+          style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="small text-secondary">3:52</span>
+      </div>
+    </div>
+
+    <!-- TRACK 4 -->
+    <div class="track-grid track-row">
+      <div class="text-center small text-secondary">4</div>
+
+      <div class="d-flex align-items-center gap-3">
+        <img class="rounded track-img" height="40"
+          src="https://i.pinimg.com/1200x/e8/5a/4c/e85a4ca99fd1c5808d44a902d93cd149.jpg" width="40"/>
+
+        <div class="overflow-hidden">
+          <div class="fw-bold track-title text-truncate">Bring Me to Life</div>
+          <div class="small text-secondary text-truncate track-artist">Evanescence</div>
+        </div>
+      </div>
+
+      <div class="small text-secondary">Evanescence</div>
+      <div class="small text-secondary">Fallen</div>
+      <div class="small text-secondary">Oct 5, 2023</div>
+
+      <div class="text-end d-flex align-items-center justify-content-end gap-3">
+        <span class="material-symbols-outlined text-success"
+          style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
+        <span class="small text-secondary">3:55</span>
+      </div>
+    </div>
+
+  </div>
+</div></section>
 </main>
 <!-- Footer Player -->
 <footer class="d-flex align-items-center">
@@ -858,8 +903,12 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
 <div class="col-3 d-flex align-items-center gap-3">
 <img alt="Track Art" class="rounded shadow" height="56" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="56"/>
 <div class="overflow-hidden">
-<div class="fw-bold text-white text-truncate">Neon Horizons</div>
-<div class="small text-secondary text-truncate">Solar Echoes</div>
+  <div class="fw-bold text-white text-truncate player-title">
+    Neon Horizons
+  </div>
+  <div class="small text-secondary text-truncate player-artist">
+    Solar Echoes
+  </div>
 </div>
 <button class="btn btn-icon ms-2">
 <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1;">favorite</span>
@@ -904,21 +953,53 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Simple micro-interactions
-    document.querySelectorAll('.track-row').forEach(row => {
-        row.addEventListener('click', function() {
-            document.querySelectorAll('.track-row').forEach(r => r.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Update player bar simulation
-            const title = this.querySelector('.track-title').innerText;
-            const artist = this.querySelector('.small.text-secondary:not(.text-center)').innerText;
-            const img = this.querySelector('img').src;
-            
-            const footer = document.querySelector('footer');
-            footer.querySelector('.fw-bold.text-success').innerText = title;
-            footer.querySelector('.small.text-secondary.text-truncate').innerText = artist;
-            footer.querySelector('img').src = img;
-        });
-    });
+  document.querySelectorAll('.track-row').forEach(row => {
+  row.addEventListener('click', function() {
+
+    const title = this.querySelector('.track-title')?.innerText;
+    const artist = this.querySelector('.track-artist')?.innerText;
+    const img = this.querySelector('.track-img')?.src;
+
+    const footer = document.querySelector('footer');
+
+    const footerTitle = footer.querySelector('.player-title');
+    const footerArtist = footer.querySelector('.player-artist');
+    const footerImg = footer.querySelector('.col-3 img');
+
+    // update footer
+    if (footerTitle) footerTitle.innerText = title;
+    if (footerArtist) footerArtist.innerText = artist;
+    if (footerImg) footerImg.src = img;
+
+    // simpan ke localStorage (BIAR NYAMBUNG ANTAR HALAMAN)
+    localStorage.setItem('currentSong', JSON.stringify({
+      title,
+      artist,
+      img
+    }));
+
+    // active state
+    document.querySelectorAll('.track-row').forEach(r => r.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('currentSong');
+
+  if (saved) {
+    const song = JSON.parse(saved);
+
+    const footer = document.querySelector('footer');
+
+    const footerTitle = footer.querySelector('.player-title');
+    const footerArtist = footer.querySelector('.player-artist');
+    const footerImg = footer.querySelector('.col-3 img');
+
+    if (footerTitle) footerTitle.innerText = song.title;
+    if (footerArtist) footerArtist.innerText = song.artist;
+    if (footerImg) footerImg.src = song.img;
+  }
+});
+
 </script>
 </body></html>
