@@ -85,15 +85,15 @@
         color: var(--primary);
         font-weight: 700;
       }
-.upgrade-btn{
-    background:#1db954;
-    border:none;
-    transition:.2s;
-}
+      .upgrade-btn {
+        background: #1db954;
+        border: none;
+        transition: 0.2s;
+      }
 
-.upgrade-btn:hover{
-    transform:scale(1.05);
-}
+      .upgrade-btn:hover {
+        transform: scale(1.05);
+      }
       .main-content {
         margin-left: 260px;
         padding-top: 90px;
@@ -434,7 +434,7 @@
     <!-- SideNavBar -->
     <aside class="sidebar d-flex flex-column" id="sidebar-nav">
       <div class="mb-5 px-2">
-        <span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
+        <span class="fs-4 fw-bold text-primary-custom" style="color: #1db954">Music Premium</span>
       </div>
       <nav class="d-flex flex-column gap-1 flex-grow-1">
         <a class="nav-link-custom" href="home.html">
@@ -456,9 +456,7 @@
       </nav>
 
       <div class="mt-auto d-flex flex-column gap-1">
-         <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
-            Upgrade Plan
-        </button>
+        <button class="btn btn-success rounded-pill fw-bold upgrade-btn">Upgrade Plan</button>
         <a class="nav-link-custom" href="#">
           <span class="material-symbols-outlined">settings</span>
           <span>Settings</span>
@@ -525,137 +523,116 @@
               </div>
             </div>
           </section>
-<!-- Recommendations Section -->
-<section>
-  <div class="d-flex justify-content-between align-items-center border-bottom border-white border-opacity-10 pb-3 mb-4">
-    <h2 class="h3 fw-bold m-0">Recommended Songs</h2>
-    <button class="btn p-0 border-0 text-primary-custom fw-bold ls-widest" style="font-size: 12px">
-      REFRESH
-    </button>
-  </div>
+          <!-- Recommendations Section -->
+          <section>
+            <div class="d-flex justify-content-between align-items-center border-bottom border-white border-opacity-10 pb-3 mb-4">
+              <h2 class="h3 fw-bold m-0">Recommended Songs</h2>
+              <button class="btn p-0 border-0 text-primary-custom fw-bold ls-widest" style="font-size: 12px">REFRESH</button>
+            </div>
 
-  <div class="table-responsive-sm">
+            <div class="table-responsive-sm">
+              <!-- HEADER -->
+              <div class="row px-3 py-2 text-uppercase fw-bold opacity-50 border-bottom border-white border-opacity-10" style="font-size: 11px; letter-spacing: 1px">
+                <div class="col-1 text-center">#</div>
+                <div class="col-5">Title</div>
+                <div class="col-3">Album</div>
+                <div class="col-2 text-end">Duration</div>
+                <div class="col-1"></div>
+              </div>
 
-    <!-- HEADER -->
-    <div class="row px-3 py-2 text-uppercase fw-bold opacity-50 border-bottom border-white border-opacity-10"
-         style="font-size: 11px; letter-spacing: 1px">
-      <div class="col-1 text-center">#</div>
-      <div class="col-5">Title</div>
-      <div class="col-3">Album</div>
-      <div class="col-2 text-end">Duration</div>
-      <div class="col-1"></div>
-    </div>
+              <!-- TRACK 1 -->
+              <div class="track-row row px-3 py-3 align-items-center">
+                <div class="col-1 text-center opacity-50">1</div>
 
-    <!-- TRACK 1 -->
-    <div class="track-row row px-3 py-3 align-items-center">
-      <div class="col-1 text-center opacity-50">1</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img class="track-img rounded" src="https://i.pinimg.com/736x/4f/1b/8f/4f1b8f8eb694367adfc9e5c896be63f5.jpg" width="48" height="48" />
 
-      <div class="col-5 d-flex align-items-center gap-3">
-        <img class="track-img rounded"
-             src="https://i.pinimg.com/736x/4f/1b/8f/4f1b8f8eb694367adfc9e5c896be63f5.jpg"
-             width="48" height="48">
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate track-title">Just a Fan</div>
+                    <div class="opacity-50 text-truncate track-artist" style="font-size: 14px">Roar</div>
+                  </div>
+                </div>
 
-        <div class="overflow-hidden">
-          <div class="fw-bold text-truncate track-title">Just a Fan</div>
-          <div class="opacity-50 text-truncate track-artist" style="font-size:14px">
-            Roar
-          </div>
-        </div>
-      </div>
+                <div class="col-3 opacity-50 text-truncate">I Cant Handle Change</div>
+                <div class="col-2 text-end opacity-50">3:55</div>
 
-      <div class="col-3 opacity-50 text-truncate">I Cant Handle Change</div>
-      <div class="col-2 text-end opacity-50">3:55</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0">
+                    <span class="material-symbols-outlined">add_circle</span>
+                  </button>
+                </div>
+              </div>
 
-      <div class="col-1 text-end">
-        <button class="btn p-0 border-0">
-          <span class="material-symbols-outlined">add_circle</span>
-        </button>
-      </div>
-    </div>
+              <!-- TRACK 2 -->
+              <div class="track-row row px-3 py-3 align-items-center">
+                <div class="col-1 text-center opacity-50">2</div>
 
-    <!-- TRACK 2 -->
-    <div class="track-row row px-3 py-3 align-items-center">
-      <div class="col-1 text-center opacity-50">2</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img class="track-img rounded" src="https://i.pinimg.com/736x/dc/76/c8/dc76c8c4afe0c148040353e9c7ece8d5.jpg" width="48" height="48" />
 
-      <div class="col-5 d-flex align-items-center gap-3">
-        <img class="track-img rounded"
-             src="https://i.pinimg.com/736x/dc/76/c8/dc76c8c4afe0c148040353e9c7ece8d5.jpg"
-             width="48" height="48">
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate track-title">Harvey</div>
+                    <div class="opacity-50 text-truncate track-artist" style="font-size: 14px">Alex G</div>
+                  </div>
+                </div>
 
-        <div class="overflow-hidden">
-          <div class="fw-bold text-truncate track-title">Harvey</div>
-          <div class="opacity-50 text-truncate track-artist" style="font-size:14px">
-            Alex G
-          </div>
-        </div>
-      </div>
+                <div class="col-3 opacity-50 text-truncate">DSU</div>
+                <div class="col-2 text-end opacity-50">1:38</div>
 
-      <div class="col-3 opacity-50 text-truncate">DSU</div>
-      <div class="col-2 text-end opacity-50">1:38</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0">
+                    <span class="material-symbols-outlined">add_circle</span>
+                  </button>
+                </div>
+              </div>
 
-      <div class="col-1 text-end">
-        <button class="btn p-0 border-0">
-          <span class="material-symbols-outlined">add_circle</span>
-        </button>
-      </div>
-    </div>
+              <!-- TRACK 3 -->
+              <div class="track-row row px-3 py-3 align-items-center">
+                <div class="col-1 text-center opacity-50">3</div>
 
-    <!-- TRACK 3 -->
-    <div class="track-row row px-3 py-3 align-items-center">
-      <div class="col-1 text-center opacity-50">3</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img class="track-img rounded" src="https://i.pinimg.com/736x/db/28/d5/db28d5270c418d293e422d06f98ef680.jpg" width="48" height="48" />
 
-      <div class="col-5 d-flex align-items-center gap-3">
-        <img class="track-img rounded"
-             src="https://i.pinimg.com/736x/db/28/d5/db28d5270c418d293e422d06f98ef680.jpg"
-             width="48" height="48">
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate track-title">Isimo</div>
+                    <div class="opacity-50 text-truncate track-artist" style="font-size: 14px">Bleachers</div>
+                  </div>
+                </div>
 
-        <div class="overflow-hidden">
-          <div class="fw-bold text-truncate track-title">Isimo</div>
-          <div class="opacity-50 text-truncate track-artist" style="font-size:14px">
-            Bleachers
-          </div>
-        </div>
-      </div>
+                <div class="col-3 opacity-50 text-truncate">Bleachers</div>
+                <div class="col-2 text-end opacity-50">3:23</div>
 
-      <div class="col-3 opacity-50 text-truncate">Bleachers</div>
-      <div class="col-2 text-end opacity-50">3:23</div>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0">
+                    <span class="material-symbols-outlined">add_circle</span>
+                  </button>
+                </div>
+              </div>
 
-      <div class="col-1 text-end">
-        <button class="btn p-0 border-0">
-          <span class="material-symbols-outlined">add_circle</span>
-        </button>
-      </div>
-    </div>
+              <!-- TRACK 4 -->
+              <div class="track-row row px-3 py-3 align-items-center">
+                <div class="col-1 text-center opacity-50">4</div>
 
-    <!-- TRACK 4 -->
-    <div class="track-row row px-3 py-3 align-items-center">
-      <div class="col-1 text-center opacity-50">4</div>
+                <div class="col-5 d-flex align-items-center gap-3">
+                  <img class="track-img rounded" src="https://i.pinimg.com/736x/19/18/90/19189022dbf18cdc2b0ae7661a8b25e4.jpg" width="48" height="48" />
 
-      <div class="col-5 d-flex align-items-center gap-3">
-        <img class="track-img rounded"
-             src="https://i.pinimg.com/736x/19/18/90/19189022dbf18cdc2b0ae7661a8b25e4.jpg"
-             width="48" height="48">
+                  <div class="overflow-hidden">
+                    <div class="fw-bold text-truncate track-title">Super Shy</div>
+                    <div class="opacity-50 text-truncate track-artist" style="font-size: 14px">NewJeans</div>
+                  </div>
+                </div>
 
-        <div class="overflow-hidden">
-          <div class="fw-bold text-truncate track-title">Super Shy</div>
-          <div class="opacity-50 text-truncate track-artist" style="font-size:14px">
-            NewJeans
-          </div>
-        </div>
-      </div>
+                <div class="col-3 opacity-50 text-truncate">Get Up</div>
+                <div class="col-2 text-end opacity-50">2:34</div>
 
-      <div class="col-3 opacity-50 text-truncate">Get Up</div>
-      <div class="col-2 text-end opacity-50">2:34</div>
-
-      <div class="col-1 text-end">
-        <button class="btn p-0 border-0">
-          <span class="material-symbols-outlined">add_circle</span>
-        </button>
-      </div>
-    </div>
-
-  </div>
-</section>
+                <div class="col-1 text-end">
+                  <button class="btn p-0 border-0">
+                    <span class="material-symbols-outlined">add_circle</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
           <!-- Features Grid -->
           <section class="row g-4 mt-5">
             <div class="col-md-4">
@@ -696,14 +673,10 @@
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg"
               width="56"
             />
-           <div class="overflow-hidden">
-  <div class="fw-bold text-white text-truncate player-title">
-    Neon Horizons
-  </div>
-  <div class="small text-secondary text-truncate player-artist">
-    Solar Echoes
-  </div>
-</div>
+            <div class="overflow-hidden">
+              <div class="fw-bold text-white text-truncate player-title">Neon Horizons</div>
+              <div class="small text-secondary text-truncate player-artist">Solar Echoes</div>
+            </div>
             <button class="btn btn-icon ms-2">
               <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1">favorite</span>
             </button>
@@ -745,54 +718,55 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-  document.querySelectorAll('.track-row').forEach(row => {
-  row.addEventListener('click', function() {
+      document.querySelectorAll('.track-row').forEach((row) => {
+        row.addEventListener('click', function () {
+          const title = this.querySelector('.track-title')?.innerText;
+          const artist = this.querySelector('.track-artist')?.innerText;
+          const img = this.querySelector('.track-img')?.src;
 
-    const title = this.querySelector('.track-title')?.innerText;
-    const artist = this.querySelector('.track-artist')?.innerText;
-    const img = this.querySelector('.track-img')?.src;
+          const footer = document.querySelector('footer');
 
-    const footer = document.querySelector('footer');
+          const footerTitle = footer.querySelector('.player-title');
+          const footerArtist = footer.querySelector('.player-artist');
+          const footerImg = footer.querySelector('.col-3 img');
 
-    const footerTitle = footer.querySelector('.player-title');
-    const footerArtist = footer.querySelector('.player-artist');
-    const footerImg = footer.querySelector('.col-3 img');
+          // update footer
+          if (footerTitle) footerTitle.innerText = title;
+          if (footerArtist) footerArtist.innerText = artist;
+          if (footerImg) footerImg.src = img;
 
-    // update footer
-    if (footerTitle) footerTitle.innerText = title;
-    if (footerArtist) footerArtist.innerText = artist;
-    if (footerImg) footerImg.src = img;
+          // simpan ke localStorage (BIAR NYAMBUNG ANTAR HALAMAN)
+          localStorage.setItem(
+            'currentSong',
+            JSON.stringify({
+              title,
+              artist,
+              img,
+            }),
+          );
 
-    // simpan ke localStorage (BIAR NYAMBUNG ANTAR HALAMAN)
-    localStorage.setItem('currentSong', JSON.stringify({
-      title,
-      artist,
-      img
-    }));
+          // active state
+          document.querySelectorAll('.track-row').forEach((r) => r.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+      window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('currentSong');
 
-    // active state
-    document.querySelectorAll('.track-row').forEach(r => r.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('currentSong');
+        if (saved) {
+          const song = JSON.parse(saved);
 
-  if (saved) {
-    const song = JSON.parse(saved);
+          const footer = document.querySelector('footer');
 
-    const footer = document.querySelector('footer');
+          const footerTitle = footer.querySelector('.player-title');
+          const footerArtist = footer.querySelector('.player-artist');
+          const footerImg = footer.querySelector('.col-3 img');
 
-    const footerTitle = footer.querySelector('.player-title');
-    const footerArtist = footer.querySelector('.player-artist');
-    const footerImg = footer.querySelector('.col-3 img');
-
-    if (footerTitle) footerTitle.innerText = song.title;
-    if (footerArtist) footerArtist.innerText = song.artist;
-    if (footerImg) footerImg.src = song.img;
-  }
-});
-
+          if (footerTitle) footerTitle.innerText = song.title;
+          if (footerArtist) footerArtist.innerText = song.artist;
+          if (footerImg) footerImg.src = song.img;
+        }
+      });
     </script>
   </body>
 </html>
