@@ -1,646 +1,702 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Music Premium - Luna Vibe</title>
-<!-- Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        :root {
-            --primary: #53e076;
-            --primary-rgb: 83, 224, 118;
-            --on-primary: #003914;
-            --background: #131313;
-            --surface: #201f1f;
-            --on-surface: #e5e2e1;
-            --on-surface-variant: #bccbb9;
-            --glass-bg: rgba(19, 19, 19, 0.7);
-        }
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Music Premium - Luna Vibe</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #53e076;
+        --primary-rgb: 83, 224, 118;
+        --on-primary: #003914;
+        --background: #131313;
+        --surface: #201f1f;
+        --on-surface: #e5e2e1;
+        --on-surface-variant: #bccbb9;
+        --glass-bg: rgba(19, 19, 19, 0.7);
+      }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background);
-            color: var(--on-surface);
-            overflow-x: hidden;
-        }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background);
+        color: var(--on-surface);
+        overflow-x: hidden;
+      }
 
-        /* Sidebar Styles */
+      /* Sidebar Styles */
+      .sidebar {
+        width: 260px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(24px);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        z-index: 1050;
+        transition: transform 0.3s ease;
+      }
+
+      /* Main Content Margin */
+      main {
+        margin-left: 260px;
+        min-height: 100vh;
+      }
+
+      @media (max-width: 991.98px) {
         .sidebar {
-            width: 260px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(24px);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 1050;
-            transition: transform 0.3s ease;
+          transform: translateX(-100%);
         }
-
-        /* Main Content Margin */
+        .sidebar.show {
+          transform: translateX(0);
+        }
         main {
-            margin-left: 260px;
-            min-height: 100vh;
+          margin-left: 0;
         }
+      }
 
-        @media (max-width: 991.98px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            main {
-                margin-left: 0;
-            }
-        }
+      /* Top Header Navigation */
+      .top-header {
+        height: 64px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 260px;
+        z-index: 1040;
+        padding: 0 32px;
+        background: transparent;
+        transition: all 0.3s ease;
+      }
 
-        /* Top Header Navigation */
+      @media (max-width: 991.98px) {
         .top-header {
-            height: 64px;
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 260px;
-            z-index: 1040;
-            padding: 0 32px;
-            background: transparent;
-            transition: all 0.3s ease;
+          left: 0;
         }
+      }
 
-        @media (max-width: 991.98px) {
-            .top-header {
-                left: 0;
-            }
-        }
+      .top-header.scrolled {
+        background: rgba(19, 19, 19, 0.9);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
 
-        .top-header.scrolled {
-            background: rgba(19, 19, 19, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+      /* Hero Section */
+      .hero-section {
+        position: relative;
+        height: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 32px 40px;
+        overflow: hidden;
+      }
 
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            height: 480px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 32px 40px;
-            overflow: hidden;
-        }
+      .hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
 
-        .hero-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
+      .hero-gradient {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: linear-gradient(to bottom, rgba(19, 19, 19, 0) 0%, rgba(19, 19, 19, 0.4) 40%, rgba(19, 19, 19, 0.8) 70%, #131313 100%), linear-gradient(to right, rgba(19, 19, 19, 0.8) 0%, rgba(19, 19, 19, 0) 50%);
+      }
 
-        .hero-gradient {
-            position: absolute;
-            inset: 0;
-            z-index: 10;
-            background: linear-gradient(to bottom, rgba(19,19,19,0) 0%, rgba(19,19,19,0.4) 40%, rgba(19,19,19,0.8) 70%, #131313 100%),
-                        linear-gradient(to right, rgba(19,19,19,0.8) 0%, rgba(19,19,19,0) 50%);
-        }
+      .hero-content {
+        position: relative;
+        z-index: 20;
+      }
 
-        .hero-content {
-            position: relative;
-            z-index: 20;
-        }
+      /* Utility Classes */
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(24px);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
 
-        /* Utility Classes */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
+      .btn-primary-spotify {
+        background-color: var(--primary);
+        color: var(--on-primary);
+        border-radius: 9999px;
+        font-weight: 700;
+        padding: 12px 40px;
+        border: none;
+        transition: transform 0.2s;
+        box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.3);
+      }
 
-        .btn-primary-spotify {
-            background-color: var(--primary);
-            color: var(--on-primary);
-            border-radius: 9999px;
-            font-weight: 700;
-            padding: 12px 40px;
-            border: none;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.3);
-        }
+      .btn-primary-spotify:hover {
+        transform: scale(1.05);
+        background-color: #64f087;
+      }
 
-        .btn-primary-spotify:hover {
-            transform: scale(1.05);
-            background-color: #64f087;
-        }
+      .btn-outline-spotify {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        font-weight: 700;
+        padding: 12px 40px;
+        backdrop-filter: blur(10px);
+      }
 
-        .btn-outline-spotify {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            font-weight: 700;
-            padding: 12px 40px;
-            backdrop-filter: blur(10px);
-        }
+      .btn-outline-spotify:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
 
-        .btn-outline-spotify:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
+      .track-row {
+        border-radius: 12px;
+        transition: background 0.2s;
+        cursor: pointer;
+        padding: 8px 12px;
+      }
 
-        .track-row {
-            border-radius: 12px;
-            transition: background 0.2s;
-            cursor: pointer;
-            padding: 8px 12px;
-        }
+      .track-row:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
 
-        .track-row:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+      .track-row:hover .track-number {
+        color: var(--primary) !important;
+      }
 
-        .track-row:hover .track-number {
-            color: var(--primary) !important;
-        }
+      .album-card {
+        background: rgba(28, 27, 27, 0.4);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        cursor: pointer;
+        height: 100%;
+      }
 
-        .album-card {
-            background: rgba(28, 27, 27, 0.4);
-            border-radius: 12px;
-            padding: 16px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-            cursor: pointer;
-            height: 100%;
-        }
+      .album-card:hover {
+        background: var(--surface);
+        border-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 30px -10px rgba(var(--primary-rgb), 0.15);
+      }
 
-        .album-card:hover {
-            background: var(--surface);
-            border-color: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px -10px rgba(var(--primary-rgb), 0.15);
-        }
+      .album-img-container {
+        position: relative;
+        aspect-ratio: 1/1;
+        margin-bottom: 16px;
+        overflow: hidden;
+        border-radius: 8px;
+      }
 
-        .album-img-container {
-            position: relative;
-            aspect-ratio: 1/1;
-            margin-bottom: 16px;
-            overflow: hidden;
-            border-radius: 8px;
-        }
+      .album-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s ease;
+      }
 
-        .album-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s ease;
-        }
+      .album-card:hover img {
+        transform: scale(1.1);
+      }
 
-        .album-card:hover img {
-            transform: scale(1.1);
-        }
+      .play-btn-overlay {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        border: none;
+      }
 
-        .play-btn-overlay {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(16px);
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            border: none;
-        }
+      .album-card:hover .play-btn-overlay {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-        .album-card:hover .play-btn-overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      /* Player Bar */
+      .player-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 96px;
+        z-index: 1100;
+      }
 
-        /* Player Bar */
-        .player-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 96px;
-            z-index: 1100;
-        }
+      .progress-container {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        width: 100%;
+        position: relative;
+        cursor: pointer;
+      }
 
-        .progress-container {
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            width: 100%;
-            position: relative;
-            cursor: pointer;
-        }
+      .progress-bar-spotify {
+        height: 100%;
+        background: var(--primary);
+        border-radius: 2px;
+        position: relative;
+      }
 
-        .progress-bar-spotify {
-            height: 100%;
-            background: var(--primary);
-            border-radius: 2px;
-            position: relative;
-        }
+      .progress-handle {
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        position: absolute;
+        right: -6px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
 
-        .progress-handle {
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            position: absolute;
-            right: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
+      .progress-container:hover .progress-handle {
+        opacity: 1;
+      }
 
-        .progress-container:hover .progress-handle {
-            opacity: 1;
-        }
+      .nav-link-spotify {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--on-surface-variant);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
 
-        .nav-link-spotify {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            color: var(--on-surface-variant);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
+      .nav-link-spotify:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+      }
 
-        .nav-link-spotify:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
+      .nav-link-spotify.active {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary);
+        font-weight: 600;
+      }
 
-        .nav-link-spotify.active {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--primary);
-            font-weight: 600;
-        }
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24;
+      }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+      .active .material-symbols-outlined {
+        font-variation-settings: 'FILL' 1;
+      }
 
-        .active .material-symbols-outlined {
-            font-variation-settings: 'FILL' 1;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
     </style>
-</head>
-<body>
-<!-- Sidebar -->
-<aside class="sidebar d-flex flex-column p-4">
-<div class="fs-4 fw-bold text-primary mb-5 px-2">Music Premium</div>
-<nav class="d-flex flex-column gap-1">
-<a class="nav-link-spotify active" href="#">
-<span class="material-symbols-outlined">home</span>
-<span>Home</span>
-</a>
-<a class="nav-link-spotify" href="search.html">
-<span class="material-symbols-outlined">search</span>
-<span>Search</span>
-</a>
-<a class="nav-link-spotify" href="library.html">
-<span class="material-symbols-outlined">library_music</span>
-<span>Your Library</span>
-</a>
-<div class="mt-4 pt-4 border-top border-white border-opacity-10">
-<a class="nav-link-spotify" href="create.html">
-<span class="material-symbols-outlined">add_box</span>
-<span>Create Playlist</span>
-</a>
-</div>
-</nav>
-<div class="mt-auto">
-<div class="p-4 rounded-4 mb-3" style="background: #2a2a2a; border: 1px solid rgba(255,255,255,0.05);">
-<p class="small fw-bold text-white mb-2">Enjoy Premium</p>
-<button class="btn btn-primary-spotify w-100 py-2 fs-6">Upgrade</button>
-</div>
-<a class="nav-link-spotify" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Settings</span>
-</a>
-</div>
-</aside>
-<!-- Top Header -->
-<header class="top-header d-flex align-items-center justify-content-between">
-<div class="d-flex align-items-center gap-4">
-<!-- Search -->
-<div class="position-relative d-none d-md-block">
-<span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ms-3 text-on-surface-variant small">search</span>
-<input class="form-control rounded-pill border-0 text-white ps-5" placeholder="Search for artists, songs..." style="background: rgba(42, 42, 42, 0.6); width: 280px; font-size: 14px; backdrop-filter: blur(10px);" type="text"/>
-</div>
-<!-- Quick Nav -->
-<nav class="d-none d-lg-flex gap-4 ms-2">
-<a class="text-white text-decoration-none small fw-bold pb-1 border-bottom border-2 border-primary" href="#">Podcasts</a>
-<a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#">Charts</a>
-<a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#">Genres</a>
-<a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#">New Releases</a>
-</nav>
-</div>
-<div class="d-flex align-items-center gap-4">
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
-<div class="d-flex align-items-center gap-3 ps-4 border-start border-white border-opacity-10">
-<div class="text-end d-none d-sm-block">
-<div class="small fw-bold text-white">Premium Member</div>
-<div class="text-primary fw-bold" style="font-size: 10px; letter-spacing: 0.1em;">ACTIVE</div>
-</div>
-<div class="bg-surface-container-highest rounded-circle d-flex align-items-center justify-content-center overflow-hidden" style="width: 36px; height: 36px; background: #353534;">
-<span class="material-symbols-outlined">account_circle</span>
-</div>
-</div>
-</div>
-</header>
-<main>
-<!-- Hero -->
-<section class="hero-section">
-<img alt="Luna Vibe" class="hero-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX-BhTlXLBitd6ilg3Keggz2ILVfcxNF3M6HFBtXAkeqLUnH0e8M-9bCc7jCLC2IOT73XBw0Rl9LE4Xqof9vDYLU3KOoV8pwv8HcAvlb78e6dR3rS-_YfHaN-aidRUkawPDATeJ5MKYaeosEIydshrq5aMgAXWLn02xsjfgVhPi1d1uaIGHKZRqNmRk7f0N8XcM1-8rWpjq0Lagclf7gOMFBKcDA6Kw-JoBB7QSXoiJp-Vt90etgEg_Ja_VIuSzsNtPQQLBEh55g"/>
-<div class="hero-gradient"></div>
-<div class="hero-content">
-<div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(83, 224, 118, 0.2); border: 1px solid rgba(83, 224, 118, 0.2); backdrop-filter: blur(10px);">
-<span class="material-symbols-outlined text-primary fs-6" style="font-variation-settings: 'FILL' 1;">verified</span>
-<span class="text-primary fw-bold small text-uppercase" style="letter-spacing: 1px; font-size: 11px;">Verified Artist</span>
-</div>
-<h1 class="display-1 fw-black text-white mb-2" style="font-weight: 900;">Luna Vibe</h1>
-<p class="fs-5 text-on-surface-variant fw-medium mb-4">48,294,102 monthly listeners</p>
-<div class="d-flex align-items-center gap-3">
-<button class="btn btn-primary-spotify d-flex align-items-center gap-2">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-                    PLAY
-                </button>
-<button class="btn btn-outline-spotify">FOLLOWING</button>
-<button class="btn border-0 text-on-surface-variant hover-white">
-<span class="material-symbols-outlined fs-2">more_horiz</span>
-</button>
-</div>
-</div>
-</section>
-<!-- Content Body -->
-<div class="container-fluid px-4 py-5">
-<div class="row g-5">
-<!-- Popular Tracks -->
-<div class="col-12 col-lg-8">
-<h2 class="h3 fw-bold text-white mb-4">Popular</h2>
-<div class="d-flex flex-column gap-1">
-<!-- Track 1 -->
-<div class="track-row d-flex align-items-center gap-3">
-<div class="text-on-surface-variant track-number text-center" style="width: 24px;">1</div>
-<div class="position-relative" style="width: 48px; height: 48px;">
-<img alt="Midnight Resonance" class="rounded w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZVCiFBpyeyGLbwyvtt2KbyzK3pvDhPtCePLkahlb0mrxL0lLnnVQW35DeRqpzzrzc0WAOtgXQlJg8GDSQ-ma94h_XTUz63L4a4DLjzsWpQyqCJQy40L5Wd7nkSfNYzpwrRevmeFTJVYajwzYdMHlCcGfHyUkSCf3wy2u8tETlVui-HSAUTx83dwjTEvLCwp3-xiCOVuqmdrokZig5e24brgNQMiKt8pdBgBlH_WYfar56zX4CbNPg0T2InAMcczQ9J9WwgYYI9Q"/>
-</div>
-<div class="flex-grow-1 overflow-hidden">
-<div class="text-white fw-semibold text-truncate">Midnight Resonance</div>
-<div class="small text-on-surface-variant">Luna Vibe</div>
-</div>
-<div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px;">84,203,112</div>
-<div class="text-on-surface-variant small text-end" style="width: 60px;">3:42</div>
-<span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
-</div>
-<!-- Track 2 -->
-<div class="track-row d-flex align-items-center gap-3">
-<div class="text-on-surface-variant track-number text-center" style="width: 24px;">2</div>
-<div class="position-relative" style="width: 48px; height: 48px;">
-<img alt="Electric Dreams" class="rounded w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD536VpwNRqW2PL-liBI8O0E747hQcXuX0w1GEFlaozppoqcCr8mWHZakdtyBPxvMnu32jRZV9WMZsMDveIVfabhtv2-omIKd8HHXj2d9_6RZrtZcv3C4y6C-8wAek-UJ2BU95vk0uJDk79qh_vxOZwbGar-fcOo4PqRKDlpNT4RKk5mMd2XpomGmLAAp5a0FMJbjWPje5_TQ8mNM9TTTxRM2CUU5obtLqh06WLoqZyi0dJjTj9q0df_T9_kfuQscpwD9H5ynqgKg"/>
-</div>
-<div class="flex-grow-1 overflow-hidden">
-<div class="text-white fw-semibold text-truncate">Electric Dreams</div>
-<div class="small text-on-surface-variant">Luna Vibe</div>
-</div>
-<div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px;">72,198,443</div>
-<div class="text-on-surface-variant small text-end" style="width: 60px;">4:15</div>
-<span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
-</div>
-<!-- Track 3 -->
-<div class="track-row d-flex align-items-center gap-3">
-<div class="text-on-surface-variant track-number text-center" style="width: 24px;">3</div>
-<div class="position-relative" style="width: 48px; height: 48px;">
-<img alt="Neon Horizon" class="rounded w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfQTuANkLcPHN0cKeYLIkr8vMc9kIJTNzMjoEawFLsERlUVZBp4kRWLSLVCvURgzaYePDrPHqi6U6LgNcT6dME8pLaVlCb13rE3lcgPd_0JZxDd6oAnehdkjqZiV_HzDFijze8J3VQREAp3n5aJ2nWZlZKxIDG79I1FCjgrqOtrVuxTeoKcCnHc5OAaMMzWSWjq7A5bcElHHVG5GxQgpo0vZz3AHJlmoT2EiVDHcu8NCkkqnrTlw2c73YGiAxcPq2BjjPD5gp-XQ"/>
-</div>
-<div class="flex-grow-1 overflow-hidden">
-<div class="text-white fw-semibold text-truncate">Neon Horizon</div>
-<div class="small text-on-surface-variant">Luna Vibe, Sol</div>
-</div>
-<div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px;">65,002,110</div>
-<div class="text-on-surface-variant small text-end" style="width: 60px;">2:58</div>
-<span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
-</div>
-</div>
-<button class="btn btn-link text-decoration-none text-on-surface-variant fw-bold small text-uppercase mt-4 p-0" style="font-size: 11px; letter-spacing: 1px;">See All Popular Tracks</button>
-</div>
-<!-- Fans Also Like -->
-<div class="col-12 col-lg-4">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h2 class="h3 fw-bold text-white mb-0">Fans also like</h2>
-<button class="btn btn-link text-decoration-none text-on-surface-variant fw-bold small text-uppercase p-0" style="font-size: 11px;">See all</button>
-</div>
-<div class="d-flex flex-column gap-2">
-<div class="track-row d-flex align-items-center gap-3">
-<img alt="Nova Ray" class="rounded-circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdQ_6ISbvs9mdv01J4eSzSnbTN2YiebaJQtccrvZS0JhrYyAclv3PzKDNRJDgBpEtHhLYl0Z6nALl3Gieiu1HCmoAJ8O3fZClOqa9FQKvc_FTtzv_7_-TSOxoyFcDg1VsZ8krpMLUeRjNrtYsraAGnYNffWT8PNtAyHUbeSTx5uSPLD1AB5oOPTs_TahzXzn1RYhVmLeX25X8HAUuuIgpsa4Sc7-5WP_rpnJ2RTgwgxj30mau0n1YlbT5PvZLaBSwtmyCogO2MQ" style="width: 56px; height: 56px; object-fit: cover;"/>
-<div class="flex-grow-1">
-<div class="text-white fw-bold">Nova Ray</div>
-<div class="small text-on-surface-variant">4.2M Listeners</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
-</div>
-<div class="track-row d-flex align-items-center gap-3">
-<img alt="Cyrus Flow" class="rounded-circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy38m1RXaa5mw8Sr6xAA4wOuB9gOau6-4vuF0bfGhgXsz3upN0xAfLjkD7etc2OIXVJmf0RStoQKdUsjVykhwgn1GqUTWj00rYvFGayftechSfC5PoVz2mHajTRCrlqLZQJLzye85fb3UwaFacer72aLm5pvgXRrFY4469ou4FYKQJyUOJUtofbS1tAnlCTx62aTflXPIMAHeP_q8wQXbR9_kGWyofeD2cc6wS1FDUNv5-OKRwrKpYVIFuEgz-dORQdtA69onAtA" style="width: 56px; height: 56px; object-fit: cover;"/>
-<div class="flex-grow-1">
-<div class="text-white fw-bold">Cyrus Flow</div>
-<div class="small text-on-surface-variant">2.8M Listeners</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
-</div>
-<div class="track-row d-flex align-items-center gap-3">
-<img alt="Astra" class="rounded-circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE5m3Hjw4zrMFoDB4oggsWy8IRaXpuf01sFPUO7WO1e6Ct_OhJ9ufyuucpDsX-tFlxJ3OSiMfcozDDdUbPZ5YJofAU66ICjfHN-1DT8WglMG07UiaWia58AoWktZfnJNCUjO6wlha1P6yh_uP-DL-bMnqZtPh9LaVhJmzYu17HQQ2Oqg7lsoKNbEbAJbMSlaYCvA4SgbgDiCzB1jdOlky5N0OB6H_G32xZIc9s-EETTRiC7kpBn0ahW297lwB0vYQYVnlCMe1MQQ" style="width: 56px; height: 56px; object-fit: cover;"/>
-<div class="flex-grow-1">
-<div class="text-white fw-bold">Astra</div>
-<div class="small text-on-surface-variant">1.5M Listeners</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Discography -->
-<section class="mt-5 pt-5 border-top border-white border-opacity-5">
-<div class="d-flex justify-content-between align-items-end mb-4">
-<h2 class="h3 fw-bold text-white mb-0">Discography</h2>
-<button class="btn btn-link text-decoration-none text-on-surface-variant fw-bold small text-uppercase p-0" style="font-size: 11px;">Show all albums</button>
-</div>
-<div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 row-cols-xl-6 g-4">
-<!-- Album 1 -->
-<div class="col">
-<div class="album-card">
-<div class="album-img-container">
-<img alt="Ethereal Nights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy5BOi2xxM36OgbbjSsVLMPiIzh1drBHUo_NVIYmqBzs55CX0JwShgVzNVqQRgsNbYk_M01zyDyKKEoThG2gFlDTZVKEiQiY7MCLBjbI9Ro1Fb-SyA63uOu0hHg9CeJyZyr6EXhkIYPi9rXdOQ0cM0xSaMwbVyEUBiPbF0U_J3mhXaSTfeM_dlPwAggcLvLKoPtkrHS_tsQjTeQUFY963zoLFuzA3eiob0UBYfRt9ye9_nEVf3CZWgg51i31NYR-PElqiUVVFlxg"/>
-<button class="play-btn-overlay">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<div class="text-white fw-bold text-truncate">Ethereal Nights</div>
-<div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px;">2024 • Album</div>
-</div>
-</div>
-<!-- Album 2 -->
-<div class="col">
-<div class="album-card">
-<div class="album-img-container">
-<img alt="Sublime Flow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDGYGTKUrqk964oHHDVZeRyeWgokU1wzOMXGNdLFELrhZuGT3J0WOpix9OnpTkB7Q85kprpnzhUS91P6Q7VbcRTErelNpXKCVcfFsxzpV7u7alJSHWDo4QwrH_p_dIbJEYgfPzmlN6xYMvPkWngqOVbZROzIMVJoUL55mfbKpDuiQ4VSwShoKoHawhoZvFUBsZ7_BbpIxM0iHnboeyDMQB569BDFxVH8ZLjAjJOmNlo7LUzFQElp1X0YPvTDkmf04MKTTK-F2kSA"/>
-<button class="play-btn-overlay">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<div class="text-white fw-bold text-truncate">Sublime Flow</div>
-<div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px;">2023 • Album</div>
-</div>
-</div>
-<!-- Album 3 -->
-<div class="col">
-<div class="album-card">
-<div class="album-img-container">
-<img alt="Star Gazer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhy4hq2TW4laqLumQUNMyPl3qvzmnLW9EoUFIa9qwIGzJzr410hdBNphbRSvnAiX_sYlgdkRWdz6gjKqI4_XkM8FbVmxtA3Jp7ldJ6jz5GEKkdjLBh2SQxItCD3YYWqinyBewnmr5_xK2KDYmHI0KaWuodU22zDrLWxrQ-VFHPmoFhl3GY82NCc6xNwrCqUX0AaAOa9xy-5D3dBNzzp3yR8YpLFgaTsIbr5jZ8cm6uq5TKqJjDqEcs1dsJq2Id4Pn66Di9XIXLhw"/>
-<button class="play-btn-overlay">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<div class="text-white fw-bold text-truncate">Star Gazer</div>
-<div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px;">2022 • Single</div>
-</div>
-</div>
-<!-- Album 4 -->
-<div class="col">
-<div class="album-card">
-<div class="album-img-container">
-<img alt="Redshift" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWxodQmhzYKD8uLA6aHoZGL8jxso4_yTIy_7bZWtSl6Y7h03H5tGejk3K0qVrBtkpDlcXVOKd9K_Hi_-ZQaKmjsE9lvnG2h_5ss2i_VUdegg7QkOB4mcUX_HrDwSy0sL6w0ut8fFqvypq6-MyQcjXuKjte6mwQHZwxfuyyWN_hYyHJ9EAARJdKYwfh-WY3G_UfijWqS3nky1TnTx0aGxfrSR3LUbc0_JoffC_UsEJUAINAIVGIfyR-4_FTa8-KtiRVC1ZQIjMs5g"/>
-<button class="play-btn-overlay">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<div class="text-white fw-bold text-truncate">Redshift</div>
-<div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px;">2021 • EP</div>
-</div>
-</div>
-<!-- Album 5 -->
-<div class="col">
-<div class="album-card">
-<div class="album-img-container">
-<img alt="The Void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr4tu-l22EsBkA9ch79EwlmGzUL16JSbQpp03WGwyvaYnSxGF75wHpjkmqzlNgjT1A70u41XzIz5c5Abiagay0Gmo4AggO8Zd8Qr1viTEsEnYjIsyo60BwOjd2Tu-l1lCuKRtjwTMypAOKLPV9emxCPzhPYXwUkHHpHiPaiudnEZMIeTrgUjix1jIe9HqVYkomkRUhjNcsNUekv8tqFPiBjbCmDkYz9ae95lWibCQZQbuGFeGh0rE67VInoGK3PiXAND32CI8spg"/>
-<button class="play-btn-overlay">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<div class="text-white fw-bold text-truncate">The Void</div>
-<div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px;">2020 • Album</div>
-</div>
-</div>
-</div>
-</section>
-<div style="height: 120px;"></div>
-</div>
-</main>
-<!-- Fixed Player Bar -->
-<footer class="player-bar glass-panel d-flex align-items-center px-4">
-<div class="container-fluid">
-<div class="row align-items-center h-100">
-<!-- Now Playing Info -->
-<div class="col-4 d-flex align-items-center gap-3">
-<img alt="Current Track" class="rounded-2 shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQINeP7502gKIAAvbq9nJmJkSTNbzeuHlNwY3W13jgv1h7x_BOFsUUuMt8ZfNwo9TkNKGZYHH_WoQ0QkL38X1ZlJjK7bi3kOjOx9l3aIlUIsRLomLzNEuGeloRikB88sv-oI4VhS6L_1LdX38J7lOrFHYTlXnnDpVmUT9kbUz_HdUdvavzdoXqPmYBCQ8gc2HKjCkuBYTwbrr5HILx7QmC9eDS66XPCmA_63dJlfKKpSk98cMn8F_1irHEr5okgH4NRK2ZOjx3DA" style="width: 56px; height: 56px;"/>
-<div class="overflow-hidden">
-<div class="text-white fw-bold text-truncate">Midnight Resonance</div>
-<div class="small text-on-surface-variant hover-underline cursor-pointer">Luna Vibe</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer ms-2 hover-primary">favorite</span>
-</div>
-<!-- Controls -->
-<div class="col-4 d-flex flex-column align-items-center">
-<div class="d-flex align-items-center gap-4 mb-2">
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">shuffle</span>
-<span class="material-symbols-outlined text-white cursor-pointer fs-4">skip_previous</span>
-<button class="bg-white border-0 rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-<span class="material-symbols-outlined text-black fs-3" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-<span class="material-symbols-outlined text-white cursor-pointer fs-4">skip_next</span>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">repeat</span>
-</div>
-<div class="d-flex align-items-center gap-2 w-100 px-4">
-<span class="text-on-surface-variant" style="font-size: 10px; min-width: 30px;">1:45</span>
-<div class="progress-container flex-grow-1">
-<div class="progress-bar-spotify" style="width: 40%;">
-<div class="progress-handle"></div>
-</div>
-</div>
-<span class="text-on-surface-variant" style="font-size: 10px; min-width: 30px;">3:42</span>
-</div>
-</div>
-<!-- Volume & Extra Tools -->
-<div class="col-4 d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">mic</span>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">queue_music</span>
-<div class="d-flex align-items-center gap-2" style="width: 120px;">
-<span class="material-symbols-outlined text-on-surface-variant fs-5">volume_up</span>
-<div class="progress-container">
-<div class="progress-bar-spotify bg-white" style="width: 66%;"></div>
-</div>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">fullscreen</span>
-</div>
-</div>
-</div>
-</footer>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Header transition effect
-    window.addEventListener('scroll', () => {
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar d-flex flex-column p-4">
+      <div class="fs-4 fw-bold text-success mb-5 px-2">Music Premium</div>
+      <nav class="d-flex flex-column gap-1">
+        <a class="nav-link-spotify active" href="#">
+          <span class="material-symbols-outlined">home</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-link-spotify" href="search.html">
+          <span class="material-symbols-outlined">search</span>
+          <span>Search</span>
+        </a>
+        <a class="nav-link-spotify" href="library.html">
+          <span class="material-symbols-outlined">library_music</span>
+          <span>Your Library</span>
+        </a>
+        <div class="mt-4 pt-4 border-top border-white border-opacity-10">
+          <a class="nav-link-spotify" href="create.html">
+            <span class="material-symbols-outlined">add_box</span>
+            <span>Create Playlist</span>
+          </a>
+        </div>
+      </nav>
+      <div class="mt-auto">
+        <div class="p-4 rounded-4 mb-3" style="background: #2a2a2a; border: 1px solid rgba(255, 255, 255, 0.05)">
+          <p class="small fw-bold text-white mb-2">Enjoy Premium</p>
+          <button class="btn btn-primary-spotify w-100 py-2 fs-6">Upgrade</button>
+        </div>
+        <a class="nav-link-spotify" href="#">
+          <span class="material-symbols-outlined">settings</span>
+          <span>Settings</span>
+        </a>
+      </div>
+    </aside>
+    <!-- Top Header -->
+    <header class="top-header d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-4">
+        <!-- Search -->
+        <div class="position-relative d-none d-md-block">
+          <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ms-3 text-on-surface-variant small">search</span>
+          <input class="form-control rounded-pill border-0 text-white ps-5" placeholder="Search for artists, songs..." style="background: rgba(42, 42, 42, 0.6); width: 280px; font-size: 14px; backdrop-filter: blur(10px)" type="text" />
+        </div>
+        <!-- Quick Nav -->
+        <nav class="d-none d-lg-flex gap-4 ms-2">
+          <a class="text-white text-decoration-none small fw-bold pb-1 border-bottom border-2 border-primary" href="#">Podcasts</a>
+          <a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#" style="color: #bccbb9">Charts</a>
+          <a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#" style="color: #bccbb9">Genres</a>
+          <a class="text-on-surface-variant text-decoration-none small fw-bold hover-white transition" href="#" style="color: #bccbb9">New Releases</a>
+        </nav>
+      </div>
+      <div class="d-flex align-items-center gap-4">
+        <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+        <div class="d-flex align-items-center gap-3 ps-4 border-start border-white border-opacity-10">
+          <div class="text-end d-none d-sm-block">
+            <div class="small fw-bold text-white">Premium Member</div>
+            <div class="text-success fw-bold" style="font-size: 10px; letter-spacing: 0.1em">ACTIVE</div>
+          </div>
+          <div class="bg-surface-container-highest rounded-circle d-flex align-items-center justify-content-center overflow-hidden" style="width: 36px; height: 36px; background: #353534">
+            <span class="material-symbols-outlined">account_circle</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <!-- Hero -->
+      <section class="hero-section">
+        <img
+          alt="Luna Vibe"
+          class="hero-img"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX-BhTlXLBitd6ilg3Keggz2ILVfcxNF3M6HFBtXAkeqLUnH0e8M-9bCc7jCLC2IOT73XBw0Rl9LE4Xqof9vDYLU3KOoV8pwv8HcAvlb78e6dR3rS-_YfHaN-aidRUkawPDATeJ5MKYaeosEIydshrq5aMgAXWLn02xsjfgVhPi1d1uaIGHKZRqNmRk7f0N8XcM1-8rWpjq0Lagclf7gOMFBKcDA6Kw-JoBB7QSXoiJp-Vt90etgEg_Ja_VIuSzsNtPQQLBEh55g"
+        />
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(83, 224, 118, 0.2); border: 1px solid rgba(83, 224, 118, 0.342); backdrop-filter: blur(10px)">
+            <span class="material-symbols-outlined text-primary fs-6" style="font-variation-settings: 'FILL' 1">verified</span>
+            <span class="text-success fw-bold small text-uppercase" style="letter-spacing: 1px; font-size: 11px">Verified Artist</span>
+          </div>
+          <h1 class="display-1 fw-black text-white mb-2" style="font-weight: 900">Luna Vibe</h1>
+          <p class="fs-5 text-on-surface-variant fw-medium mb-4">48,294,102 monthly listeners</p>
+          <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-primary-spotify d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+              PLAY
+            </button>
+            <button class="btn btn-outline-spotify">FOLLOWING</button>
+            <button class="btn border-0 text-on-surface-variant hover-white">
+              <span class="material-symbols-outlined fs-2">more_horiz</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Content Body -->
+      <div class="container-fluid px-4 py-5">
+        <div class="row g-5">
+          <!-- Popular Tracks -->
+          <div class="col-12 col-lg-8">
+            <h2 class="h3 fw-bold text-white mb-4">Popular</h2>
+            <div class="d-flex flex-column gap-1">
+              <!-- Track 1 -->
+              <div class="track-row d-flex align-items-center gap-3">
+                <div class="text-on-surface-variant track-number text-center" style="width: 24px">1</div>
+                <div class="position-relative" style="width: 48px; height: 48px">
+                  <img
+                    alt="Midnight Resonance"
+                    class="rounded w-100 h-100 object-fit-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZVCiFBpyeyGLbwyvtt2KbyzK3pvDhPtCePLkahlb0mrxL0lLnnVQW35DeRqpzzrzc0WAOtgXQlJg8GDSQ-ma94h_XTUz63L4a4DLjzsWpQyqCJQy40L5Wd7nkSfNYzpwrRevmeFTJVYajwzYdMHlCcGfHyUkSCf3wy2u8tETlVui-HSAUTx83dwjTEvLCwp3-xiCOVuqmdrokZig5e24brgNQMiKt8pdBgBlH_WYfar56zX4CbNPg0T2InAMcczQ9J9WwgYYI9Q"
+                  />
+                </div>
+                <div class="flex-grow-1 overflow-hidden">
+                  <div class="text-white fw-semibold text-truncate">Midnight Resonance</div>
+                  <div class="small text-on-surface-variant">Luna Vibe</div>
+                </div>
+                <div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px">84,203,112</div>
+                <div class="text-on-surface-variant small text-end" style="width: 60px">3:42</div>
+                <span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
+              </div>
+              <!-- Track 2 -->
+              <div class="track-row d-flex align-items-center gap-3">
+                <div class="text-on-surface-variant track-number text-center" style="width: 24px">2</div>
+                <div class="position-relative" style="width: 48px; height: 48px">
+                  <img
+                    alt="Electric Dreams"
+                    class="rounded w-100 h-100 object-fit-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD536VpwNRqW2PL-liBI8O0E747hQcXuX0w1GEFlaozppoqcCr8mWHZakdtyBPxvMnu32jRZV9WMZsMDveIVfabhtv2-omIKd8HHXj2d9_6RZrtZcv3C4y6C-8wAek-UJ2BU95vk0uJDk79qh_vxOZwbGar-fcOo4PqRKDlpNT4RKk5mMd2XpomGmLAAp5a0FMJbjWPje5_TQ8mNM9TTTxRM2CUU5obtLqh06WLoqZyi0dJjTj9q0df_T9_kfuQscpwD9H5ynqgKg"
+                  />
+                </div>
+                <div class="flex-grow-1 overflow-hidden">
+                  <div class="text-white fw-semibold text-truncate">Electric Dreams</div>
+                  <div class="small text-on-surface-variant">Luna Vibe</div>
+                </div>
+                <div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px">72,198,443</div>
+                <div class="text-on-surface-variant small text-end" style="width: 60px">4:15</div>
+                <span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
+              </div>
+              <!-- Track 3 -->
+              <div class="track-row d-flex align-items-center gap-3">
+                <div class="text-on-surface-variant track-number text-center" style="width: 24px">3</div>
+                <div class="position-relative" style="width: 48px; height: 48px">
+                  <img
+                    alt="Neon Horizon"
+                    class="rounded w-100 h-100 object-fit-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfQTuANkLcPHN0cKeYLIkr8vMc9kIJTNzMjoEawFLsERlUVZBp4kRWLSLVCvURgzaYePDrPHqi6U6LgNcT6dME8pLaVlCb13rE3lcgPd_0JZxDd6oAnehdkjqZiV_HzDFijze8J3VQREAp3n5aJ2nWZlZKxIDG79I1FCjgrqOtrVuxTeoKcCnHc5OAaMMzWSWjq7A5bcElHHVG5GxQgpo0vZz3AHJlmoT2EiVDHcu8NCkkqnrTlw2c73YGiAxcPq2BjjPD5gp-XQ"
+                  />
+                </div>
+                <div class="flex-grow-1 overflow-hidden">
+                  <div class="text-white fw-semibold text-truncate">Neon Horizon</div>
+                  <div class="small text-on-surface-variant">Luna Vibe, Sol</div>
+                </div>
+                <div class="text-on-surface-variant small d-none d-sm-block text-end" style="width: 100px">65,002,110</div>
+                <div class="text-on-surface-variant small text-end" style="width: 60px">2:58</div>
+                <span class="material-symbols-outlined text-on-surface-variant ms-3">favorite</span>
+              </div>
+            </div>
+            <button class="btn btn-link text-decoration-none text-success text-on-surface-variant fw-bold small text-uppercase mt-4 p-0" style="font-size: 11px; letter-spacing: 1px">See All Popular Tracks</button>
+          </div>
+          <!-- Fans Also Like -->
+          <div class="col-12 col-lg-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h2 class="h3 fw-bold text-white mb-0">Fans also like</h2>
+              <button class="btn btn-link text-success text-decoration-none text-on-surface-variant fw-bold small text-uppercase p-0" style="font-size: 11px">See all</button>
+            </div>
+            <div class="d-flex flex-column gap-2">
+              <div class="track-row d-flex align-items-center gap-3">
+                <img
+                  alt="Nova Ray"
+                  class="rounded-circle"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdQ_6ISbvs9mdv01J4eSzSnbTN2YiebaJQtccrvZS0JhrYyAclv3PzKDNRJDgBpEtHhLYl0Z6nALl3Gieiu1HCmoAJ8O3fZClOqa9FQKvc_FTtzv_7_-TSOxoyFcDg1VsZ8krpMLUeRjNrtYsraAGnYNffWT8PNtAyHUbeSTx5uSPLD1AB5oOPTs_TahzXzn1RYhVmLeX25X8HAUuuIgpsa4Sc7-5WP_rpnJ2RTgwgxj30mau0n1YlbT5PvZLaBSwtmyCogO2MQ"
+                  style="width: 56px; height: 56px; object-fit: cover"
+                />
+                <div class="flex-grow-1">
+                  <div class="text-white fw-bold">Nova Ray</div>
+                  <div class="small text-on-surface-variant">4.2M Listeners</div>
+                </div>
+                <span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
+              </div>
+              <div class="track-row d-flex align-items-center gap-3">
+                <img
+                  alt="Cyrus Flow"
+                  class="rounded-circle"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy38m1RXaa5mw8Sr6xAA4wOuB9gOau6-4vuF0bfGhgXsz3upN0xAfLjkD7etc2OIXVJmf0RStoQKdUsjVykhwgn1GqUTWj00rYvFGayftechSfC5PoVz2mHajTRCrlqLZQJLzye85fb3UwaFacer72aLm5pvgXRrFY4469ou4FYKQJyUOJUtofbS1tAnlCTx62aTflXPIMAHeP_q8wQXbR9_kGWyofeD2cc6wS1FDUNv5-OKRwrKpYVIFuEgz-dORQdtA69onAtA"
+                  style="width: 56px; height: 56px; object-fit: cover"
+                />
+                <div class="flex-grow-1">
+                  <div class="text-white fw-bold">Cyrus Flow</div>
+                  <div class="small text-on-surface-variant">2.8M Listeners</div>
+                </div>
+                <span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
+              </div>
+              <div class="track-row d-flex align-items-center gap-3">
+                <img
+                  alt="Astra"
+                  class="rounded-circle"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE5m3Hjw4zrMFoDB4oggsWy8IRaXpuf01sFPUO7WO1e6Ct_OhJ9ufyuucpDsX-tFlxJ3OSiMfcozDDdUbPZ5YJofAU66ICjfHN-1DT8WglMG07UiaWia58AoWktZfnJNCUjO6wlha1P6yh_uP-DL-bMnqZtPh9LaVhJmzYu17HQQ2Oqg7lsoKNbEbAJbMSlaYCvA4SgbgDiCzB1jdOlky5N0OB6H_G32xZIc9s-EETTRiC7kpBn0ahW297lwB0vYQYVnlCMe1MQQ"
+                  style="width: 56px; height: 56px; object-fit: cover"
+                />
+                <div class="flex-grow-1">
+                  <div class="text-white fw-bold">Astra</div>
+                  <div class="small text-on-surface-variant">1.5M Listeners</div>
+                </div>
+                <span class="material-symbols-outlined text-on-surface-variant">play_circle</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Discography -->
+        <section class="mt-5 pt-5 border-top border-white border-opacity-5">
+          <div class="d-flex justify-content-between align-items-end mb-4">
+            <h2 class="h3 fw-bold text-white mb-0">Discography</h2>
+            <button class="btn btn-link text-decoration-none text-success text-on-surface-variant fw-bold small text-uppercase p-0" style="font-size: 11px">Show all albums</button>
+          </div>
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 row-cols-xl-6 g-4">
+            <!-- Album 1 -->
+            <div class="col">
+              <div class="album-card">
+                <div class="album-img-container">
+                  <img
+                    alt="Ethereal Nights"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy5BOi2xxM36OgbbjSsVLMPiIzh1drBHUo_NVIYmqBzs55CX0JwShgVzNVqQRgsNbYk_M01zyDyKKEoThG2gFlDTZVKEiQiY7MCLBjbI9Ro1Fb-SyA63uOu0hHg9CeJyZyr6EXhkIYPi9rXdOQ0cM0xSaMwbVyEUBiPbF0U_J3mhXaSTfeM_dlPwAggcLvLKoPtkrHS_tsQjTeQUFY963zoLFuzA3eiob0UBYfRt9ye9_nEVf3CZWgg51i31NYR-PElqiUVVFlxg"
+                  />
+                  <button class="play-btn-overlay">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                  </button>
+                </div>
+                <div class="text-white fw-bold text-truncate">Ethereal Nights</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2024 • Album</div>
+              </div>
+            </div>
+            <!-- Album 2 -->
+            <div class="col">
+              <div class="album-card">
+                <div class="album-img-container">
+                  <img
+                    alt="Sublime Flow"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDGYGTKUrqk964oHHDVZeRyeWgokU1wzOMXGNdLFELrhZuGT3J0WOpix9OnpTkB7Q85kprpnzhUS91P6Q7VbcRTErelNpXKCVcfFsxzpV7u7alJSHWDo4QwrH_p_dIbJEYgfPzmlN6xYMvPkWngqOVbZROzIMVJoUL55mfbKpDuiQ4VSwShoKoHawhoZvFUBsZ7_BbpIxM0iHnboeyDMQB569BDFxVH8ZLjAjJOmNlo7LUzFQElp1X0YPvTDkmf04MKTTK-F2kSA"
+                  />
+                  <button class="play-btn-overlay">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                  </button>
+                </div>
+                <div class="text-white fw-bold text-truncate">Sublime Flow</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2023 • Album</div>
+              </div>
+            </div>
+            <!-- Album 3 -->
+            <div class="col">
+              <div class="album-card">
+                <div class="album-img-container">
+                  <img
+                    alt="Star Gazer"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhy4hq2TW4laqLumQUNMyPl3qvzmnLW9EoUFIa9qwIGzJzr410hdBNphbRSvnAiX_sYlgdkRWdz6gjKqI4_XkM8FbVmxtA3Jp7ldJ6jz5GEKkdjLBh2SQxItCD3YYWqinyBewnmr5_xK2KDYmHI0KaWuodU22zDrLWxrQ-VFHPmoFhl3GY82NCc6xNwrCqUX0AaAOa9xy-5D3dBNzzp3yR8YpLFgaTsIbr5jZ8cm6uq5TKqJjDqEcs1dsJq2Id4Pn66Di9XIXLhw"
+                  />
+                  <button class="play-btn-overlay">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                  </button>
+                </div>
+                <div class="text-white fw-bold text-truncate">Star Gazer</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2022 • Single</div>
+              </div>
+            </div>
+            <!-- Album 4 -->
+            <div class="col">
+              <div class="album-card">
+                <div class="album-img-container">
+                  <img
+                    alt="Redshift"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWxodQmhzYKD8uLA6aHoZGL8jxso4_yTIy_7bZWtSl6Y7h03H5tGejk3K0qVrBtkpDlcXVOKd9K_Hi_-ZQaKmjsE9lvnG2h_5ss2i_VUdegg7QkOB4mcUX_HrDwSy0sL6w0ut8fFqvypq6-MyQcjXuKjte6mwQHZwxfuyyWN_hYyHJ9EAARJdKYwfh-WY3G_UfijWqS3nky1TnTx0aGxfrSR3LUbc0_JoffC_UsEJUAINAIVGIfyR-4_FTa8-KtiRVC1ZQIjMs5g"
+                  />
+                  <button class="play-btn-overlay">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                  </button>
+                </div>
+                <div class="text-white fw-bold text-truncate">Redshift</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2021 • EP</div>
+              </div>
+            </div>
+            <!-- Album 5 -->
+            <div class="col">
+              <div class="album-card">
+                <div class="album-img-container">
+                  <img
+                    alt="The Void"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr4tu-l22EsBkA9ch79EwlmGzUL16JSbQpp03WGwyvaYnSxGF75wHpjkmqzlNgjT1A70u41XzIz5c5Abiagay0Gmo4AggO8Zd8Qr1viTEsEnYjIsyo60BwOjd2Tu-l1lCuKRtjwTMypAOKLPV9emxCPzhPYXwUkHHpHiPaiudnEZMIeTrgUjix1jIe9HqVYkomkRUhjNcsNUekv8tqFPiBjbCmDkYz9ae95lWibCQZQbuGFeGh0rE67VInoGK3PiXAND32CI8spg"
+                  />
+                  <button class="play-btn-overlay">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+                  </button>
+                </div>
+                <div class="text-white fw-bold text-truncate">The Void</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2020 • Album</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div style="height: 120px"></div>
+      </div>
+    </main>
+    <!-- Fixed Player Bar -->
+    <footer class="player-bar glass-panel d-flex align-items-center px-4">
+      <div class="container-fluid">
+        <div class="row align-items-center h-100">
+          <!-- Now Playing Info -->
+          <div class="col-4 d-flex align-items-center gap-3">
+            <img
+              alt="Current Track"
+              class="rounded-2 shadow"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQINeP7502gKIAAvbq9nJmJkSTNbzeuHlNwY3W13jgv1h7x_BOFsUUuMt8ZfNwo9TkNKGZYHH_WoQ0QkL38X1ZlJjK7bi3kOjOx9l3aIlUIsRLomLzNEuGeloRikB88sv-oI4VhS6L_1LdX38J7lOrFHYTlXnnDpVmUT9kbUz_HdUdvavzdoXqPmYBCQ8gc2HKjCkuBYTwbrr5HILx7QmC9eDS66XPCmA_63dJlfKKpSk98cMn8F_1irHEr5okgH4NRK2ZOjx3DA"
+              style="width: 56px; height: 56px"
+            />
+            <div class="overflow-hidden">
+              <div class="text-white fw-bold text-truncate">Midnight Resonance</div>
+              <div class="small text-on-surface-variant hover-underline cursor-pointer">Luna Vibe</div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant cursor-pointer ms-2 hover-primary">favorite</span>
+          </div>
+          <!-- Controls -->
+          <div class="col-4 d-flex flex-column align-items-center">
+            <div class="d-flex align-items-center gap-4 mb-2">
+              <span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">shuffle</span>
+              <span class="material-symbols-outlined text-white cursor-pointer fs-4">skip_previous</span>
+              <button class="bg-white border-0 rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px">
+                <span class="material-symbols-outlined text-black fs-3" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+              </button>
+              <span class="material-symbols-outlined text-white cursor-pointer fs-4">skip_next</span>
+              <span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">repeat</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 w-100 px-4">
+              <span class="text-on-surface-variant" style="font-size: 10px; min-width: 30px">1:45</span>
+              <div class="progress-container flex-grow-1">
+                <div class="progress-bar-spotify" style="width: 40%">
+                  <div class="progress-handle"></div>
+                </div>
+              </div>
+              <span class="text-on-surface-variant" style="font-size: 10px; min-width: 30px">3:42</span>
+            </div>
+          </div>
+          <!-- Volume & Extra Tools -->
+          <div class="col-4 d-flex align-items-center justify-content-end gap-3">
+            <span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">mic</span>
+            <span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">queue_music</span>
+            <div class="d-flex align-items-center gap-2" style="width: 120px">
+              <span class="material-symbols-outlined text-on-surface-variant fs-5">volume_up</span>
+              <div class="progress-container">
+                <div class="progress-bar-spotify bg-white" style="width: 66%"></div>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant cursor-pointer fs-5">fullscreen</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Header transition effect
+      window.addEventListener('scroll', () => {
         const header = document.querySelector('.top-header');
         if (window.scrollY > 100) {
-            header.classList.add('scrolled');
+          header.classList.add('scrolled');
         } else {
-            header.classList.remove('scrolled');
+          header.classList.remove('scrolled');
         }
-    });
+      });
 
-    // Simple favorite toggle simulation
-    document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
-        if(icon.innerText === 'favorite') {
-            icon.addEventListener('click', function() {
-                const isFilled = this.style.fontVariationSettings.includes("'FILL' 1");
-                this.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
-                this.style.color = isFilled ? '' : '#53e076';
-            });
+      // Simple favorite toggle simulation
+      document.querySelectorAll('.material-symbols-outlined').forEach((icon) => {
+        if (icon.innerText === 'favorite') {
+          icon.addEventListener('click', function () {
+            const isFilled = this.style.fontVariationSettings.includes("'FILL' 1");
+            this.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
+            this.style.color = isFilled ? '' : '#53e076';
+          });
         }
-    });
-</script>
-</body></html>
+      });
+    </script>
+  </body>
+</html>
