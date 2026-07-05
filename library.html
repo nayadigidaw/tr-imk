@@ -144,12 +144,6 @@
             .playlists-col { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
         }
 
-        .playlists-col {
-            width: 320px;
-            overflow-y: auto;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(19, 19, 19, 0.3);
-        }
 
         .main-overview {
             flex: 1;
@@ -178,24 +172,6 @@
             transform: translateY(-4px);
         }
 
-        .play-btn {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: black;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            border: none;
-        }
 
         .music-card:hover .play-btn {
             opacity: 1;
@@ -210,33 +186,62 @@
         }
 
         .playlist-item:hover { background: rgba(255,255,255,0.05); }
-        .playlist-item.active { background: rgba(83, 224, 118, 0.1); border: 1px solid rgba(83, 224, 118, 0.2); }
 
         /* Player */
-        .player-bar {
-            height: 96px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1100;
-        }
+footer {
+height: 96px;
+background: rgba(19, 19, 19, 0.7);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-top: 1px solid rgba(255,255,255,0.1);
+position: fixed;
+bottom: 0;
+left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+right: 0;
+z-index: 1060;
+padding: 0 2rem;
+}
 
-        .progress-bar-custom {
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            position: relative;
-            cursor: pointer;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--primary);
-            border-radius: 2px;
-            width: 33%;
-        }
+/* Progress Bar */
+.progress-container {
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+width: 100%;
+position: relative;
+cursor: pointer;
+}
 
-        .artist-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; }
+.progress-bar-inner {
+height: 100%;
+background: var(--primary);
+border-radius: 2px;
+width: 33%;
+}
+
+/* Volume */
+.volume-bar {
+width: 100px;
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+}
+
+.volume-bar-inner {
+width: 50%;
+height: 100%;
+background: var(--on-surface-variant);
+border-radius: 2px;
+}
+
+/* Mobile Fix */
+@media (max-width: 991.98px) {
+footer {
+left: 0; /* ⬅️ full lagi saat sidebar hilang */
+}
+}
+
+ .artist-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; }
         .nav-link:hover .artist-img, .artist-item:hover .artist-img { filter: grayscale(0%); }
 
         /* Typography overrides */
@@ -263,39 +268,6 @@
 </head>
 <body>
 <!-- Sidebar Navigation -->
-<!--  
-<aside class="sidebar glass-panel d-none d-lg-flex">
-<div class="mb-4">
-<h2 class="headline-md text-primary mb-0">Music Premium</h2>
-</div>
-<nav class="nav flex-column gap-1">
-<a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
-<a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
-<a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
-<a class="nav-link" href="#"><span class="material-symbols-outlined">add_box</span>Create Playlist</a>
-</nav>
-<div class="mt-5">
-<p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
-<div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
-<div class="nav-link cursor-pointer">
-<img alt="Solar Echoes" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA"/>
-<span class="body-md">Solar Echoes</span>
-</div>
-<div class="nav-link cursor-pointer">
-<img alt="Luna Vibe" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
-<span class="body-md">Luna Vibe</span>
-</div>
-<div class="nav-link cursor-pointer">
-<img alt="Vector Pulse" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxWg2QRyIWuHn6urSz3DmTBTG9aHM8mURqFh2mLw1LIclGrmErSeAc0kDft-67GpAvjIRVhcQWeK-h-sNfFE1pz8HQqyG-e1iVQJoHCQVsbO3_M6Y-Vxo4iZ-MS578v7GLJaron--n4cc_3QmReUy0WGTKuD4HeOxHzasqpgySQvBNbn3EMMO3o0K10jsbIXebbFAzVS3_8-rnBmszzxsrHYTMFjR9wHItG68MMgAk3-KOovAfr7Hbul5Gvu7kH6s0WxFjzRSEQ"/>
-<span class="body-md">Vector Pulse</span>
-</div>
-</div>
-</div>
-<div class="mt-auto pt-3 border-top border-white-10">
-<a class="nav-link" href="#"><span class="material-symbols-outlined">settings</span>Settings</a>
-<a class="nav-link" href="#"><span class="material-symbols-outlined">help</span>Help</a>
-</div>
-</aside> -->
 <aside class="sidebar d-flex flex-column" id="sidebar-nav">
 <div class="mb-5 px-2">
 <span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
@@ -305,15 +277,15 @@
 <span class="material-symbols-outlined">home</span>
 <span>Home</span>
 </a>
-<a class="nav-link-custom" href="#">
+<a class="nav-link-custom" href="search.html">
 <span class="material-symbols-outlined">search</span>
 <span>Search</span>
 </a>
-<a class="nav-link-custom" href="#">
+<a class="nav-link-custom active" href="library.html">
 <span class="material-symbols-outlined">library_music</span>
 <span>Your Library</span>
 </a>
-<a class="nav-link-custom active" href="#">
+<a class="nav-link-custom" href="create.html">
 <span class="material-symbols-outlined">add_box</span>
 <span>Create Playlist</span>
 </a>
@@ -334,7 +306,6 @@
 </div>
 </div>
 </div>
-
 </nav>
 
 <div class="mt-auto d-flex flex-column gap-1">
@@ -403,10 +374,12 @@
 <div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: linear-gradient(135deg, #53e076, #004118);">
 <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">favorite</span>
 </div>
-<div>
-<p class="title-lg mb-0">Liked Songs</p>
-<p class="body-md text-white-50 mb-0">Playlist • 128 songs</p>
-</div>
+<a href="liked.html" class="text-decoration-none"> 
+    <div> 
+        <p class="title-lg mb-0">Liked Songs</p> 
+        <p class="body-md text-white-50 mb-0">Playlist • 128 songs</p> 
+    </div> 
+</a>
 </div>
 </div>
 <div class="playlist-item">
@@ -456,7 +429,6 @@
 <div class="music-card">
 <div class="position-relative mb-3">
 <img alt="Mix" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ"/>
-<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
 </div>
 <p class="title-lg text-truncate mb-1">Daily Mix 1</p>
 <p class="body-md text-white-50 mb-0">Made for John Doe</p>
@@ -467,7 +439,6 @@
 <div class="music-card">
 <div class="position-relative mb-3">
 <img alt="Discover" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGgktQ7TBP2Z7Ijx4Iv8mVI-9_PsATW1FibNn7ZSeBQ_xJEV2jdtI8w8LQz-cyjT7CNFyWrS_mkvrJaJ5cJhuQQECPlNQaPYIo53dG3cur5Du9Vvig0Lxh3XOEMVsNPPW3iadiVJ0CUvkhDohjVGrZhQiNGqGUM6Z9jbcKOyg9hOLVM6T9U7pVNSUlqCBIOi4FICHBnIK9gUNo3RQ3lXPi4dPi_KLZENq2H4J0RPM2aVqp2yAQxNU_3PXnsl4NvVLBCgKEqnH0hPQ"/>
-<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
 </div>
 <p class="title-lg text-truncate mb-1">Discover Weekly</p>
 <p class="body-md text-white-50 mb-0">New music for you</p>
@@ -478,7 +449,6 @@
 <div class="music-card">
 <div class="position-relative mb-3">
 <img alt="Luna" class="w-100 rounded-circle shadow-lg object-fit-cover aspect-square border border-white-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
-<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
 </div>
 <p class="title-lg text-truncate mb-1 text-center">Luna Vibe</p>
 <p class="body-md text-white-50 mb-0 text-center">Artist</p>
@@ -489,7 +459,6 @@
 <div class="music-card">
 <div class="position-relative mb-3">
 <img alt="Indie" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0zaFMIJt2nd0KkOXTtUhs59mU5rvxRQxZruMpEOvN4v6BtzwI7C1x14GMyCwI2i8LmclfHVr7Inq6xre69-K2Sf-E0mKEbN1eTj561j6dcdQ4K5lu_-MNDAbt8DF5XlcdplyFXP6R_F3yXAoiI_kG_4Lm611__M787y3nMheM1mnwZzp3sCqdrs9sRs9-nzPPYAR2Q5vyqUpnPu4uTuiCJVtKbyVwnlImZiou502Bo-sJBfEHKxTq_trQWVY0--tMhulWwlDaw"/>
-<button class="play-btn"><span class="material-symbols-outlined">play_arrow</span></button>
 </div>
 <p class="title-lg text-truncate mb-1">Indie Anthems</p>
 <p class="body-md text-white-50 mb-0">Playlist</p>
@@ -533,50 +502,55 @@
 </div>
 </main>
 <!-- Bottom Player Bar -->
-<footer class="player-bar glass-panel d-flex align-items-center px-4">
-<div class="container-fluid">
-<div class="row align-items-center">
-<!-- Now Playing -->
+<footer class="d-flex align-items-center">
+<div class="container-fluid px-0 h-100">
+<div class="row align-items-center h-100">
+<!-- Left: Current Song -->
 <div class="col-3 d-flex align-items-center gap-3">
-<img alt="Current" class="rounded shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6hpkusANUf4YPuERWy6t7HETHj9Nufg6cceROHlZZmnR94mwILZ6Vm-le0P5UqBwQWn7Isr3S3pj2ETzjd7wZ9jCRS5ZNAWUgwQGN1kGb8f5KCuwU66aXEVL8OsIOZogl_KojmTP06QiOYR3U2rx9tod-0tNlpUJi2hEs0KS-Phs9MiXqzPAVpPVeSzmVwsu9CbzY-JUpwNTA4SoBM4NbT4dBDmvLqX_ge6flILCh6h6jEwhga6mXROhkKKoMlKmA91WOtem8xA" style="width: 56px; height: 56px; object-fit: cover;"/>
-<div class="d-none d-md-block">
-<p class="title-lg text-primary mb-0">Neon Horizons</p>
-<p class="body-md text-white-50 mb-0">Solar Echoes</p>
+<img alt="Track Art" class="rounded shadow" height="56" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="56"/>
+<div class="overflow-hidden">
+<div class="fw-bold text-primary text-truncate">Neon Horizons</div>
+<div class="small text-secondary text-truncate">Solar Echoes</div>
 </div>
-<button class="btn btn-link p-0 text-primary ms-2"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span></button>
+<button class="btn btn-icon ms-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
 </div>
-<!-- Controls -->
+<!-- Center: Controls -->
 <div class="col-6 d-flex flex-column align-items-center gap-2">
 <div class="d-flex align-items-center gap-4">
-<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">shuffle</span></button>
-<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined headline-md">skip_previous</span></button>
-<button class="btn btn-light rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 44px; height: 44px;"><span class="material-symbols-outlined text-black headline-md" style="font-variation-settings: 'FILL' 1;">pause</span></button>
-<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined headline-md">skip_next</span></button>
-<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">repeat</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_previous</span></button>
+<button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+<span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_next</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
 </div>
-<div class="d-flex align-items-center gap-3 w-100 px-lg-5">
-<span class="label-md text-white-50">1:24</span>
-<div class="progress-bar-custom flex-grow-1">
-<div class="progress-bar-fill"></div>
+<div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px;">
+<span class="small text-secondary" style="min-width: 35px;">1:24</span>
+<div class="progress-container flex-grow-1">
+<div class="progress-bar-inner"></div>
 </div>
-<span class="label-md text-white-50">3:45</span>
+<span class="small text-secondary" style="min-width: 35px;">3:45</span>
 </div>
 </div>
-<!-- Volume/Extra -->
+<!-- Right: Extras -->
 <div class="col-3 d-flex align-items-center justify-content-end gap-3">
-<span class="material-symbols-outlined text-white-50 cursor-pointer d-none d-lg-block">mic</span>
-<span class="material-symbols-outlined text-white-50 cursor-pointer d-none d-lg-block">queue_music</span>
-<span class="material-symbols-outlined text-white-50 cursor-pointer">volume_up</span>
-<div class="progress-bar-custom d-none d-xl-block" style="width: 100px;">
-<div class="progress-bar-fill" style="width: 60%"></div>
+<button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
+<div class="d-flex align-items-center gap-2">
+<button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
+<div class="volume-bar">
+<div class="volume-bar-inner"></div>
 </div>
-<span class="material-symbols-outlined text-white-50 cursor-pointer">open_in_full</span>
+</div>
+<button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
 </div>
 </div>
 </div>
-</footer>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</footer>ps://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Interaction simulation
     document.querySelectorAll('.music-card, .playlist-item').forEach(el => {

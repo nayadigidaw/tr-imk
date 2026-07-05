@@ -3,74 +3,253 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Music Premium - Your Library (Bootstrap 5)</title>
+<title>Music Premium - Your Library</title>
 <!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         :root {
-            --primary-color: #53e076;
-            --bg-dark: #131313;
+            --primary: #53e076;
+            --on-primary: #003914;
+            --background: #131313;
+            --surface: #131313;
             --surface-container: #201f1f;
+            --surface-container-low: #1c1b1b;
+            --surface-container-high: #2a2a2a;
+            --surface-container-highest: #353534;
             --on-surface: #e5e2e1;
             --on-surface-variant: #bccbb9;
-            --glass-bg: rgba(25, 25, 25, 0.7);
-            --glass-top: rgba(19, 19, 19, 0.4);
-            --border-white: rgba(255, 255, 255, 0.1);
+            --outline-variant: #3d4a3d;
+            --primary-container: #1db954;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A;
+            background-color: var(--background);
             color: var(--on-surface);
             overflow-x: hidden;
             margin: 0;
             padding: 0;
         }
 
-        /* Sidebar Styles */
-        #sidebar {
+        /* Sonic Glass Aesthetic */
+        .glass-panel {
+            background: rgba(25, 25, 25, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-top {
+            background: rgba(19, 19, 19, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Sidebar Desktop */
+        @media (min-width: 992px) {
+            .sidebar {
+                width: 256px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 1050;
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+            }
+            main { margin-left: 256px; }
+            header { left: 256px !important; }
+        }
+
+        /* Sidebar Mobile/Tablet */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            main { margin-left: 0; }
+            header { left: 0 !important; position: sticky !important; }
+        }
+
+        
+        /* Sidebar Styling */
+        .sidebar {
             width: 256px;
             height: 100vh;
             position: fixed;
             left: 0;
             top: 0;
-            background: var(--glass-bg);
+            background: rgba(19, 19, 19, 0.7);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border-white);
-            z-index: 1050;
-            transition: all 0.3s;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            z-index: 1030;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .nav-link {
-            color: var(--on-surface-variant);
-            font-weight: 500;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
+        @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0 !important;
+            }
+            .header-nav {
+                left: 0 !important;
+            }
+        }
+
+        .nav-link-custom {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--on-surface-variant);
+            text-decoration: none;
+            font-weight: 500;
             transition: all 0.2s;
         }
 
-        .nav-link:hover {
+        .nav-link-custom:hover {
             background: rgba(255, 255, 255, 0.05);
             color: var(--on-surface);
         }
 
-        .nav-link.active {
+        .nav-link-custom.active {
             background: rgba(255, 255, 255, 0.05);
-            color: var(--primary-color) !important;
+            color: var(--primary);
             font-weight: 700;
         }
 
-        .nav-link:hover .material-symbols-outlined {
-            color: var(--primary-color);
+
+        /* Library Content Layout */
+        .library-layout {
+            display: flex;
+            height: calc(100vh - 80px - 96px); /* minus header and player */
         }
 
+        @media (max-width: 768px) {
+            .library-layout { flex-direction: column; height: auto; }
+            .playlists-col { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        }
+
+
+        .main-overview {
+            flex: 1;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, rgba(83, 224, 118, 0.05), var(--background) 40%);
+        }
+
+        /* Scrollbars */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+
+        /* Cards and Elements */
+      
+        .playlist-item {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .playlist-item:hover { background: rgba(255,255,255,0.05); }
+        
+        /* Main Content */
+        main {
+            margin-left: 256px;
+            padding-top: 64px;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .playlist-column {
+            width: 320px;
+            border-right: 1px solid var(--border-white);
+            height: calc(100vh - 64px - 96px);
+            overflow-y: auto;
+        }
+
+        .content-column {
+            flex: 1;
+            height: calc(100vh - 64px - 96px);
+            overflow-y: auto;
+            background: linear-gradient(to bottom, rgba(83, 224, 118, 0.1), transparent);
+        }
+
+        /* UI Elements */
+        .search-input {
+            background: rgba(53, 53, 52, 0.5);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem 0.5rem 3rem;
+            color: white;
+            width: 288px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary-color);
+            background: rgba(53, 53, 52, 0.8);
+        }
+
+        .search-container .material-symbols-outlined {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+        }
+
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(25, 25, 25, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: border-color 0.3s;
+        }
+        .glass-panel:hover {
+            border-color: rgba(83, 224, 118, 0.4);
+        }
+
+.main-content{
+    margin-left:260px;
+    padding-top:90px;
+}
+.topbar{
+    position:fixed;
+    top:0;
+    left:260px;
+    right:0;
+    height:70px;
+    background:rgba(19,19,19,0.4);
+    backdrop-filter:blur(12px);
+    z-index:40;
+}
+.nav-link-custom{
+    color:#bccbb9;
+    font-weight:500;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.nav-link-custom:hover{
+    color:#e5e2e1;
+}
         /* Header Styles */
         header {
             height: 64px;
@@ -210,54 +389,59 @@
         }
 
         /* Player Bar */
-        footer {
-            height: 96px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-white);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1060;
-            padding: 0 2rem;
-        }
+footer {
+height: 96px;
+background: rgba(19, 19, 19, 0.7);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-top: 1px solid rgba(255,255,255,0.1);
+position: fixed;
+bottom: 0;
+left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+right: 0;
+z-index: 1060;
+padding: 0 2rem;
+}
 
-        .progress-container {
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            width: 100%;
-            position: relative;
-            cursor: pointer;
-        }
+/* Progress Bar */
+.progress-container {
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+width: 100%;
+position: relative;
+cursor: pointer;
+}
 
-        .progress-bar-inner {
-            height: 100%;
-            background: var(--primary-color);
-            border-radius: 2px;
-            width: 33%;
-        }
+.progress-bar-inner {
+height: 100%;
+background: var(--primary);
+border-radius: 2px;
+width: 33%;
+}
 
-        .volume-bar {
-            width: 100px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-        }
+/* Volume */
+.volume-bar {
+width: 100px;
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+}
 
-        .volume-bar-inner {
-            width: 50%;
-            height: 100%;
-            background: var(--on-surface-variant);
-            border-radius: 2px;
-        }
+.volume-bar-inner {
+width: 50%;
+height: 100%;
+background: var(--on-surface-variant);
+border-radius: 2px;
+}
 
-        /* Custom Scrollbar */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
+/* Mobile Fix */
+@media (max-width: 991.98px) {
+footer {
+left: 0; /* ⬅️ full lagi saat sidebar hilang */
+}
+}
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
@@ -283,123 +467,247 @@
                 display: none;
             }
         }
+
+  /* Typography overrides */
+        .display-lg { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        .headline-md { font-size: 24px; font-weight: 700; }
+        .title-lg { font-size: 20px; font-weight: 600; }
+        .body-md { font-size: 14px; }
+        .label-md { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .search-input {
+            background: rgba(53, 53, 52, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 0.6rem 1rem 0.6rem 3rem;
+            color: white;
+            width: 320px;
+        }
+        .search-input:focus {
+            background: rgba(53, 53, 52, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+    
+        /* Player */
+footer {
+height: 96px;
+background: rgba(19, 19, 19, 0.7);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-top: 1px solid rgba(255,255,255,0.1);
+position: fixed;
+bottom: 0;
+left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+right: 0;
+z-index: 1060;
+padding: 0 2rem;
+}
+
+/* Progress Bar */
+.progress-container {
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+width: 100%;
+position: relative;
+cursor: pointer;
+}
+
+.progress-bar-inner {
+height: 100%;
+background: var(--primary);
+border-radius: 2px;
+width: 33%;
+}
+
+/* Volume */
+.volume-bar {
+width: 100px;
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+}
+
+.volume-bar-inner {
+width: 50%;
+height: 100%;
+background: var(--on-surface-variant);
+border-radius: 2px;
+}
+
+/* Mobile Fix */
+@media (max-width: 991.98px) {
+footer {
+left: 0; /* ⬅️ full lagi saat sidebar hilang */
+}
+}
+
+ .artist-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; }
+        .nav-link:hover .artist-img, .artist-item:hover .artist-img { filter: grayscale(0%); }
+
+        /* Typography overrides */
+        .display-lg { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+        .headline-md { font-size: 24px; font-weight: 700; }
+        .title-lg { font-size: 20px; font-weight: 600; }
+        .body-md { font-size: 14px; }
+        .label-md { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        .search-input {
+            background: rgba(53, 53, 52, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 0.6rem 1rem 0.6rem 3rem;
+            color: white;
+            width: 320px;
+        }
+        .search-input:focus {
+            background: rgba(53, 53, 52, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
     </style>
 </head>
-<body class="custom-scrollbar">
-<aside class="d-flex flex-column p-4" id="sidebar">
-<div class="mb-5">
-<span class="fs-4 fw-bold text-primary">Music Premium</span>
+<body>
+<!-- Sidebar Navigation -->
+<aside class="sidebar d-flex flex-column" id="sidebar-nav">
+<div class="mb-5 px-2">
+<span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
 </div>
-<nav class="nav flex-column gap-2">
-<a class="nav-link" href="#">
+<nav class="d-flex flex-column gap-1 flex-grow-1">
+<a class="nav-link-custom" href="home.html">
 <span class="material-symbols-outlined">home</span>
 <span>Home</span>
 </a>
-<a class="nav-link" href="#">
+<a class="nav-link-custom" href="search.html">
 <span class="material-symbols-outlined">search</span>
 <span>Search</span>
 </a>
-<a class="nav-link active" href="#">
+<a class="nav-link-custom active" href="library.html">
 <span class="material-symbols-outlined">library_music</span>
 <span>Your Library</span>
 </a>
-<a class="nav-link" href="#">
+<a class="nav-link-custom" href="create.html">
 <span class="material-symbols-outlined">add_box</span>
 <span>Create Playlist</span>
 </a>
-</nav>
 <div class="mt-5">
-<p class="text-uppercase small tracking-widest text-secondary opacity-75 mb-3 px-3" style="letter-spacing: 0.1em; font-size: 0.7rem;">Favorite Artists</p>
-<div class="d-flex flex-column gap-2 overflow-auto custom-scrollbar" style="max-height: 200px;">
-<div class="d-flex align-items-center gap-3 p-2 rounded cursor-pointer hover-bg-white-5">
-<img alt="Solar Echoes" class="rounded-circle" height="32" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA" width="32"/>
-<span class="small text-truncate">Solar Echoes</span>
+<p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
+<div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
+<div class="nav-link cursor-pointer">
+<img alt="Solar Echoes" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA"/>
+<span class="body-md">Solar Echoes</span>
 </div>
-<div class="d-flex align-items-center gap-3 p-2 rounded cursor-pointer">
-<img alt="Luna Vibe" class="rounded-circle" height="32" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA" width="32"/>
-<span class="small text-truncate">Luna Vibe</span>
+<div class="nav-link cursor-pointer">
+<img alt="Luna Vibe" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMPW8o8j1MXaTS8ctlJ4ghQBfUubxZ18okjci6M6yfeBjcE5sK1A6zU6DCf6jSrlDoTWVWvr17RR3JCIWfUk2THJDcJoSz7rE4pHf-a9eV2hBFv9ODDW7JMDyhT3UeBN1brgeEggVPChDIzNWsAwlHAVcFRi8-UOkXVczurILIKdT0v6SgsJhnc_4VzzDYLlzj5FTfF_JTziDyyzfEV6tQolsf4_GZgXL8mcUmsm4Pn2SaeVqvLQBJVqnfhW3z00ycKMph4FqTZA"/>
+<span class="body-md">Luna Vibe</span>
 </div>
-<div class="d-flex align-items-center gap-3 p-2 rounded cursor-pointer">
-<img alt="Vector Pulse" class="rounded-circle" height="32" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxWg2QRyIWuHn6urSz3DmTBTG9aHM8mURqFh2mLw1LIclGrmErSeAc0kDft-67GpAvjIRVhcQWeK-h-sNfFE1pz8HQqyG-e1iVQJoHCQVsbO3_M6Y-Vxo4iZ-MS578v7GLJaron--n4cc_3QmReUy0WGTKuD4HeOxHzasqpgySQvBNbn3EMMO3o0K10jsbIXebbFAzVS3_8-rnBmszzxsrHYTMFjR9wHItG68MMgAk3-KOovAfr7Hbul5Gvu7kH6s0WxFjzRSEQ" width="32"/>
-<span class="small text-truncate">Vector Pulse</span>
+<div class="nav-link cursor-pointer">
+<img alt="Vector Pulse" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxxWg2QRyIWuHn6urSz3DmTBTG9aHM8mURqFh2mLw1LIclGrmErSeAc0kDft-67GpAvjIRVhcQWeK-h-sNfFE1pz8HQqyG-e1iVQJoHCQVsbO3_M6Y-Vxo4iZ-MS578v7GLJaron--n4cc_3QmReUy0WGTKuD4HeOxHzasqpgySQvBNbn3EMMO3o0K10jsbIXebbFAzVS3_8-rnBmszzxsrHYTMFjR9wHItG68MMgAk3-KOovAfr7Hbul5Gvu7kH6s0WxFjzRSEQ"/>
+<span class="body-md">Vector Pulse</span>
 </div>
 </div>
 </div>
-<div class="mt-auto pt-4 border-top border-white-10">
-<a class="nav-link" href="#">
+</nav>
+
+<div class="mt-auto d-flex flex-column gap-1">
+<a class="nav-link-custom" href="#">
 <span class="material-symbols-outlined">settings</span>
 <span>Settings</span>
 </a>
-<a class="nav-link" href="#">
+<a class="nav-link-custom" href="#">
 <span class="material-symbols-outlined">help</span>
 <span>Help</span>
 </a>
 </div>
 </aside>
-<!-- Header -->
-<header class="justify-content-between">
-<div class="d-flex align-items-center gap-4 h-100">
-<div class="search-container position-relative">
-<span class="material-symbols-outlined">search</span>
+<!-- Top Header -->
+<header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040;">
+<div class="container-fluid d-flex justify-content-between align-items-center">
+<div class="d-flex align-items-center gap-4">
+<div class="position-relative d-none d-md-block">
+<span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
 <input class="search-input" placeholder="Search Library" type="text"/>
 </div>
-<nav class="d-none d-lg-flex gap-4 h-100 align-items-center">
-<a class="text-decoration-none text-white small fw-bold border-bottom border-primary border-2 h-100 d-flex align-items-center" href="#">All Content</a>
-<a class="text-decoration-none text-secondary small hover-text-white transition-all" href="#">Podcasts</a>
-<a class="text-decoration-none text-secondary small hover-text-white transition-all" href="#">Playlists</a>
-<a class="text-decoration-none text-secondary small hover-text-white transition-all" href="#">Albums</a>
+<nav class="d-none d-xl-flex gap-4">
+<a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration:none">All Content</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Podcasts</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Playlists</a>
+<a class="label-md text-white-50" href="#" style="text-decoration:none">Albums</a>
 </nav>
 </div>
 <div class="d-flex align-items-center gap-3">
-<button class="btn btn-icon rounded-circle d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
-<span class="material-symbols-outlined">notifications</span>
+<button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
+<span class="material-symbols-outlined">menu</span>
 </button>
-<div class="rounded-circle overflow-hidden border border-white-10 cursor-pointer" style="width:40px; height:40px;">
-<img alt="User Profile" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
+<button class="btn btn-link text-white p-2"><span class="material-symbols-outlined">notifications</span></button>
+<div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
+<img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
+</div>
 </div>
 </div>
 </header>
-<!-- Main -->
-<main>
-<!-- Left column: Playlists -->
-<section class="playlist-column p-4 custom-scrollbar">
-<h2 class="h4 fw-bold mb-4">Playlists</h2>
+<!-- Mobile Sidebar Offcanvas -->
+<div class="offcanvas offcanvas-start bg-dark glass-panel" id="sidebarMobile" tabindex="-1">
+<div class="offcanvas-header">
+<h5 class="headline-md text-primary mb-0">Music Premium</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" type="button"></button>
+</div>
+<div class="offcanvas-body">
+<nav class="nav flex-column gap-1">
+<a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
+<a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
+<a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
+</nav>
+</div>
+</div>
+<!-- Main Content Area -->
+<main style="padding-top: 80px;">
+<div class="library-layout">
+<!-- Playlists Column -->
+<section class="playlists-col d-flex flex-column p-4 custom-scrollbar">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h2 class="headline-md mb-0">Playlists</h2>
+<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">add</span></button>
+</div>
 <div class="d-flex flex-column gap-2">
-<div class="playlist-card active">
+<div class="playlist-item active">
 <div class="d-flex align-items-center gap-3">
-<div class="rounded d-flex align-items-center justify-content-center" style="width:48px; height:48px; background: linear-gradient(135deg, #53e076, #004118);">
+<div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: linear-gradient(135deg, #53e076, #004118);">
 <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">favorite</span>
 </div>
-<div>
-<div class="fw-bold">Liked Songs</div>
-<div class="small text-secondary">Playlist • 128 songs</div>
+<a href="liked.html" class="text-decoration-none"> 
+    <div> 
+        <p class="title-lg mb-0">Liked Songs</p> 
+        <p class="body-md text-white-50 mb-0">Playlist • 128 songs</p> 
+    </div> 
+</a>
 </div>
 </div>
-</div>
-<div class="playlist-card">
+<div class="playlist-item">
 <div class="d-flex align-items-center gap-3">
-<img alt="Playlist Art" class="rounded" height="48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ" width="48"/>
+<img alt="Deep Focus Tech" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ" style="width: 48px; height: 48px; object-fit: cover;"/>
 <div>
-<div class="fw-bold">Deep Focus Tech</div>
-<div class="small text-secondary">Playlist • 45 songs</div>
+<p class="title-lg mb-0">Deep Focus Tech</p>
+<p class="body-md text-white-50 mb-0">Playlist • 45 songs</p>
 </div>
 </div>
 </div>
-<div class="playlist-card">
+<div class="playlist-item">
 <div class="d-flex align-items-center gap-3">
-<img alt="Playlist Art" class="rounded" height="48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGgktQ7TBP2Z7Ijx4Iv8mVI-9_PsATW1FibNn7ZSeBQ_xJEV2jdtI8w8LQz-cyjT7CNFyWrS_mkvrJaJ5cJhuQQECPlNQaPYIo53dG3cu5Du9Vvig0Lxh3XOEMVsNPPW3iadiVJ0CUvkhDohjVGrZhQiNGqGUM6Z9jbcKOyg9hOLVM6T9U7pVNSUlqCBIOi4FICHBnIK9gUNo3RQ3lXPi4dPi_KLZENq2H4J0RPM2aVqp2yAQxNU_3PXnsl4NvVLBCgKEqnH0hPQ" width="48"/>
+<img alt="Midnight Jazz" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGgktQ7TBP2Z7Ijx4Iv8mVI-9_PsATW1FibNn7ZSeBQ_xJEV2jdtI8w8LQz-cyjT7CNFyWrS_mkvrJaJ5cJhuQQECPlNQaPYIo53dG3cu5Du9Vvig0Lxh3XOEMVsNPPW3iadiVJ0CUvkhDohjVGrZhQiNGqGUM6Z9jbcKOyg9hOLVM6T9U7pVNSUlqCBIOi4FICHBnIK9gUNo3RQ3lXPi4dPi_KLZENq2H4J0RPM2aVqp2yAQxNU_3PXnsl4NvVLBCgKEqnH0hPQ" style="width: 48px; height: 48px; object-fit: cover;"/>
 <div>
-<div class="fw-bold">Midnight Jazz</div>
-<div class="small text-secondary">Playlist • 82 songs</div>
+<p class="title-lg mb-0">Midnight Jazz</p>
+<p class="body-md text-white-50 mb-0">Playlist • 82 songs</p>
 </div>
 </div>
 </div>
-<div class="playlist-card">
+<div class="playlist-item">
 <div class="d-flex align-items-center gap-3">
-<img alt="Playlist Art" class="rounded" height="48" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0zaFMIJt2nd0KkOXTtUhs59mU5rvxRQxZruMpEOvN4v6BtzwI7C1x14GMyCwN2i8LmclfHVr7Inq6xre69-K2Sf-E0mKEbN1eTj561j6dcdQ4K5lu_-MNDAbt8DF5XlcdplyFXP6R_F3yXAoiI_kG_4Lm611__M787y3nMheM1mnwZzp3sCqdrs9sRs9-nzPPYAR2Q5vyqUpnPu4uTuiCJVtKbyVwnlImZiou502Bo-sJBfEHKxTq_trQWVY0--tMhulWwlDaw" width="48"/>
+<img alt="Indie Anthems" class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF0zaFMIJt2nd0KkOXTtUhs59mU5rvxRQxZruMpEOvN4v6BtzwI7C1x14GMyCwI2i8LmclfHVr7Inq6xre69-K2Sf-E0mKEbN1eTj561j6dcdQ4K5lu_-MNDAbt8DF5XlcdplyFXP6R_F3yXAoiI_kG_4Lm611__M787y3nMheM1mnwZzp3sCqdrs9sRs9-nzPPYAR2Q5vyqUpnPu4uTuiCJVtKbyVwnlImZiou502Bo-sJBfEHKxTq_trQWVY0--tMhulWwlDaw" style="width: 48px; height: 48px; object-fit: cover;"/>
 <div>
-<div class="fw-bold">Indie Anthems</div>
-<div class="small text-secondary">Playlist • 104 songs</div>
+<p class="title-lg mb-0">Indie Anthems</p>
+<p class="body-md text-white-50 mb-0">Playlist • 104 songs</p>
 </div>
 </div>
 </div>
@@ -409,22 +717,39 @@
 <section class="content-column p-5 custom-scrollbar">
 <!-- Playlist Header -->
 <div class="row align-items-end g-4 mb-5">
-<div class="col-auto">
-<div class="album-art-lg">
-<span class="material-symbols-outlined text-white" style="font-size: 100px; font-variation-settings: 'FILL' 1;">favorite</span>
-</div>
-</div>
+    <div class="col-auto">
+        <div class="album-art-lg">
+            <span class="material-symbols-outlined text-white"
+                  style="font-size: 100px; font-variation-settings: 'FILL' 1;">
+                favorite
+            </span>
+        </div>
+    </div>
+
 <div class="col">
-<div class="text-uppercase small fw-bold text-primary tracking-widest mb-2" style="letter-spacing: 0.2em;">Playlist</div>
-<h1 class="display-3 fw-800 mb-4" style="margin-left: -4px;">Liked Songs</h1>
-<div class="d-flex align-items-center gap-2">
-<img alt="John Doe" class="rounded-circle" height="24" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiZf5sU61ofyE66wMoiAB8rka2-AlJ7M64NP-4QBeqUBUBZRZaZ7Tu2y0RUfp6N0B8UgD2bgKYZ3ldJ_m_1db7IY0YO9X7kARlMgix54LCXcODROWx9VPsWGflBRcwnyCZjM2pLhWhAJRP6XqNIQpCtf6ztKotQ8q-3slR8zTUZnR2RUqPRnqxIv8TxeywZPDjXa1W0iNQnqp7oA2QgcBNYxZRH00q_FSK3MPLtoPnRi36DpUQq9rubelC4428D63GoPpjCvENUw" width="24"/>
-<span class="fw-bold">John Doe</span>
-<span class="opacity-50">•</span>
-<span class="text-secondary small">128 songs, 8 hr 14 min</span>
+    <div class="text-uppercase small fw-bold text-primary mb-2" style="letter-spacing: 0.2em;">
+        Playlist
+    </div>
+
+    <!-- Judul lebih bold -->
+    <h1 class="display-3 fw-bold mb-4" style="margin-left: -4px; font-weight: 800;">
+        Liked Songs
+    </h1>
+
+    <div class="d-flex align-items-center gap-2">
+        <img alt="John Doe" class="rounded-circle" height="24"
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiZf5sU61ofyE66wMoiAB8rka2-AlJ7M64NP-4QBeqUBUBZRZaZ7Tu2y0RUfp6N0B8UgD2bgKYZ3ldJ_m_1db7IY0YO9X7kARlMgix54LCXcODROWx9VPsWGflBRcwnyCZjM2pLhWhAJRP6XqNIQpCtf6ztKotQ8q-3slR8zTUZnR2RUqPRnqxIv8TxeywZPDjXa1W0iNQnqp7oA2QgcBNYxZRH00q_FSK3MPLtoPnRi36DpUQq9rubelC4428D63GoPpjCvENUw"
+             width="24"/>
+
+        <span class="fw-bold">John Doe</span>
+        <span class="opacity-50">•</span>
+        <span class="text-secondary small">128 songs, 8 hr 14 min</span>
+    </div>
 </div>
+```
+
 </div>
-</div>
+
 <!-- Controls -->
 <div class="d-flex align-items-center gap-4 mb-4">
 <button class="btn-play-lg shadow-lg">
@@ -452,72 +777,72 @@
 <div class="track-grid track-row active">
 <div class="text-center small text-secondary">1</div>
 <div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="40"/>
+<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/ec/19/d3/ec19d3062de74dff87bb9eb61e4c5e08.jpg" width="40"/>
 <div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Neon Horizons</div>
-<div class="small text-secondary text-truncate">E-D-M Premium</div>
+<div class="fw-bold track-title text-truncate">Join Me In Death</div>
+<div class="small text-secondary text-truncate">HIM</div>
 </div>
 </div>
-<div class="small text-secondary">Solar Echoes</div>
-<div class="small text-secondary">Static Waves</div>
+<div class="small text-secondary">HIM</div>
+<div class="small text-secondary">And Love Said No</div>
 <div class="small text-secondary">2 days ago</div>
 <div class="text-end d-flex align-items-center justify-content-end gap-3">
 <span class="material-symbols-outlined text-primary" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">3:45</span>
+<span class="small text-secondary">3:36</span>
 </div>
 </div>
 <!-- Track 2 -->
 <div class="track-grid track-row">
 <div class="text-center small text-secondary">2</div>
 <div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqsObV1wMGNFBs4mfVQFkxGSYQ1gamVMD0iYGnWsXSD8ne7l3o-kD1seDTtq6jcJahDXPXNSTgzTAd6rhfBGnEF_3wpCEeYT_RGDNZrJqpES1i7K5necQOQhRGa4hddXFegFBZ5tL2t1H0m4PEByPMbFxdc-ulVX2MoyDw-L7FfitOrNntGq68UnL31hU1GXWdxRTKrBpveMacWPlV1BrDfjGjcWSBegtiGiC750LdU2PxKDMyv6wSDGDXEMLhOtyqto3MCJLUzg" width="40"/>
+<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/70/80/5b/70805b5177f25f604e238ef67bd2a330.jpg" width="40"/>
 <div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Starlight Drive</div>
-<div class="small text-secondary text-truncate">Synth Pop Gold</div>
+<div class="fw-bold track-title text-truncate">Blackbird</div>
+<div class="small text-secondary text-truncate">The Beatles</div>
 </div>
 </div>
-<div class="small text-secondary">Luna Vibe</div>
-<div class="small text-secondary">Midnight Drive</div>
+<div class="small text-secondary">The Beatles</div>
+<div class="small text-secondary">The White Album</div>
 <div class="small text-secondary">Oct 12, 2023</div>
 <div class="text-end d-flex align-items-center justify-content-end gap-3">
 <span class="material-symbols-outlined text-primary" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">4:12</span>
+<span class="small text-secondary">2:18</span>
 </div>
 </div>
 <!-- Track 3 -->
 <div class="track-grid track-row">
 <div class="text-center small text-secondary">3</div>
 <div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1hLy0NB27Et2CIIKqzM8111JFDIzw2908JZdV4lwl0QLwAuuLQiHwOr0J49RLgFwa-aTPQ10Vep2ogJKkEBrzCOvZI7QrgfutC1_C6t1t_RQrB_5jicbWhaPgUju_-EhYl4Lu0pejYj9pXRWyMhpvRnNSQ0izsRDIAxSX5vQWS05OW3grYwNsrT1jN2dnMkKo0pntdacNPrgHyQTNx93Q_5cKo3exUICUWJ4xb7B5WnCpNS8DE6fxZ2v_FB6w5DSDQXXrsBDqag" width="40"/>
+<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/736x/7f/20/6b/7f206b7a9e3e034675661d8ce97740b7.jpg" width="40"/>
 <div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Velvet Dreams</div>
-<div class="small text-secondary text-truncate">Soulful Sessions</div>
+<div class="fw-bold track-title text-truncate">Run to the Hills</div>
+<div class="small text-secondary text-truncate">Iron Maiden</div>
 </div>
 </div>
-<div class="small text-secondary">Ruby Soul</div>
-<div class="small text-secondary">Deep Red</div>
+<div class="small text-secondary">Iron Maiden</div>
+<div class="small text-secondary">The Number of the Beast</div>
 <div class="small text-secondary">Oct 10, 2023</div>
 <div class="text-end d-flex align-items-center justify-content-end gap-3">
 <span class="material-symbols-outlined text-primary" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">5:20</span>
+<span class="small text-secondary">3:52</span>
 </div>
 </div>
 <!-- Track 4 -->
 <div class="track-grid track-row">
 <div class="text-center small text-secondary">4</div>
 <div class="d-flex align-items-center gap-3">
-<img alt="Album Art" class="rounded" height="40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDslaAesXolPgn-b7IV48XmGsiDJEakidaKPmj3dJi5RRp4GdK95LwgymBithXUqMm-Nk9bnmfhReFSDXQRXKiWSMAQLUMM7Kb6HJf5IYWU1PQiY-OeHqhVoDGacvRqUdHKn2H1b6x069SU8K7BSKFxVKVcZlR3TNLp7wiQROXq5pbaI81YC4wf0A6nTv-qb-dk35Hr7Im6gq03I2Cd_qo2oZHIZE44yxpTuKjKz5Ta0oRPdV5-12rxmfvROj5TaLWFUtMNdj5ZmA" width="40"/>
+<img alt="Album Art" class="rounded" height="40" src="https://i.pinimg.com/1200x/e8/5a/4c/e85a4ca99fd1c5808d44a902d93cd149.jpg" width="40"/>
 <div class="overflow-hidden">
-<div class="fw-bold track-title text-truncate">Electric Sky</div>
-<div class="small text-secondary text-truncate">Festival Bangers</div>
+<div class="fw-bold track-title text-truncate">Bring Me to Life</div>
+<div class="small text-secondary text-truncate">Evanescence</div>
 </div>
 </div>
-<div class="small text-secondary">Vector Pulse</div>
-<div class="small text-secondary">Uplift</div>
+<div class="small text-secondary">Evanescence</div>
+<div class="small text-secondary">Fallen</div>
 <div class="small text-secondary">Oct 5, 2023</div>
 <div class="text-end d-flex align-items-center justify-content-end gap-3">
 <span class="material-symbols-outlined text-primary" style="font-size: 1.2rem; font-variation-settings: 'FILL' 1;">favorite</span>
-<span class="small text-secondary">3:58</span>
+<span class="small text-secondary">3:55</span>
 </div>
 </div>
 </div>

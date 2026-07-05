@@ -3,35 +3,81 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Explore - Sonic Glass</title>
+<title>Music Premium - Your Library</title>
 <!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
         :root {
-            --primary-color: #53e076;
-            --bg-dark: #131313;
-            --surface-color: #201f1f;
-            --text-secondary: #bccbb9;
+            --primary: #53e076;
+            --on-primary: #003914;
+            --background: #131313;
+            --surface: #131313;
+            --surface-container: #201f1f;
+            --surface-container-low: #1c1b1b;
+            --surface-container-high: #2a2a2a;
+            --surface-container-highest: #353534;
+            --on-surface: #e5e2e1;
+            --on-surface-variant: #bccbb9;
+            --outline-variant: #3d4a3d;
+            --primary-container: #1db954;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: #e5e2e1;
             font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--on-surface);
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Material Symbols Fill Settings */
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
+        /* Sonic Glass Aesthetic */
+        .glass-panel {
+            background: rgba(25, 25, 25, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .material-symbols-outlined.fill {
-            font-variation-settings: 'FILL' 1;
+
+        .glass-top {
+            background: rgba(19, 19, 19, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* Sidebar Desktop */
+        @media (min-width: 992px) {
+            .sidebar {
+                width: 256px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 1050;
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+            }
+            main { margin-left: 256px; }
+            header { left: 256px !important; }
+        }
+
+        /* Sidebar Mobile/Tablet */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            main { margin-left: 0; }
+            header { left: 0 !important; position: sticky !important; }
+        }
+
         
         /* Sidebar Styling */
         .sidebar {
@@ -86,7 +132,7 @@
             font-weight: 700;
         }
 
-        /* Header Styling */
+  /* Header Styling */
         .top-header {
             height: 80px;
             position: fixed;
@@ -101,8 +147,7 @@
             align-items: center;
             padding: 0 2rem;
         }
-
-        /* Main Content */
+ /* Main Content */
         main {
             margin-left: 280px;
             padding-top: 80px;
@@ -127,7 +172,7 @@
             pointer-events: none;
         }
 
-        .search-container {
+       .search-container {
             max-width: 700px;
             margin: 0 auto;
             position: relative;
@@ -141,7 +186,7 @@
             transition: all 0.3s ease;
         }
 
-        .search-input-group:focus-within {
+.search-input-group:focus-within {
             border-color: var(--primary-color);
             box-shadow: 0 0 20px rgba(83, 224, 118, 0.1);
         }
@@ -158,7 +203,7 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        .btn-primary-custom {
+  .btn-primary-custom {
             background-color: var(--primary-color);
             border: none;
             color: #002108;
@@ -195,8 +240,7 @@
             color: var(--text-secondary);
             transition: all 0.3s ease;
         }
-
-        .btn-pill:hover, .btn-pill.active {
+       .btn-pill:hover, .btn-pill.active {
             border-color: var(--primary-color);
             color: var(--primary-color);
             background: rgba(83, 224, 118, 0.05);
@@ -226,8 +270,7 @@
             left: 0;
             transition: transform 0.6s ease;
         }
-
-        .genre-card:hover img {
+  .genre-card:hover img {
             transform: scale(1.1);
         }
 
@@ -257,66 +300,61 @@
             letter-spacing: 0.15em;
             color: var(--primary-color);
         }
+footer {
+height: 96px;
+background: rgba(19, 19, 19, 0.7);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-top: 1px solid rgba(255,255,255,0.1);
+position: fixed;
+bottom: 0;
+left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+right: 0;
+z-index: 1060;
+padding: 0 2rem;
+}
 
-        /* Player Bar */
-        .player-bar {
-            height: 100px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(19, 19, 19, 0.8);
-            backdrop-filter: blur(30px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            z-index: 1001;
-            padding: 0 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+/* Progress Bar */
+.progress-container {
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+width: 100%;
+position: relative;
+cursor: pointer;
+}
 
-        .song-info img {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
+.progress-bar-inner {
+height: 100%;
+background: var(--primary);
+border-radius: 2px;
+width: 33%;
+}
 
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            position: relative;
-            cursor: pointer;
-        }
+/* Volume */
+.volume-bar {
+width: 100px;
+height: 4px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 2px;
+}
 
-        .progress-bar-inner {
-            position: absolute;
-            height: 100%;
-            background: var(--primary-color);
-            border-radius: 2px;
-        }
+.volume-bar-inner {
+width: 50%;
+height: 100%;
+background: var(--on-surface-variant);
+border-radius: 2px;
+}
 
-        .play-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: #002108;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            box-shadow: 0 0 20px rgba(83, 224, 118, 0.3);
-            transition: transform 0.2s;
-        }
+/* Mobile Fix */
+@media (max-width: 991.98px) {
+footer {
+left: 0; /* ⬅️ full lagi saat sidebar hilang */
+}
+}
 
-        .play-btn:hover {
-            transform: scale(1.1);
-        }
 
-        /* Scrollbar */
+ /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: #353534; border-radius: 10px; }
@@ -326,10 +364,12 @@
             .sidebar { transform: translateX(-100%); }
             .top-header, main { left: 0; margin-left: 0; }
         }
+
+
     </style>
 </head>
 <body>
-<!-- Sidebar -->
+<!-- Sidebar Navigation -->
 <aside class="sidebar d-flex flex-column" id="sidebar-nav">
 <div class="mb-5 px-2">
 <span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
@@ -339,15 +379,15 @@
 <span class="material-symbols-outlined">home</span>
 <span>Home</span>
 </a>
-<a class="nav-link-custom" href="#">
+<a class="nav-link-custom active" href="search.html">
 <span class="material-symbols-outlined">search</span>
 <span>Search</span>
 </a>
-<a class="nav-link-custom" href="#">
+<a class="nav-link-custom" href="library.html">
 <span class="material-symbols-outlined">library_music</span>
 <span>Your Library</span>
 </a>
-<a class="nav-link-custom active" href="#">
+<a class="nav-link-custom" href="create.html">
 <span class="material-symbols-outlined">add_box</span>
 <span>Create Playlist</span>
 </a>
@@ -363,7 +403,8 @@
 <span>Help</span>
 </a>
 </div>
-</aside><header class="top-header">
+</aside>
+<header class="top-header">
 <div class="d-flex gap-2">
 <button class="btn border-0 p-2" style="background: rgba(255,255,255,0.05); color: #fff; border-radius: 12px;">
 <span class="material-symbols-outlined">chevron_left</span>
@@ -478,48 +519,53 @@
 </section>
 </main>
 <!-- Fixed Player Bar -->
-<footer class="player-bar">
-<!-- Song Info -->
-<div class="d-flex align-items-center gap-3" style="width: 300px;">
-<div class="song-info position-relative group">
-<img alt="Cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Hjs8vcOcNQ-vEvxlCS-LGno6vEzjglqAUDzckCxJiqWHEf4FU0L-RIT8K0BzlLBH1fOIcU56ffgIQfmCI9vo5WHKXphsB_epTBtCLeG-GCR-yn_qRsJ2hl1fkJVr5CUY7b3Lu2pDCXDy9IUQxMhrDZ-zHDYXD0T7WvToYDqtkShq_KlGhulS83PYTmkLG9Uk8YMo38LHJF6efAgy5hEVpZvhRVQRIFOBnhNMsuvekD2rg8buDprR8VsHX3Cm80Yvkz4A5t84aQ"/>
+<footer class="d-flex align-items-center">
+<div class="container-fluid px-0 h-100">
+<div class="row align-items-center h-100">
+<!-- Left: Current Song -->
+<div class="col-3 d-flex align-items-center gap-3">
+<img alt="Track Art" class="rounded shadow" height="56" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="56"/>
+<div class="overflow-hidden">
+<div class="fw-bold text-primary text-truncate">Neon Horizons</div>
+<div class="small text-secondary text-truncate">Solar Echoes</div>
 </div>
-<div class="text-truncate">
-<div class="fw-bold mb-0 text-white">Midnight City</div>
-<div class="text-secondary small text-truncate">M83 • Hurry Up, We're Dreaming</div>
-</div>
-<button class="btn btn-link text-secondary p-0 ms-2">
-<span class="material-symbols-outlined">favorite</span>
+<button class="btn btn-icon ms-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
 </button>
 </div>
-<!-- Player Controls -->
-<div class="flex-grow-1 mx-5 d-flex flex-column align-items-center gap-2" style="max-width: 600px;">
+<!-- Center: Controls -->
+<div class="col-6 d-flex flex-column align-items-center gap-2">
 <div class="d-flex align-items-center gap-4">
-<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">shuffle</span></button>
-<button class="btn btn-link text-white p-0"><span class="material-symbols-outlined fs-2">skip_previous</span></button>
-<button class="play-btn"><span class="material-symbols-outlined fill fs-3">play_arrow</span></button>
-<button class="btn btn-link text-white p-0"><span class="material-symbols-outlined fs-2">skip_next</span></button>
-<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">repeat</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_previous</span></button>
+<button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+<span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_next</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
 </div>
-<div class="d-flex align-items-center gap-3 w-100">
-<span class="text-secondary" style="font-size: 10px; font-family: monospace;">01:24</span>
+<div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px;">
+<span class="small text-secondary" style="min-width: 35px;">1:24</span>
 <div class="progress-container flex-grow-1">
-<div class="progress-bar-inner" style="width: 35%;"></div>
+<div class="progress-bar-inner"></div>
 </div>
-<span class="text-secondary" style="font-size: 10px; font-family: monospace;">03:45</span>
-</div>
-</div>
-<!-- Extra Controls -->
-<div class="d-flex align-items-center justify-content-end gap-3" style="width: 300px;">
-<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">mic</span></button>
-<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">queue_music</span></button>
-<div class="d-flex align-items-center gap-2" style="width: 100px;">
-<span class="material-symbols-outlined text-secondary fs-5">volume_up</span>
-<div class="progress-container flex-grow-1" style="height: 3px;">
-<div class="progress-bar-inner" style="width: 70%; background: var(--text-secondary);"></div>
+<span class="small text-secondary" style="min-width: 35px;">3:45</span>
 </div>
 </div>
-<button class="btn btn-link text-secondary p-0"><span class="material-symbols-outlined">open_in_full</span></button>
+<!-- Right: Extras -->
+<div class="col-3 d-flex align-items-center justify-content-end gap-3">
+<button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
+<button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
+<div class="d-flex align-items-center gap-2">
+<button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
+<div class="volume-bar">
+<div class="volume-bar-inner"></div>
+</div>
+</div>
+<button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
+</div>
+</div>
 </div>
 </footer>
 <!-- Bootstrap 5 JS Bundle -->
