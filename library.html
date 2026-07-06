@@ -188,108 +188,99 @@
 
         .playlist-item:hover { background: rgba(255,255,255,0.05); }
 
-        /* Player */
- /* PLAYER BAR - FINAL CLEAN */
-.player-bar{
-    position:fixed;
-    bottom:0;
-    left:250px;
-    right:0;
-    height:90px;
-    backdrop-filter:blur(20px);
-    background:rgba(0,0,0,0.7);
-    border-top:1px solid rgba(255,255,255,0.1);
-    z-index:999;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 20px;
-}
+        .player-bar{
+            position:fixed;
+            bottom:0;
+            left:250px;
+            right:0;
+            height:90px;
+            backdrop-filter:blur(20px);
+            background:rgba(0,0,0,0.7);
+            border-top:1px solid rgba(255,255,255,0.1);
+            z-index:999;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 20px;
+        }
 
-/* COVER */
-.cover{
-    width:56px;
-    height:56px;
-    border-radius:8px;
-    object-fit:cover;
-}
+        .cover{
+            width:56px;
+            height:56px;
+            border-radius:8px;
+            object-fit:cover;
+        }
 
-/* ICON BUTTON */
-.icon-btn{
-    background:none;
-    border:none;
-    color:#aaa;
-    cursor:pointer;
-    transition:0.25s;
-}
+        .icon-btn{
+            background:none;
+            border:none;
+            color:#aaa;
+            cursor:pointer;
+            transition:0.25s;
+        }
 
-.icon-btn:hover{
-    color:#fff;
-}
+        .icon-btn:hover{
+            color:#fff;
+        }
 
-/* ICON ACTIVE (FILL) */
-.icon-btn.fill span{
-    font-variation-settings:'FILL' 1;
-}
+        .icon-btn.fill span{
+            font-variation-settings:'FILL' 1;
+        }
 
-/* PLAY BUTTON (CENTER) */
-.play-btn{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#fff;
-    color:#000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:none;
-    transform: translateY(-3px);
-    transition:0.2s;
-}
+        .play-btn{
+            width:42px;
+            height:42px;
+            border-radius:50%;
+            background:#fff;
+            color:#000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border:none;
+            transform: translateY(-3px);
+            transition:0.2s;
+        }
 
-.play-btn:hover{
-    transform: translateY(-3px) scale(1.08);
-}
+        .play-btn:hover{
+            transform: translateY(-3px) scale(1.08);
+        }
 
-/* PROGRESS BAR */
-.progress{
-    height:4px;
-    background:#333;
-    border-radius:10px;
-    overflow:hidden;
-}
+        .progress{
+            height:4px;
+            background:#333;
+            border-radius:10px;
+            overflow:hidden;
+        }
 
-.progress-bar{
-    width:35%;
-    background:var(--primary-container); /* pakai variable */
-    transition:width .3s ease;
-}
+        .progress-bar{
+            width:35%;
+            background:var(--primary-container); /* pakai variable */
+            transition:width .3s ease;
+        }
 
-/* VOLUME */
-.volume-bar{
-    width:80px;
-    height:4px;
-    background:#333;
-    border-radius:10px;
-    overflow:hidden;
-}
+        .volume-bar{
+            width:80px;
+            height:4px;
+            background:#333;
+            border-radius:10px;
+            overflow:hidden;
+        }
 
-.volume-fill{
-    width:60%;
-    height:100%;
-    background:#aaa;
-}
-/* Mobile Fix */
-@media (max-width: 991.98px) {
-footer {
-left: 0; /* ⬅️ full lagi saat sidebar hilang */
-}
-}
+        .volume-fill{
+            width:60%;
+            height:100%;
+            background:#aaa;
+        }
+
+        @media (max-width: 991.98px) {
+        footer {
+        left: 0; 
+        }
+        }
 
  .artist-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s; }
         .nav-link:hover .artist-img, .artist-item:hover .artist-img { filter: grayscale(0%); }
 
-        /* Typography overrides */
         .display-lg { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
         .headline-md { font-size: 24px; font-weight: 700; }
         .title-lg { font-size: 20px; font-weight: 600; }
@@ -386,7 +377,7 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
         <span class="material-symbols-outlined">notifications</span>
       </button>
       <div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
-        <img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
+        <img alt="User" class="w-100 h-100 object-fit-cover" src="https://i.pinimg.com/736x/90/48/98/904898a02be413d05149510900155108.jpg"/>
       </div>
     </div>
   </div>

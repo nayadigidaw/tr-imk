@@ -445,7 +445,6 @@
     </style>
   </head>
   <body>
-    <!-- Sidebar Navigation -->
     <aside class="sidebar d-flex flex-column" id="sidebar-nav">
       <div class="mb-5 px-2">
         <span class="fs-4 fw-bold text-primary-custom" style="color: #1db954">Music Premium</span>
@@ -503,9 +502,8 @@
         </button>
       </div>
     </header>
-    <!-- Main Content -->
+ 
     <main>
-      <!-- Hero Section -->
       <section class="hero-section">
         <div class="hero-blob" style="top: 10%; left: 15%"></div>
         <div class="hero-blob" style="bottom: 10%; right: 15%"></div>
@@ -519,7 +517,7 @@
             <button class="btn btn-primary-custom ms-2" type="button">Explore</button>
           </div>
         </div>
-        <!-- Filter Pills -->
+    
         <div class="filter-pills">
           <button class="btn btn-pill active">Moods</button>
           <button class="btn btn-pill">Genres</button>
@@ -528,7 +526,7 @@
           <button class="btn btn-pill">Trending</button>
         </div>
       </section>
-      <!-- Category Grid -->
+
       <section class="container-fluid px-lg-5">
         <div class="d-flex align-items-center justify-content-between mb-4">
           <div class="d-flex align-items-center gap-3">
@@ -545,7 +543,7 @@
           </div>
         </div>
         <div class="row g-4">
-          <!-- Pop -->
+     
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card genre-card">
               <img
@@ -558,7 +556,7 @@
               </div>
             </div>
           </div>
-          <!-- Hip Hop -->
+    
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card genre-card">
               <img
@@ -571,7 +569,7 @@
               </div>
             </div>
           </div>
-          <!-- Electronic -->
+      
           <div class="col-12 col-md-6 col-lg-4">
             <div class="card genre-card">
               <img
@@ -584,7 +582,7 @@
               </div>
             </div>
           </div>
-          <!-- Rock -->
+  
           <div class="col-12 col-md-6">
             <div class="card genre-card">
               <img
@@ -597,7 +595,7 @@
               </div>
             </div>
           </div>
-          <!-- Jazz -->
+    
           <div class="col-12 col-md-6">
             <div class="card genre-card">
               <img
@@ -613,7 +611,6 @@
         </div>
       </section>
     </main>
-    <!-- Fixed Player Bar -->
     <footer class="player-bar d-flex align-items-center justify-content-between px-4">
 
     <div class="d-flex align-items-center gap-3 col-3">
@@ -696,7 +693,6 @@
 
 </footer>
     <script>
-        // Simple interactivity for pricing cards
         const cards = document.querySelectorAll('.glass-card');
         cards.forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -711,7 +707,7 @@
             });
         });
 
-        // Toggle Active State
+    
         function selectPlan(element) {
             cards.forEach(c => c.classList.remove('active-card', 'glow-shadow-primary'));
             element.classList.add('active-card', 'glow-shadow-primary');

@@ -32,7 +32,6 @@
         margin-bottom: 120px; 
       }
 
-      /* Sidebar */
       .sidebar {
         width: 256px;
         height: 100vh;
@@ -281,7 +280,6 @@
         transform: translateX(4px);
       }
 
-     /* footer */
       .player-bar{
           position:fixed;
           bottom:0;
@@ -385,8 +383,8 @@
         font-weight: 700;
         border: none;
         transition:
-          transform 0.2s,
-          background 0.2s;
+        transform 0.2s,
+        background 0.2s;
       }
       .btn-pill:active {
         transform: scale(0.95);
@@ -405,7 +403,16 @@
         background: rgba(255, 255, 255, 0.1);
         border-color: rgba(255, 255, 255, 0.4);
       }
+      .bg-primary-custom {
+        background-color: var(--primary);
+        color: var(--on-primary-fixed);
+      }
 
+      .bg-primary-custom:hover {
+        background-color: #169c46;
+        color: var(--on-primary-fixed);
+      }
+      
       .custom-scrollbar::-webkit-scrollbar {
         width: 6px;
       }
@@ -460,7 +467,7 @@
     <button class="btn d-lg-none position-fixed top-0 start-0 m-2 z-max text-white" id="sidebar-toggle">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <!-- sidebar -->
+
     <aside class="sidebar d-flex flex-column" id="sidebar-nav">
       <div class="mb-5 px-2">
         <span class="fs-4 fw-bold text-primary-custom" style="color: #1db954">Music Premium</span>
@@ -524,16 +531,15 @@
               <img
                 alt="User"
                 class="w-100 h-100 object-fit-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"
+                src="https://i.pinimg.com/736x/90/48/98/904898a02be413d05149510900155108.jpg"
               />
             </div>
           </div>
         </div>
       </header>
-      <!-- Page Content -->
+
       <div class="container-fluid pt-5 mt-4 px-4 px-lg-5">
         <div class="mx-auto" style="max-width: 1200px">
-          <!-- Hero Section -->
           <section class="row g-4 mb-5 align-items-end">
             <div class="col-auto">
               <div class="album-cover-container">
