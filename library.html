@@ -4,7 +4,6 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Music Premium - Your Library</title>
-<!-- Bootstrap 5 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -33,7 +32,6 @@
             padding: 0;
         }
 
-        /* Sonic Glass Aesthetic */
         .glass-panel {
             background: rgba(25, 25, 25, 0.7);
             backdrop-filter: blur(20px);
@@ -132,16 +130,13 @@
             font-weight: 700;
         }
         .upgrade-btn{
-    background:#1db954;
-    border:none;
-    transition:.2s;
-}
-
-.upgrade-btn:hover{
-    transform:scale(1.05);
-}
-
-        /* Library Content Layout */
+            background:#1db954;
+            border:none;
+            transition:.2s;
+        }
+        .upgrade-btn:hover{
+            transform:scale(1.05);
+        }
         .library-layout {
             display: flex;
             height: calc(100vh - 80px - 96px); /* minus header and player */
@@ -151,8 +146,6 @@
             .library-layout { flex-direction: column; height: auto; }
             .playlists-col { width: 100% !important; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.1); }
         }
-
-
         .main-overview {
             flex: 1;
             overflow-y: auto;
@@ -196,52 +189,96 @@
         .playlist-item:hover { background: rgba(255,255,255,0.05); }
 
         /* Player */
-footer {
-height: 96px;
-background: rgba(19, 19, 19, 0.7);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border-top: 1px solid rgba(255,255,255,0.1);
-position: fixed;
-bottom: 0;
-left: 256px; /* ⬅️ biar tidak nabrak sidebar */
-right: 0;
-z-index: 1060;
-padding: 0 2rem;
+ /* PLAYER BAR - FINAL CLEAN */
+.player-bar{
+    position:fixed;
+    bottom:0;
+    left:250px;
+    right:0;
+    height:90px;
+    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,0.7);
+    border-top:1px solid rgba(255,255,255,0.1);
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
 }
 
-/* Progress Bar */
-.progress-container {
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
-width: 100%;
-position: relative;
-cursor: pointer;
+/* COVER */
+.cover{
+    width:56px;
+    height:56px;
+    border-radius:8px;
+    object-fit:cover;
 }
 
-.progress-bar-inner {
-height: 100%;
-background: var(--primary);
-border-radius: 2px;
-width: 33%;
+/* ICON BUTTON */
+.icon-btn{
+    background:none;
+    border:none;
+    color:#aaa;
+    cursor:pointer;
+    transition:0.25s;
 }
 
-/* Volume */
-.volume-bar {
-width: 100px;
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
+.icon-btn:hover{
+    color:#fff;
 }
 
-.volume-bar-inner {
-width: 50%;
-height: 100%;
-background: var(--on-surface-variant);
-border-radius: 2px;
+/* ICON ACTIVE (FILL) */
+.icon-btn.fill span{
+    font-variation-settings:'FILL' 1;
 }
 
+/* PLAY BUTTON (CENTER) */
+.play-btn{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#fff;
+    color:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    transform: translateY(-3px);
+    transition:0.2s;
+}
+
+.play-btn:hover{
+    transform: translateY(-3px) scale(1.08);
+}
+
+/* PROGRESS BAR */
+.progress{
+    height:4px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:35%;
+    background:var(--primary-container); /* pakai variable */
+    transition:width .3s ease;
+}
+
+/* VOLUME */
+.volume-bar{
+    width:80px;
+    height:4px;
+    background:#333;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.volume-fill{
+    width:60%;
+    height:100%;
+    background:#aaa;
+}
 /* Mobile Fix */
 @media (max-width: 991.98px) {
 footer {
@@ -275,316 +312,364 @@ left: 0; /* ⬅️ full lagi saat sidebar hilang */
     </style>
 </head>
 <body>
-<!-- Sidebar Navigation -->
 <aside class="sidebar d-flex flex-column" id="sidebar-nav">
-<div class="mb-5 px-2">
-<span class="fs-4 fw-bold text-primary-custom" style="color: #1db954;">Music Premium</span>
-</div>
-<nav class="d-flex flex-column gap-1 flex-grow-1">
-<a class="nav-link-custom" href="home.html">
-<span class="material-symbols-outlined">home</span>
-<span>Home</span>
-</a>
-<a class="nav-link-custom" href="search.html">
-<span class="material-symbols-outlined">search</span>
-<span>Search</span>
-</a>
-<a class="nav-link-custom active" href="library.html">
-<span class="material-symbols-outlined">library_music</span>
-<span>Your Library</span>
-</a>
-<a class="nav-link-custom" href="create.html">
-<span class="material-symbols-outlined">add_box</span>
-<span>Create Playlist</span>
-</a>
-<div class="mt-5">
-<p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
-<div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
-<div class="nav-link cursor-pointer">
-<img alt="Solar Echoes" class="artist-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA"/>
-<span class="body-md">Alex G</span>
-</div>
-</div>
-</div>
-</nav>
+  <div class="mb-5 px-2">
+    <span class="fs-4 fw-bold text-primary-custom" style="color: #1db954;">Music Premium</span>
+  </div>
 
-<div class="mt-auto d-flex flex-column gap-1">
-     <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
-            Upgrade Plan
-        </button>
-<a class="nav-link-custom" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span>Settings</span>
-</a>
-<a class="nav-link-custom" href="#">
-<span class="material-symbols-outlined">help</span>
-<span>Help</span>
-</a>
-</div>
+  <nav class="d-flex flex-column gap-1 flex-grow-1">
+    <a class="nav-link-custom" href="home.html">
+      <span class="material-symbols-outlined">home</span>
+      <span>Home</span>
+    </a>
+    <a class="nav-link-custom" href="search.html">
+      <span class="material-symbols-outlined">search</span>
+      <span>Search</span>
+    </a>
+    <a class="nav-link-custom active" href="library.html">
+      <span class="material-symbols-outlined">library_music</span>
+      <span>Your Library</span>
+    </a>
+    <a class="nav-link-custom" href="create.html">
+      <span class="material-symbols-outlined">add_box</span>
+      <span>Create Playlist</span>
+    </a>
+
+    <div class="mt-5">
+      <p class="label-md text-white-50 px-2 mb-3">Favorite Artists</p>
+      <div class="d-flex flex-column gap-2 overflow-y-auto custom-scrollbar" style="max-height: 250px;">
+        <div class="nav-link cursor-pointer">
+          <img alt="Solar Echoes" class="artist-img" src="https://i.pinimg.com/736x/ff/88/e5/ff88e56f53c95200d06079afb05ae364.jpg"/>
+          <span class="body-md">Alex G</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mt-auto d-flex flex-column gap-1">
+    <a href="prem.html" class="btn btn-success rounded-pill fw-bold upgrade-btn text-center">
+      Upgrade Plan
+    </a>
+  </div>
+
+  <a class="nav-link-custom" href="#">
+    <span class="material-symbols-outlined">settings</span>
+    <span>Settings</span>
+  </a>
+  <a class="nav-link-custom" href="#">
+    <span class="material-symbols-outlined">help</span>
+    <span>Help</span>
+  </a>
 </aside>
-<!-- Top Header -->
+
 <header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040;">
-<div class="container-fluid d-flex justify-content-between align-items-center">
-<div class="d-flex align-items-center gap-4">
-<div class="position-relative d-none d-md-block">
-<span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
-<input class="search-input" placeholder="Search Library" type="text"/>
-</div>
-<nav class="d-none d-xl-flex gap-4">
-<a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration:none">All Content</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Podcasts</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Playlists</a>
-<a class="label-md text-white-50" href="#" style="text-decoration:none">Albums</a>
-</nav>
-</div>
-<div class="d-flex align-items-center gap-3">
-<button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<button class="btn btn-link text-white p-2"><span class="material-symbols-outlined">notifications</span></button>
-<div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
-<img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
-</div>
-</div>
-</div>
-</header>
-<!-- Mobile Sidebar Offcanvas -->
-<div class="offcanvas offcanvas-start bg-dark glass-panel" id="sidebarMobile" tabindex="-1">
-<div class="offcanvas-header">
-<h5 class="headline-md text-primary mb-0">Music Premium</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" type="button"></button>
-</div>
-<div class="offcanvas-body">
-<nav class="nav flex-column gap-1">
-<a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
-<a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
-<a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
-</nav>
-</div>
-</div>
-<!-- Main Content Area -->
-<main style="padding-top: 80px;">
-<div class="library-layout">
-<!-- Playlists Column -->
-<section class="playlists-col d-flex flex-column p-4 custom-scrollbar">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h2 class="headline-md mb-0">Playlists</h2>
-<button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">add</span></button>
-</div>
-<div class="d-flex flex-column gap-2">
-<div class="playlist-item active">
-<div class="d-flex align-items-center gap-3">
-<div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: linear-gradient(135deg, #53e076, #004118);">
-<span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">favorite</span>
-</div>
-<a href="liked.html" class="text-decoration-none"> 
-    <div> 
-        <p class="title-lg mb-0 text-success">Liked Songs</p> 
-        <p class="body-md text-white-50 mb-0">Playlist • 128 songs</p> 
-    </div> 
-</a>
-</div>
-</div>
-<div class="playlist-item">
-<div class="d-flex align-items-center gap-3">
-<img alt="Overwhelmed gweh cik" class="rounded" src="https://i.pinimg.com/736x/77/9d/2f/779d2f6701d4ca444f3ede4a4b71f80b.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
-<div>
-<p class="title-lg mb-0">Overwhelmed gweh</p>
-<p class="body-md text-white-50 mb-0">Playlist • 45 songs</p>
-</div>
-</div>
-</div>
-<div class="playlist-item">
-<div class="d-flex align-items-center gap-3">
-<img alt="hhhh" class="rounded" src="https://i.pinimg.com/1200x/1b/5d/ea/1b5deadbc09c981298a6e16f2a57143c.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
-<div>
-<p class="title-lg mb-0">Kelompok Hebat</p>
-<p class="body-md text-white-50 mb-0">Playlist • 82 songs</p>
-</div>
-</div>
-</div>
-<div class="playlist-item">
-<div class="d-flex align-items-center gap-3">
-<img alt="Indie Anthems" class="rounded" src="https://i.pinimg.com/736x/38/0f/35/380f35271f6954091d29f857999110c5.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
-<div>
-<p class="title-lg mb-0">Indie Anthems</p>
-<p class="body-md text-white-50 mb-0">Playlist • 104 songs</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Right Main Overview -->
-<section class="main-overview p-4 p-md-5 custom-scrollbar">
-<div class="mb-5 py-4">
-<p class="label-md text-success mb-2">Library Overview</p>
-<h1 class="display-lg">Your Library</h1>
-</div>
-<!-- Recent Activity Section -->
-<div class="mb-5">
-<div class="d-flex justify-content-between align-items-center mb-4">
-<h2 class="headline-md mb-0">Recent Activity</h2>
-<button class="btn btn-link text-white-50 p-0 label-md" style="text-decoration:none">SEE ALL</button>
-</div>
-<div class="row g-4">
-<!-- Card 1 -->
-<div class="col-12 col-sm-6 col-xl-3">
-<div class="music-card">
-<div class="position-relative mb-3">
-<img alt="Mix" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDsZwmXIFlWul63Be-rwfvn2HlvVirz6H743G8pZxiZQ&s=10"/>
-</div>
-<p class="title-lg text-truncate mb-1">Daily Mix 1</p>
-<p class="body-md text-white-50 mb-0">Made for John Doe</p>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="col-12 col-sm-6 col-xl-3">
-<div class="music-card">
-<div class="position-relative mb-3">
-<img alt="Discover" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoHz8OjesnDVZWgZTny_KP06LfBesW6fRuruU0nzBr_A&s=10"/>
-</div>
-<p class="title-lg text-truncate mb-1">Discover Weekly</p>
-<p class="body-md text-white-50 mb-0">New music for you</p>
-</div>
-</div>
-<!-- Card 3 (Artist Circle) -->
-<div class="col-12 col-sm-6 col-xl-3">
-  <a href="artist.html" class="text-decoration-none">
-    
-    <div class="music-card p-3 rounded hover-card">
-      
-      <div class="position-relative mb-3">
-        <img 
-          alt="Luna" 
-          class="w-100 rounded-circle shadow-lg object-fit-cover aspect-square border border-white-10"
-          src="https://i.pinimg.com/736x/89/9f/b6/899fb6fb356f5929a1e756d07fa6056c.jpg"
-        />
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-4">
+      <div class="position-relative d-none d-md-block">
+        <span class="material-symbols-outlined position-absolute start-0 top-50 translate-middle-y ms-3 text-white-50">search</span>
+        <input class="search-input" placeholder="Search Library" type="text"/>
       </div>
 
-      <p class="title-lg text-truncate mb-1 text-center text-white">
-        Alex G
-      </p>
+      <nav class="d-none d-xl-flex gap-4">
+        <a class="label-md text-white border-bottom border-primary pb-1" href="#" style="text-decoration:none">All Content</a>
+        <a class="label-md text-white-50" href="#" style="text-decoration:none">Podcasts</a>
+        <a class="label-md text-white-50" href="#" style="text-decoration:none">Playlists</a>
+        <a class="label-md text-white-50" href="#" style="text-decoration:none">Albums</a>
+      </nav>
+    </div>
 
-      <p class="body-md text-white-50 mb-0 text-center">
-        Artist
-      </p>
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-link text-white p-2 d-lg-none" data-bs-target="#sidebarMobile" data-bs-toggle="offcanvas" type="button">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <button class="btn btn-link text-white p-2">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <div class="rounded-circle overflow-hidden border border-white-10" style="width: 40px; height: 40px;">
+        <img alt="User" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiqs285YYuVTFmnTOJF5dS2TyJ1sXtpt1EDlIaBSoTtGPqf4uxtBc004SH8D3bnFUdWgeR-6Tx7HY1WG3CWKA7lmtWH192F4uBKVq8kG0zqb1gKS_2YIxEPYxJXN-Og5UdTDLxdWS4Aef-C0bYnKSCA5_bX-nOZZ72ZXUeb0WMyZAf6PY9z_eR-jJ1yW-zKF1Lo9enhH1VK6KEDzF9_YqBXaITVRKXkfrC-4FqROAlW2g7Tkf03GeAOt3klRQMixboosUetCGTMw"/>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="offcanvas offcanvas-start bg-dark glass-panel" id="sidebarMobile" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="headline-md text-primary mb-0">Music Premium</h5>
+    <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" type="button"></button>
+  </div>
+  <div class="offcanvas-body">
+    <nav class="nav flex-column gap-1">
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">home</span>Home</a>
+      <a class="nav-link" href="#"><span class="material-symbols-outlined">search</span>Search</a>
+      <a class="nav-link active" href="#"><span class="material-symbols-outlined">library_music</span>Your Library</a>
+    </nav>
+  </div>
+</div>
+
+<main style="padding-top: 80px;">
+  <div class="library-layout">
+    <section class="playlists-col d-flex flex-column p-4 custom-scrollbar">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="headline-md mb-0">Playlists</h2>
+        <button class="btn btn-link text-white-50 p-0"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <div class="d-flex flex-column gap-2">
+        <div class="playlist-item active">
+          <div class="d-flex align-items-center gap-3">
+            <div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: linear-gradient(135deg, #53e076, #004118);">
+              <span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            </div>
+            <a href="liked.html" class="text-decoration-none">
+              <div>
+                <p class="title-lg mb-0 text-success">Liked Songs</p>
+                <p class="body-md text-white-50 mb-0">Playlist • 128 songs</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="playlist-item">
+          <div class="d-flex align-items-center gap-3">
+            <img alt="Overwhelmed gweh cik" class="rounded" src="https://i.pinimg.com/736x/77/9d/2f/779d2f6701d4ca444f3ede4a4b71f80b.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
+            <div>
+              <p class="title-lg mb-0">Overwhelmed gweh</p>
+              <p class="body-md text-white-50 mb-0">Playlist • 45 songs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="playlist-item">
+          <div class="d-flex align-items-center gap-3">
+            <img alt="hhhh" class="rounded" src="https://i.pinimg.com/1200x/1b/5d/ea/1b5deadbc09c981298a6e16f2a57143c.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
+            <div>
+              <p class="title-lg mb-0">Kelompok Hebat</p>
+              <p class="body-md text-white-50 mb-0">Playlist • 82 songs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="playlist-item">
+          <div class="d-flex align-items-center gap-3">
+            <img alt="Indie Anthems" class="rounded" src="https://i.pinimg.com/736x/38/0f/35/380f35271f6954091d29f857999110c5.jpg" style="width: 48px; height: 48px; object-fit: cover;"/>
+            <div>
+              <p class="title-lg mb-0">Indie Anthems</p>
+              <p class="body-md text-white-50 mb-0">Playlist • 104 songs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="main-overview p-4 p-md-5 custom-scrollbar">
+      <div class="mb-5 py-4">
+        <p class="label-md text-success mb-2">Library Overview</p>
+        <h1 class="display-lg">Your Library</h1>
+      </div>
+
+      <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2 class="headline-md mb-0">Recent Activity</h2>
+          <button class="btn btn-link text-white-50 p-0 label-md" style="text-decoration:none">SEE ALL</button>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="music-card">
+              <div class="position-relative mb-3">
+                <img alt="Mix" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDsZwmXIFlWul63Be-rwfvn2HlvVirz6H743G8pZxiZQ&s=10"/>
+              </div>
+              <p class="title-lg text-truncate mb-1">Daily Mix 1</p>
+              <p class="body-md text-white-50 mb-0">Made for John Doe</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="music-card">
+              <div class="position-relative mb-3">
+                <img alt="Discover" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoHz8OjesnDVZWgZTny_KP06LfBesW6fRuruU0nzBr_A&s=10"/>
+              </div>
+              <p class="title-lg text-truncate mb-1">Discover Weekly</p>
+              <p class="body-md text-white-50 mb-0">New music for you</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <a href="artist.html" class="text-decoration-none">
+              <div class="music-card p-3 rounded hover-card">
+                <div class="position-relative mb-3">
+                  <img alt="Luna" class="w-100 rounded-circle shadow-lg object-fit-cover aspect-square border border-white-10" src="https://i.pinimg.com/736x/89/9f/b6/899fb6fb356f5929a1e756d07fa6056c.jpg"/>
+                </div>
+                <p class="title-lg text-truncate mb-1 text-center text-white">Alex G</p>
+                <p class="body-md text-white-50 mb-0 text-center">Artist</p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="music-card">
+              <div class="position-relative mb-3">
+                <img alt="Indie" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://i.pinimg.com/736x/38/0f/35/380f35271f6954091d29f857999110c5.jpg"/>
+              </div>
+              <p class="title-lg text-truncate mb-1">Indie Anthems</p>
+              <p class="body-md text-white-50 mb-0">Playlist</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-5 pb-5">
+        <h2 class="headline-md mb-4">Jump Back In</h2>
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+              <img class="rounded" src="https://i.pinimg.com/736x/ff/88/e5/ff88e56f53c95200d06079afb05ae364.jpg" style="width: 56px; height: 56px; object-fit: cover;"/>
+              <p class="mb-0 fw-bold">Alex G</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+              <img class="rounded" src="https://i.pinimg.com/736x/da/4c/e2/da4ce254de730ceafdf9c12e6570dfab.jpg" style="width: 56px; height: 56px; object-fit: cover;"/>
+              <p class="mb-0 fw-bold">HIM</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+              <img class="rounded" src="https://i.pinimg.com/736x/84/d9/fa/84d9fa3ee35a1ccef9fb1daa22d3b047.jpg" style="width: 56px; height: 56px; object-fit: cover;"/>
+              <p class="mb-0 fw-bold">NewJeans</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
+              <div class="rounded d-flex align-items-center justify-content-center bg-success bg-opacity-20" style="width: 56px; height: 56px;">
+                <span class="material-symbols-outlined" style="color: #131313;">favorite</span>
+              </div>
+              <p class="mb-0 fw-bold">Liked Songs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer class="player-bar d-flex align-items-center justify-content-between px-4">
+
+    <div class="d-flex align-items-center gap-3 col-3">
+
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ln0u6CeZ8C6RfSXSzAZbone7Df_LhrkkavFJywZwJy-bpp2fQyK9Z4RHp5821GqiKh0N6anACH-lHek2qhaBVuz87FLd9KNoYznc7kBrF1_AOg725sV5zespuYkpl6Khp-YIG0Xy_VUJN4R5RXmxD4SS9f2tLfy0VmDRCFMWBYp9PKSU2puj-EunungJQgNiCDRbowIIcDMCUIdKynnA7IiFQkzDF_EzhmBlIuG_ZO66o0iTvYrpdvO3_W1WCJps9rz_mIV3Lg"
+             class="cover">
+
+        <div class="text-truncate">
+            <div class="text-white fw-bold small player-title">Circuit Breaker</div>
+            <div class="text-secondary small player-artist">Sonic Frontiers</div>
+        </div>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">favorite</span>
+        </button>
 
     </div>
 
-  </a>
-</div>
-<!-- Card 4 -->
-<div class="col-12 col-sm-6 col-xl-3">
-<div class="music-card">
-<div class="position-relative mb-3">
-<img alt="Indie" class="w-100 rounded shadow-lg object-fit-cover aspect-square" src="https://i.pinimg.com/736x/38/0f/35/380f35271f6954091d29f857999110c5.jpg"/>
-</div>
-<p class="title-lg text-truncate mb-1">Indie Anthems</p>
-<p class="body-md text-white-50 mb-0">Playlist</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Jump Back In Section -->
-<div class="mb-5 pb-5">
-<h2 class="headline-md mb-4">Jump Back In</h2>
-<div class="row g-3">
-<div class="col-12 col-md-6 col-lg-3">
-<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
-<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhI78jXVhfTjxylt-q9WcJrHE2kbrw5qqo0w9CUoAmNKR4e2Zr5kz1cbSbf0_LS-upxHtgpZCVIk-iI3nXdij-y5xxAmZSub7SrN3m1-IqlAZctfiJnJ3c6fZ4HzH-xSbsgvQa-h1liUX0FE9qGzPeAWI1fZjBZTidaO8AHOWRl95sKrmOWY7nyTQBPXL_3xuKkPkseBhLn2uU-5sux9WW19EHRkccCOz5QCATGFcMa4AMbI_gdoAiOK1-adaPMrrbQh_jOotXfA" style="width: 56px; height: 56px; object-fit: cover;"/>
-<p class="mb-0 fw-bold">Solar Echoes</p>
-</div>
-</div>
-<div class="col-12 col-md-6 col-lg-3">
-<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
-<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVApOHuLrcyyHgNjg5eRptlAzS6OpfC-f7kcmEXy8t3HEF66cmgjm-4VqP-ns2kyZcAqFBOU3q_h22YlsDzPpmdkEy5Sxy1T0ikL_aI5V2-ggdTupsBaw7nXr_h5yJBlYAnDI4e9AA3aum2WPlCHkK-M2f7XxnaIShx3ein4_7dsMi4p-VJID65gfyKw4ou4qUQPS1a7QFJlwKCsZl5HOO7zDwGVgX3C9eBNlBUp5Hmn9rB48tC9pIQyujWldFw9AkAEA9E1XJwQ" style="width: 56px; height: 56px; object-fit: cover;"/>
-<p class="mb-0 fw-bold">Deep Focus</p>
-</div>
-</div>
-<div class="col-12 col-md-6 col-lg-3">
-<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
-<img class="rounded" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6hpkusANUf4YPuERWy6t7HETHj9Nufg6cceROHlZZmnR94mwILZ6Vm-le0P5UqBwQWn7Isr3S3pj2ETzjd7wZ9jCRS5ZNAWUgwQGN1kGb8f5KCuwU66aXEVL8OsIOZogl_KojmTP06QiOYR3U2rx9tod-0tNlpUJi2hEs0KS-Phs9MiXqzPAVpPVeSzmVwsu9CbzY-JUpwNTA4SoBM4NbT4dBDmvLqX_ge6flILCh6h6jEwhga6mXROhkKKoMlKmA91WOtem8xA" style="width: 56px; height: 56px; object-fit: cover;"/>
-<p class="mb-0 fw-bold">Neon Horizons</p>
-</div>
-</div>
-<div class="col-12 col-md-6 col-lg-3">
-<div class="d-flex align-items-center gap-3 p-2 bg-white-5 rounded hover-bg-white-10 transition-all cursor-pointer">
-<div class="rounded d-flex align-items-center justify-content-center bg-success bg-opacity-20" style="width: 56px; height: 56px;">
-<span class="material-symbols-outlined" style="color: #131313;">favorite</span>
-</div>
-<p class="mb-0 fw-bold">Liked Songs</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-</div>
-</main>
-<!-- Bottom Player Bar -->
-<footer class="d-flex align-items-center">
-<div class="container-fluid px-0 h-100">
-<div class="row align-items-center h-100">
-<!-- Left: Current Song -->
-<div class="col-3 d-flex align-items-center gap-3">
-<img alt="Track Art" class="rounded shadow" height="56" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg" width="56"/>
-<div class="overflow-hidden">
-<div class="fw-bold text-white text-truncate">Neon Horizons</div>
-<div class="small text-secondary text-truncate">Solar Echoes</div>
-</div>
-<button class="btn btn-icon ms-2">
-<span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1;">favorite</span>
-</button>
-</div>
-<!-- Center: Controls -->
-<div class="col-6 d-flex flex-column align-items-center gap-2">
-<div class="d-flex align-items-center gap-4">
-<button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_previous</span></button>
-<button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-<span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">pause</span>
-</button>
-<button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1;">skip_next</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
-</div>
-<div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px;">
-<span class="small text-secondary" style="min-width: 35px;">1:24</span>
-<div class="progress-container flex-grow-1">
-<div class="progress-bar-inner"></div>
-</div>
-<span class="small text-secondary" style="min-width: 35px;">3:45</span>
-</div>
-</div>
-<!-- Right: Extras -->
-<div class="col-3 d-flex align-items-center justify-content-end gap-3">
-<button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
-<button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
-<div class="d-flex align-items-center gap-2">
-<button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
-<div class="volume-bar">
-<div class="volume-bar-inner"></div>
-</div>
-</div>
-<button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
-</div>
-</div>
-</div>
+    <div class="text-center col-6">
+
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-1">
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">shuffle</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_previous</span>
+            </button>
+
+            <button class="play-btn">
+                <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_next</span>
+            </button>
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">repeat</span>
+            </button>
+
+        </div>
+
+        <div class="d-flex align-items-center gap-2 px-3">
+
+            <small class="text-secondary">1:24</small>
+
+            <div class="progress flex-grow-1">
+                <div class="progress-bar"></div>
+            </div>
+
+            <small class="text-secondary">3:45</small>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end gap-3 col-3">
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">lyrics</span>
+        </button>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">queue_music</span>
+        </button>
+
+        <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">volume_up</span>
+
+            <div class="volume-bar">
+                <div class="volume-fill"></div>
+            </div>
+        </div>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">fullscreen</span>
+        </button>
+
+    </div>
+
 </footer>
 <script>
-    // Interaction simulation
-    document.querySelectorAll('.music-card, .playlist-item').forEach(el => {
-        el.addEventListener('click', function() {
-            const title = this.querySelector('.title-lg')?.innerText;
-            const artist = this.querySelector('.body-md')?.innerText;
-            const img = this.querySelector('img')?.src;
-            
-            if(title && artist && img) {
-                const footer = document.querySelector('footer');
-                footer.querySelector('.title-lg').innerText = title;
-                footer.querySelector('.body-md').innerText = artist;
-                footer.querySelector('img').src = img;
-            }
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (!card.classList.contains('active-card')) {
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                if (!card.classList.contains('active-card')) {
+                    card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                }
+            });
         });
-    });
-</script>
+
+        function selectPlan(element) {
+            cards.forEach(c => c.classList.remove('active-card', 'glow-shadow-primary'));
+            element.classList.add('active-card', 'glow-shadow-primary');
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('currentSong');
+
+  if (saved) {
+    const song = JSON.parse(saved);
+
+    const footer = document.querySelector('footer');
+
+    const footerTitle = footer.querySelector('.player-title');
+    const footerArtist = footer.querySelector('.player-artist');
+    const footerImg = footer.querySelector('.col-3 img');
+
+    if (footerTitle) footerTitle.innerText = song.title;
+    if (footerArtist) footerArtist.innerText = song.artist;
+    if (footerImg) footerImg.src = song.img;
+  }
+});
+    </script>
 </body></html>

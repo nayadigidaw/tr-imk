@@ -5,9 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Create Playlist - Music Premium</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <style>
@@ -33,7 +31,7 @@
         margin: 0;
       }
 
-      /* Sidebar Styling */
+     /* Sidebar */
       .sidebar {
         width: 256px;
         height: 100vh;
@@ -129,7 +127,7 @@
       .btn-icon:hover {
         background: rgba(255, 255, 255, 0.05);
       }
-      /* Glass Panel */
+      
       .glass-panel {
         background: rgba(25, 25, 25, 0.7);
         backdrop-filter: blur(20px);
@@ -140,7 +138,7 @@
       .glass-panel:hover {
         border-color: rgba(83, 224, 118, 0.4);
       }
-      /* Header Styles */
+
       header {
         height: 64px;
         position: fixed;
@@ -155,7 +153,7 @@
         align-items: center;
         padding: 0 2rem;
       }
- /* Hero Section */
+
       .hero-section {
         position: relative;
         height: 480px;
@@ -187,7 +185,6 @@
         z-index: 20;
       }
 
-      /* Utility Classes */
       .glass-panel {
         background: var(--glass-bg);
         backdrop-filter: blur(24px);
@@ -298,62 +295,57 @@
         transform: translateY(0);
       }
 
-
+      /* footer */
       footer {
-height: 96px;
-background: rgba(19, 19, 19, 0.7);
-backdrop-filter: blur(20px);
--webkit-backdrop-filter: blur(20px);
-border-top: 1px solid rgba(255,255,255,0.1);
-position: fixed;
-bottom: 0;
-left: 256px; /* ⬅️ biar tidak nabrak sidebar */
-right: 0;
-z-index: 1060;
-padding: 0 2rem;
-}
+        height: 96px;
+        background: rgba(19, 19, 19, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255,255,255,0.1);
+        position: fixed;
+        bottom: 0;
+        left: 256px; /* ⬅️ biar tidak nabrak sidebar */
+        right: 0;
+        z-index: 1060;
+        padding: 0 2rem;
+        }
 
-/* Progress Bar */
-.progress-container {
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
-width: 100%;
-position: relative;
-cursor: pointer;
-}
+     .progress-container {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        width: 100%;
+        position: relative;
+        cursor: pointer;
+        }
 
-.progress-bar-inner {
-height: 100%;
-background: var(--primary);
-border-radius: 2px;
-width: 33%;
-}
+     .progress-bar-inner {
+        height: 100%;
+        background: var(--primary);
+        border-radius: 2px;
+        width: 33%;
+        }
 
-/* Volume */
-.volume-bar {
-width: 100px;
-height: 4px;
-background: rgba(255, 255, 255, 0.1);
-border-radius: 2px;
-}
+      .volume-bar {
+        width: 100px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        }
 
-.volume-bar-inner {
-width: 50%;
-height: 100%;
-background: var(--on-surface-variant);
-border-radius: 2px;
-}
+        .volume-bar-inner {
+        width: 50%;
+        height: 100%;
+        background: var(--on-surface-variant);
+        border-radius: 2px;
+        }
 
-
-      /* Mobile Fix */
       @media (max-width: 991.98px) {
         footer {
-          left: 0; /* ⬅️ full lagi saat sidebar hilang */
+          left: 0; 
         }
       }
 
-      /* Utility Classes */
       .text-primary-custom {
         color: var(--primary);
       }
@@ -398,7 +390,7 @@ border-radius: 2px;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
       }
-      /* Typography overrides */
+
       .display-lg {
         font-size: 64px;
         font-weight: 800;
@@ -439,11 +431,11 @@ border-radius: 2px;
     </style>
   </head>
   <body class="custom-scrollbar">
-    <!-- Mobile Menu Toggle -->
     <button class="btn d-lg-none position-fixed top-0 start-0 m-2 z-max text-white" id="sidebar-toggle">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <!-- SideNavBar -->
+
+    <!-- Sidebar -->
     <aside class="sidebar d-flex flex-column" id="sidebar-nav">
       <div class="mb-5 px-2">
         <span class="fs-4 fw-bold text-primary-custom">Music Premium</span>
@@ -468,9 +460,11 @@ border-radius: 2px;
       </nav>
 
       <div class="mt-auto d-flex flex-column gap-1">
-         <button class="btn btn-success rounded-pill fw-bold upgrade-btn">
-            Upgrade Plan
-        </button>
+        <a href="prem.html" 
+          class="btn btn-success rounded-pill fw-bold upgrade-btn text-center">
+          Upgrade Plan
+        </a>
+      </div>
         <a class="nav-link-custom" href="#">
           <span class="material-symbols-outlined">settings</span>
           <span>Settings</span>
@@ -481,6 +475,7 @@ border-radius: 2px;
         </a>
       </div>
     </aside>
+
     <main class="main-content position-relative pb-5">
       <header class="glass-top d-flex align-items-center px-4" style="height: 80px; position: fixed; top: 0; right: 0; z-index: 1040">
         <div class="container-fluid d-flex justify-content-between align-items-center">
@@ -511,7 +506,7 @@ border-radius: 2px;
           </div>
         </div>
       </header>
-      <!-- Hero -->
+
       <section class="hero-section">
         <img
           alt="Luna Vibe"
@@ -541,14 +536,10 @@ border-radius: 2px;
    
 <div class="container-fluid px-4 py-5">
   <div class="row g-5">
-
-    <!-- LEFT: Popular -->
     <div class="col-12 col-lg-8">
       <h2 class="h3 fw-bold mb-4">Popular</h2>
 
       <div class="d-flex flex-column gap-2">
-
-        <!-- Track 1 -->
         <div class="track-row d-flex align-items-center gap-3 p-2 rounded">
           <div style="width: 24px">1</div>
           <img src="https://i.pinimg.com/736x/41/b0/b8/41b0b8f218811d84bb65429594144100.jpg" width="48" height="48" class="rounded track-img">
@@ -559,7 +550,6 @@ border-radius: 2px;
           <div>3:42</div>
         </div>
 
-        <!-- Track 2 -->
         <div class="track-row d-flex align-items-center gap-3 p-2 rounded">
           <div style="width: 24px">2</div>
           <img src="https://i.pinimg.com/736x/13/a6/e4/13a6e44a16b43c827ac9932c8e393008.jpg" width="48" height="48" class="rounded track-img">
@@ -570,7 +560,6 @@ border-radius: 2px;
           <div>4:15</div>
         </div>
 
-        <!-- Track 3 -->
         <div class="track-row d-flex align-items-center gap-3 p-2 rounded">
           <div style="width: 24px">3</div>
           <img src="https://i.pinimg.com/736x/13/a6/e4/13a6e44a16b43c827ac9932c8e393008.jpg" width="48" height="48" class="rounded track-img">
@@ -580,13 +569,11 @@ border-radius: 2px;
           </div>
           <div>2:58</div>
         </div>
-
       </div>
 
       <button class="btn btn-link text-success mt-3 p-0">See All Popular Tracks</button>
     </div>
 
-    <!-- RIGHT: Fans Also Like -->
     <div class="col-12 col-lg-4">
       <div class="d-flex justify-content-between mb-4">
         <h2 class="h3 fw-bold mb-0">Fans also like</h2>
@@ -596,25 +583,25 @@ border-radius: 2px;
       <div class="d-flex flex-column gap-3">
 
         <div class="d-flex align-items-center gap-3">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdQ_6ISbvs9mdv01J4eSzSnbTN2YiebaJQtccrvZS0JhrYyAclv3PzKDNRJDgBpEtHhLYl0Z6nALl3Gieiu1HCmoAJ8O3fZClOqa9FQKvc_FTtzv_7_-TSOxoyFcDg1VsZ8krpMLUeRjNrtYsraAGnYNffWT8PNtAyHUbeSTx5uSPLD1AB5oOPTs_TahzXzn1RYhVmLeX25X8HAUuuIgpsa4Sc7-5WP_rpnJ2RTgwgxj30mau0n1YlbT5PvZLaBSwtmyCogO2MQ" class="rounded-circle" width="56" height="56">
+          <img src="https://i.pinimg.com/736x/6e/cd/25/6ecd256582ebb4a1a033de815a5f9339.jpg" class="rounded-circle" width="56" height="56">
           <div>
-            <div class="fw-bold">Nova Ray</div>
+            <div class="fw-bold">Current Joys</div>
             <div class="small text-secondary">4.2M Listeners</div>
           </div>
         </div>
 
         <div class="d-flex align-items-center gap-3">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy38m1RXaa5mw8Sr6xAA4wOuB9gOau6-4vuF0bfGhgXsz3upN0xAfLjkD7etc2OIXVJmf0RStoQKdUsjVykhwgn1GqUTWj00rYvFGayftechSfC5PoVz2mHajTRCrlqLZQJLzye85fb3UwaFacer72aLm5pvgXRrFY4469ou4FYKQJyUOJUtofbS1tAnlCTx62aTflXPIMAHeP_q8wQXbR9_kGWyofeD2cc6wS1FDUNv5-OKRwrKpYVIFuEgz-dORQdtA69onAtA" class="rounded-circle" width="56" height="56">
+          <img src="https://i.pinimg.com/736x/da/4c/e2/da4ce254de730ceafdf9c12e6570dfab.jpg" class="rounded-circle" width="56" height="56">
           <div>
-            <div class="fw-bold">Cyrus Flow</div>
+            <div class="fw-bold">HIM</div>
             <div class="small text-secondary">2.8M Listeners</div>
           </div>
         </div>
 
         <div class="d-flex align-items-center gap-3">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE5m3Hjw4zrMFoDB4oggsWy8IRaXpuf01sFPUO7WO1e6Ct_OhJ9ufyuucpDsX-tFlxJ3OSiMfcozDDdUbPZ5YJofAU66ICjfHN-1DT8WglMG07UiaWia58AoWktZfnJNCUjO6wlha1P6yh_uP-DL-bMnqZtPh9LaVhJmzYu17HQQ2Oqg7lsoKNbEbAJbMSlaYCvA4SgbgDiCzB1jdOlky5N0OB6H_G32xZIc9s-EETTRiC7kpBn0ahW297lwB0vYQYVnlCMe1MQQ" class="rounded-circle" width="56" height="56">
+          <img src="https://i.pinimg.com/736x/e8/47/18/e84718993d6b5d1bcd3212fdb8cd8a24.jpg" class="rounded-circle" width="56" height="56">
           <div>
-            <div class="fw-bold">Astra</div>
+            <div class="fw-bold">LINKIN PARK</div>
             <div class="small text-secondary">1.5M Listeners</div>
           </div>
         </div>
@@ -625,91 +612,85 @@ border-radius: 2px;
   </div>
 </div>
 
-        <!-- Discography -->
         <section class="mt-5 pt-5 border-top border-white border-opacity-5">
           <div class="d-flex justify-content-between align-items-end mb-4">
             <h2 class="h3 fw-bold text-white mb-0">Discography</h2>
             <button class="btn btn-link text-decoration-none text-success text-on-surface-variant fw-bold small text-uppercase p-0" style="font-size: 11px">Show all albums</button>
           </div>
           <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 row-cols-xl-6 g-4">
-            <!-- Album 1 -->
             <div class="col">
               <div class="album-card">
                 <div class="album-img-container">
                   <img
                     alt="Ethereal Nights"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy5BOi2xxM36OgbbjSsVLMPiIzh1drBHUo_NVIYmqBzs55CX0JwShgVzNVqQRgsNbYk_M01zyDyKKEoThG2gFlDTZVKEiQiY7MCLBjbI9Ro1Fb-SyA63uOu0hHg9CeJyZyr6EXhkIYPi9rXdOQ0cM0xSaMwbVyEUBiPbF0U_J3mhXaSTfeM_dlPwAggcLvLKoPtkrHS_tsQjTeQUFY963zoLFuzA3eiob0UBYfRt9ye9_nEVf3CZWgg51i31NYR-PElqiUVVFlxg"
+                    src="https://i.pinimg.com/736x/bd/f1/c0/bdf1c08b72b3a4b33bd00cf1d8688eb1.jpg"
                   />
                   <button class="play-btn-overlay">
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
                   </button>
                 </div>
-                <div class="text-white fw-bold text-truncate">Ethereal Nights</div>
-                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2024 • Album</div>
+                <div class="text-white fw-bold text-truncate">Headlights</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2025 • Album</div>
               </div>
             </div>
-            <!-- Album 2 -->
             <div class="col">
               <div class="album-card">
                 <div class="album-img-container">
                   <img
                     alt="Sublime Flow"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDGYGTKUrqk964oHHDVZeRyeWgokU1wzOMXGNdLFELrhZuGT3J0WOpix9OnpTkB7Q85kprpnzhUS91P6Q7VbcRTErelNpXKCVcfFsxzpV7u7alJSHWDo4QwrH_p_dIbJEYgfPzmlN6xYMvPkWngqOVbZROzIMVJoUL55mfbKpDuiQ4VSwShoKoHawhoZvFUBsZ7_BbpIxM0iHnboeyDMQB569BDFxVH8ZLjAjJOmNlo7LUzFQElp1X0YPvTDkmf04MKTTK-F2kSA"
+                    src="https://i.pinimg.com/736x/68/6e/5b/686e5b01c499fe7c0049ce8e8003ebfc.jpg"
                   />
                   <button class="play-btn-overlay">
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
                   </button>
                 </div>
-                <div class="text-white fw-bold text-truncate">Sublime Flow</div>
-                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2023 • Album</div>
+                <div class="text-white fw-bold text-truncate">I Saw the TV Glow</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2024 • Album</div>
               </div>
             </div>
-            <!-- Album 3 -->
             <div class="col">
               <div class="album-card">
                 <div class="album-img-container">
                   <img
                     alt="Star Gazer"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhy4hq2TW4laqLumQUNMyPl3qvzmnLW9EoUFIa9qwIGzJzr410hdBNphbRSvnAiX_sYlgdkRWdz6gjKqI4_XkM8FbVmxtA3Jp7ldJ6jz5GEKkdjLBh2SQxItCD3YYWqinyBewnmr5_xK2KDYmHI0KaWuodU22zDrLWxrQ-VFHPmoFhl3GY82NCc6xNwrCqUX0AaAOa9xy-5D3dBNzzp3yR8YpLFgaTsIbr5jZ8cm6uq5TKqJjDqEcs1dsJq2Id4Pn66Di9XIXLhw"
+                    src="https://i.pinimg.com/1200x/9b/24/99/9b2499f3f236cdc3bed4a6281e8b3f21.jpg"
                   />
                   <button class="play-btn-overlay">
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
                   </button>
                 </div>
-                <div class="text-white fw-bold text-truncate">Star Gazer</div>
-                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2022 • Single</div>
+                <div class="text-white fw-bold text-truncate">God Save the Animals</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2022 • Album</div>
               </div>
             </div>
-            <!-- Album 4 -->
             <div class="col">
               <div class="album-card">
                 <div class="album-img-container">
                   <img
                     alt="Redshift"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWxodQmhzYKD8uLA6aHoZGL8jxso4_yTIy_7bZWtSl6Y7h03H5tGejk3K0qVrBtkpDlcXVOKd9K_Hi_-ZQaKmjsE9lvnG2h_5ss2i_VUdegg7QkOB4mcUX_HrDwSy0sL6w0ut8fFqvypq6-MyQcjXuKjte6mwQHZwxfuyyWN_hYyHJ9EAARJdKYwfh-WY3G_UfijWqS3nky1TnTx0aGxfrSR3LUbc0_JoffC_UsEJUAINAIVGIfyR-4_FTa8-KtiRVC1ZQIjMs5g"
+                    src="https://i.pinimg.com/736x/0a/96/8c/0a968ce84106accf6c8f7d9ea8b153ec.jpg"
                   />
                   <button class="play-btn-overlay">
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
                   </button>
                 </div>
-                <div class="text-white fw-bold text-truncate">Redshift</div>
-                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2021 • EP</div>
+                <div class="text-white fw-bold text-truncate">House of Sugar</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2019 • Album</div>
               </div>
             </div>
-            <!-- Album 5 -->
             <div class="col">
               <div class="album-card">
                 <div class="album-img-container">
                   <img
                     alt="The Void"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr4tu-l22EsBkA9ch79EwlmGzUL16JSbQpp03WGwyvaYnSxGF75wHpjkmqzlNgjT1A70u41XzIz5c5Abiagay0Gmo4AggO8Zd8Qr1viTEsEnYjIsyo60BwOjd2Tu-l1lCuKRtjwTMypAOKLPV9emxCPzhPYXwUkHHpHiPaiudnEZMIeTrgUjix1jIe9HqVYkomkRUhjNcsNUekv8tqFPiBjbCmDkYz9ae95lWibCQZQbuGFeGh0rE67VInoGK3PiXAND32CI8spg"
+                    src="https://i.pinimg.com/1200x/a3/5c/8d/a35c8daac1f4aabd3dbf131fe831894b.jpg"
                   />
                   <button class="play-btn-overlay">
                     <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">play_arrow</span>
                   </button>
                 </div>
-                <div class="text-white fw-bold text-truncate">The Void</div>
-                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2020 • Album</div>
+                <div class="text-white fw-bold text-truncate">Rocket</div>
+                <div class="text-on-surface-variant small fw-bold text-uppercase mt-1" style="font-size: 10px; letter-spacing: 1px">2017 • Album</div>
               </div>
             </div>
           </div>
@@ -718,16 +699,11 @@ border-radius: 2px;
       </div>
     </main>
 
-
-    <!-- Player Bar -->
 <footer class="d-flex align-items-center">
   <div class="container-fluid px-0 h-100">
     <div class="row align-items-center h-100">
-
-      <!-- Left: Current Song -->
       <div class="col-3 d-flex align-items-center gap-3">
 
-        <!-- WAJIB ADA -->
         <img
           class="rounded shadow player-img"
           height="56"
@@ -736,12 +712,10 @@ border-radius: 2px;
         />
 
         <div class="overflow-hidden">
-          <!-- WAJIB ADA -->
           <div class="fw-bold text-white text-truncate player-title">
             Neon Horizons
           </div>
 
-          <!-- WAJIB ADA -->
           <div class="small text-secondary text-truncate player-artist">
             Solar Echoes
           </div>
@@ -752,15 +726,12 @@ border-radius: 2px;
             style="font-variation-settings: 'FILL' 1">favorite</span>
         </button>
       </div>
-
-      <!-- Center: Controls -->
       <div class="col-6 d-flex flex-column align-items-center gap-2">
 
         <div class="d-flex align-items-center gap-4">
           <button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
           <button class="btn btn-icon"><span class="material-symbols-outlined fs-3">skip_previous</span></button>
 
-          <!-- PLAY BUTTON -->
           <button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center play-btn"
             style="width: 40px; height: 40px">
             <span class="material-symbols-outlined fs-3">play_arrow</span>
@@ -770,7 +741,6 @@ border-radius: 2px;
           <button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
         </div>
 
-        <!-- Progress -->
         <div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px">
           <span class="small text-secondary current-time">0:00</span>
 
@@ -783,7 +753,6 @@ border-radius: 2px;
 
       </div>
 
-      <!-- Right: Extras -->
       <div class="col-3 d-flex align-items-center justify-content-end gap-3">
         <button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
         <button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
@@ -804,9 +773,7 @@ border-radius: 2px;
 </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-// ===============================
-// 🎵 CLICK TRACK
-// ===============================
+
 document.querySelectorAll('.track-row').forEach(row => {
   row.addEventListener('click', function() {
 
@@ -820,28 +787,23 @@ document.querySelectorAll('.track-row').forEach(row => {
     const footerArtist = footer.querySelector('.player-artist');
     const footerImg = footer.querySelector('.player-img'); // 🔥 FIX (lebih aman)
 
-    // update footer
     if (footerTitle) footerTitle.innerText = title;
     if (footerArtist) footerArtist.innerText = artist;
     if (footerImg) footerImg.src = img;
 
-    // simpan
     localStorage.setItem('currentSong', JSON.stringify({
       title,
       artist,
       img
     }));
 
-    // active state
     document.querySelectorAll('.track-row').forEach(r => r.classList.remove('active'));
     this.classList.add('active');
   });
 });
 
 
-// ===============================
-// 🔄 LOAD SAAT REFRESH / PINDAH HALAMAN
-// ===============================
+
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('currentSong');
 

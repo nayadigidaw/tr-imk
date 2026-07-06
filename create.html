@@ -5,9 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Create Playlist - Music Premium</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
     <style>
@@ -34,7 +32,7 @@
         margin-bottom: 120px; 
       }
 
-      /* Sidebar Styling */
+      /* Sidebar */
       .sidebar {
         width: 256px;
         height: 100vh;
@@ -130,7 +128,7 @@
       .btn-icon:hover {
         background: rgba(255, 255, 255, 0.05);
       }
-      /* Glass Panel */
+
       .glass-panel {
         background: rgba(25, 25, 25, 0.7);
         backdrop-filter: blur(20px);
@@ -141,7 +139,7 @@
       .glass-panel:hover {
         border-color: rgba(83, 224, 118, 0.4);
       }
-      /* Header Styles */
+
       header {
         height: 64px;
         position: fixed;
@@ -157,7 +155,6 @@
         padding: 0 2rem;
       }
 
-      /* Main Content */
       main {
         margin-left: 256px;
         padding-top: 64px;
@@ -179,7 +176,6 @@
         background: linear-gradient(to bottom, rgba(83, 224, 118, 0.1), transparent);
       }
 
-      /* UI Elements */
       .search-input {
         background: rgba(53, 53, 52, 0.5);
         border: none;
@@ -203,7 +199,6 @@
         color: var(--on-surface-variant);
       }
 
-      /* Album Cover Area */
       .album-cover-container {
         width: 288px;
         height: 288px;
@@ -233,7 +228,6 @@
         opacity: 0.2;
       }
 
-      /* Playlist Inputs */
       .playlist-input {
         background: transparent;
         border: none;
@@ -276,7 +270,6 @@
         background: rgba(255, 255, 255, 0.05);
       }
 
-      /* Track Rows */
       .track-row {
         border-radius: 8px;
         transition: all 0.2s;
@@ -288,61 +281,97 @@
         transform: translateX(4px);
       }
 
-      /* Player Bar */
-      footer {
-        height: 96px;
-        background: rgba(19, 19, 19, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        position: fixed;
-        bottom: 0;
-        left: 256px; /* ⬅️ biar tidak nabrak sidebar */
-        right: 0;
-        z-index: 1060;
-        padding: 0 2rem;
+     /* footer */
+      .player-bar{
+          position:fixed;
+          bottom:0;
+          left:250px;
+          right:0;
+          height:90px;
+          backdrop-filter:blur(20px);
+          background:rgba(0,0,0,0.7);
+          border-top:1px solid rgba(255,255,255,0.1);
+          z-index:999;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          padding:0 20px;
       }
 
-      /* Progress Bar */
-      .progress-container {
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
-        width: 100%;
-        position: relative;
-        cursor: pointer;
+      .cover{
+          width:56px;
+          height:56px;
+          border-radius:8px;
+          object-fit:cover;
       }
 
-      .progress-bar-inner {
-        height: 100%;
-        background: var(--primary);
-        border-radius: 2px;
-        width: 33%;
+      .icon-btn{
+          background:none;
+          border:none;
+          color:#aaa;
+          cursor:pointer;
+          transition:0.25s;
       }
 
-      /* Volume */
-      .volume-bar {
-        width: 100px;
-        height: 4px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 2px;
+      .icon-btn:hover{
+          color:#fff;
       }
 
-      .volume-bar-inner {
-        width: 50%;
-        height: 100%;
-        background: var(--on-surface-variant);
-        border-radius: 2px;
+      .icon-btn.fill span{
+          font-variation-settings:'FILL' 1;
       }
 
-      /* Mobile Fix */
+      .play-btn{
+          width:42px;
+          height:42px;
+          border-radius:50%;
+          background:#fff;
+          color:#000;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          border:none;
+          transform: translateY(-3px);
+          transition:0.2s;
+      }
+
+      .play-btn:hover{
+          transform: translateY(-3px) scale(1.08);
+      }
+
+      .progress{
+          height:4px;
+          background:#333;
+          border-radius:10px;
+          overflow:hidden;
+      }
+
+      .progress-bar{
+          width:35%;
+          background:var(--primary-container); /* pakai variable */
+          transition:width .3s ease;
+      }
+
+      .volume-bar{
+          width:80px;
+          height:4px;
+          background:#333;
+          border-radius:10px;
+          overflow:hidden;
+      }
+
+      .volume-fill{
+          width:60%;
+          height:100%;
+          background:#aaa;
+      }
+
       @media (max-width: 991.98px) {
         footer {
-          left: 0; /* ⬅️ full lagi saat sidebar hilang */
+          left: 0; 
         }
       }
 
-      /* Utility Classes */
       .text-primary-custom {
         color: var(--primary);
       }
@@ -387,7 +416,7 @@
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
       }
-      /* Typography overrides */
+
       .display-lg {
         font-size: 64px;
         font-weight: 800;
@@ -428,11 +457,10 @@
     </style>
   </head>
   <body class="custom-scrollbar">
-    <!-- Mobile Menu Toggle -->
     <button class="btn d-lg-none position-fixed top-0 start-0 m-2 z-max text-white" id="sidebar-toggle">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <!-- SideNavBar -->
+    <!-- sidebar -->
     <aside class="sidebar d-flex flex-column" id="sidebar-nav">
       <div class="mb-5 px-2">
         <span class="fs-4 fw-bold text-primary-custom" style="color: #1db954">Music Premium</span>
@@ -457,7 +485,11 @@
       </nav>
 
       <div class="mt-auto d-flex flex-column gap-1">
-        <button class="btn btn-success rounded-pill fw-bold upgrade-btn">Upgrade Plan</button>
+  <a href="prem.html" 
+     class="btn btn-success rounded-pill fw-bold upgrade-btn text-center">
+    Upgrade Plan
+  </a>
+</div>
         <a class="nav-link-custom" href="#">
           <span class="material-symbols-outlined">settings</span>
           <span>Settings</span>
@@ -662,61 +694,87 @@
       </div>
     </main>
     <!-- Player Bar -->
-    <footer class="d-flex align-items-center">
-      <div class="container-fluid px-0 h-100">
-        <div class="row align-items-center h-100">
-          <!-- Left: Current Song -->
-          <div class="col-3 d-flex align-items-center gap-3">
-            <img
-              alt="Track Art"
-              class="rounded shadow"
-              height="56"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9BogCCXxvSWBbcl9m0JMEwUMF9r6lUJsbAqgBwIeeIpbNmIugvzQ2gVlt6JHzmwBKu6p03kpQgWqqClAk_xGBN_CYibpgG1M1_LrUcE7EMj95kEeQLslVVUaSu7PAJRAdLneE9XybzU7bT8kLmazud8ZeUKKbZ9xGQZFpqIsYEca34av4SWhusi-cboFhShi9tXHwN3-YIC-4EOQtGp5mnMUbdWsmVTMaw6_Tqy_522j008Sd-QMPAuJDlsy89iHOecB9HHzBGg"
-              width="56"
-            />
-            <div class="overflow-hidden">
-              <div class="fw-bold text-white text-truncate player-title">Neon Horizons</div>
-              <div class="small text-secondary text-truncate player-artist">Solar Echoes</div>
-            </div>
-            <button class="btn btn-icon ms-2">
-              <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1">favorite</span>
-            </button>
-          </div>
-          <!-- Center: Controls -->
-          <div class="col-6 d-flex flex-column align-items-center gap-2">
-            <div class="d-flex align-items-center gap-4">
-              <button class="btn btn-icon"><span class="material-symbols-outlined">shuffle</span></button>
-              <button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">skip_previous</span></button>
-              <button class="btn btn-light rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px">
-                <span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">pause</span>
-              </button>
-              <button class="btn btn-icon"><span class="material-symbols-outlined fs-3" style="font-variation-settings: 'FILL' 1">skip_next</span></button>
-              <button class="btn btn-icon"><span class="material-symbols-outlined">repeat</span></button>
-            </div>
-            <div class="d-flex align-items-center gap-3 w-100" style="max-width: 500px">
-              <span class="small text-secondary" style="min-width: 35px">1:24</span>
-              <div class="progress-container flex-grow-1">
-                <div class="progress-bar-inner"></div>
-              </div>
-              <span class="small text-secondary" style="min-width: 35px">3:45</span>
-            </div>
-          </div>
-          <!-- Right: Extras -->
-          <div class="col-3 d-flex align-items-center justify-content-end gap-3">
-            <button class="btn btn-icon"><span class="material-symbols-outlined">mic</span></button>
-            <button class="btn btn-icon"><span class="material-symbols-outlined">queue_music</span></button>
-            <button class="btn btn-icon"><span class="material-symbols-outlined">speaker_group</span></button>
-            <div class="d-flex align-items-center gap-2">
-              <button class="btn btn-icon p-0"><span class="material-symbols-outlined">volume_up</span></button>
-              <div class="volume-bar">
-                <div class="volume-bar-inner"></div>
-              </div>
-            </div>
-            <button class="btn btn-icon"><span class="material-symbols-outlined">open_in_full</span></button>
-          </div>
+    <footer class="player-bar d-flex align-items-center justify-content-between px-4">
+
+    <div class="d-flex align-items-center gap-3 col-3">
+
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ln0u6CeZ8C6RfSXSzAZbone7Df_LhrkkavFJywZwJy-bpp2fQyK9Z4RHp5821GqiKh0N6anACH-lHek2qhaBVuz87FLd9KNoYznc7kBrF1_AOg725sV5zespuYkpl6Khp-YIG0Xy_VUJN4R5RXmxD4SS9f2tLfy0VmDRCFMWBYp9PKSU2puj-EunungJQgNiCDRbowIIcDMCUIdKynnA7IiFQkzDF_EzhmBlIuG_ZO66o0iTvYrpdvO3_W1WCJps9rz_mIV3Lg"
+             class="cover">
+
+        <div class="text-truncate">
+            <div class="text-white fw-bold small player-title">Circuit Breaker</div>
+            <div class="text-secondary small player-artist">Sonic Frontiers</div>
         </div>
-      </div>
-    </footer>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">favorite</span>
+        </button>
+
+    </div>
+
+    <div class="text-center col-6">
+
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-1">
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">shuffle</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_previous</span>
+            </button>
+
+            <button class="play-btn">
+                <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+
+            <button class="icon-btn fill">
+                <span class="material-symbols-outlined">skip_next</span>
+            </button>
+
+            <button class="icon-btn">
+                <span class="material-symbols-outlined">repeat</span>
+            </button>
+
+        </div>
+
+        <div class="d-flex align-items-center gap-2 px-3">
+
+            <small class="text-secondary">1:24</small>
+
+            <div class="progress flex-grow-1">
+                <div class="progress-bar"></div>
+            </div>
+
+            <small class="text-secondary">3:45</small>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end gap-3 col-3">
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">lyrics</span>
+        </button>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">queue_music</span>
+        </button>
+
+        <div class="d-flex align-items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">volume_up</span>
+
+            <div class="volume-bar">
+                <div class="volume-fill"></div>
+            </div>
+        </div>
+
+        <button class="icon-btn">
+            <span class="material-symbols-outlined">fullscreen</span>
+        </button>
+
+    </div>
+
+</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       document.querySelectorAll('.track-row').forEach((row) => {
